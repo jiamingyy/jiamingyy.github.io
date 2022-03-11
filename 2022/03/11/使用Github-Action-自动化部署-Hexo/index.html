@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="希望坚持每天都写点啥">
+    <meta name="description" content="记录Hexo的配置过程">
     <meta name="author" content="Jiaming Yang">
     
     <title>
@@ -23,7 +23,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"jiamingyy.github.io","root":"/","language":"zh_cn"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -78,6 +78,22 @@
                     
                         <li class="menu-item">
                             <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
                                href="/about"
                             >
                                 ABOUT
@@ -85,9 +101,15 @@
                         </li>
                     
                     
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
                 </ul>
             </div>
             <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
                 
                 <div class="icon-item menu-bar">
                     <div class="menu-bar-middle"></div>
@@ -107,6 +129,16 @@
                 <li class="drawer-menu-item flex-center">
                     <a class=""
                        href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
                 </li>
             
                 <li class="drawer-menu-item flex-center">
@@ -150,9 +182,20 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-03-11 00:43:03</span>
-        <span class="mobile">2022-03-11 00:43</span>
+        <span class="pc">2022-03-11 08:43:03</span>
+        <span class="mobile">2022-03-11 08:43</span>
     </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
     
         <span class="article-tags article-meta-item">
@@ -170,12 +213,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>353 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.4k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>6 Mins</span>
         </span>
     
     
@@ -189,24 +232,58 @@
         <div class="article-content markdown-body">
             <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修改记录</span><br></pre></td></tr></table></figure>
 
-
-
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前立的每天写点东西的Flag感觉都差不多遗忘了，注册的博客园感觉也不好玩，默认的界面太丑了，写东西都没感觉（好吧，这是借口）。觉得还是搭建自己的博客比较Geek 一点，自己DIY也比较方便（就是想折腾）。</p>
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>因为 BLM 运动，GitHub 把默认主分支的名字改成了Main，但本地的git 默认的分支名称还是 master，所以最好把git默认的分支名称也改成 main</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global init.defaultBranch main</span><br><span class="line">git branch -M main # 如果是已经新建了的仓库，修改当前的分支名称为 main</span><br></pre></td></tr></table></figure>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ul>
+<li>新建一个<code>&lt;username&gt;.github.io</code>的Github仓库。</li>
+<li>新建一个Blog 的私有仓库用于保存Blog 源代码</li>
+<li>在本地安装 Node.js</li>
+</ul>
+<h4 id="本地初始化Hexo"><a href="#本地初始化Hexo" class="headerlink" title="本地初始化Hexo"></a>本地初始化Hexo</h4><p>安装完Node.js后</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">安装 hexo</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">npm install hexo-cli -g</span> </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">hexo 初始化</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo init &lt;folder&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">npm install</span></span><br></pre></td></tr></table></figure>
 
-<p>部署步骤</p>
+<h4 id="Hexo-的配置"><a href="#Hexo-的配置" class="headerlink" title="Hexo 的配置"></a>Hexo 的配置</h4><p>因为 Github的限制，所以在访问仓库时需要设置 Taken。</p>
+<p>Token 获取步骤 ：依次选择，下面的选项，创建一个Token。</p>
+<p>Account -&gt; settings -&gt; Developer settings -&gt; Personal access tokens</p>
+<p>&#x3D;&#x3D;创建时记得勾选全部权限&#x3D;&#x3D;</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Jiaming&#x27;s</span> <span class="string">Blog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;写点啥&#x27;</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;希望坚持每天都写点啥&#x27;</span></span><br><span class="line"><span class="comment"># 设置主题</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">keep</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置推送选项</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span></span><br><span class="line">    <span class="attr">github:</span></span><br><span class="line">      <span class="attr">url:</span> <span class="string">git@github.com:jiamingyy/jiamingyy.github.io.git</span></span><br><span class="line">      <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">      <span class="attr">taken:</span> <span class="string">&lt;personel</span> <span class="string">access</span> <span class="string">token&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>设置完 deploy 之后，就可以通过<code>hexo d</code> 命令发布网页到github了。</p>
+<p>Hexo 的常用操作如下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">hexo g <span class="comment"># 编译生成发布文件</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo s <span class="comment"># 开启本地服务器预览</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo new &lt;post&gt; <span class="string">&quot;title&quot;</span> <span class="comment"># 新建一个文章</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">新建一个页面，类似于 About me 的功能，新建之后可以在相应的主题config中进行开启</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo new page <span class="string">&quot;title&quot;</span></span>  </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo d <span class="comment"># 部署</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用Github-Actions-自动部署"><a href="#使用Github-Actions-自动部署" class="headerlink" title="使用Github Actions 自动部署"></a>使用Github Actions 自动部署</h4><p>为了可以在多台设备上随时进行写作和同步，我们可以利用 Github 提供的Actions 服务自动化对博客进行部署。也可以省去我们在本地配置环境的时间，专注于写作。当我们写了新的文章，只需要将Blog 的源代码推送到Github 的 Blog 仓库，Github actions 就可以在直接云端执行 <code>hexo g</code>、<code>hexo d</code>这些操作，自动帮我们部署到page中。</p>
+<p>在开始配置之前需要确定以下事情：</p>
 <ol>
-<li>初始化 hexo 仓库</li>
-<li>配置 Hexo Config，设置 deploy repository （也就是保存 发布网页的 github pages 仓库）</li>
-<li>初始化 Blog 的 Git 仓库，配置远程 Repository（此处的仓库记得私有化）</li>
-<li>编写 Actions 脚本</li>
-<li>生成并配置 ssh 访问 密匙</li>
-<li>推送测试</li>
+<li>本地Blog部署生成和部署正常</li>
+<li>Blog 仓库已经创建完毕</li>
 </ol>
-<h4 id="初始化Hexo"><a href="#初始化Hexo" class="headerlink" title="初始化Hexo"></a>初始化Hexo</h4><p>初始化 Hexo 的安装可参照官网</p>
-<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>因为使用了自动部署，所以配置的主题需要使用 submodule 的形式引入，如果没有以该种形式引入的话，最终生成的<code>index.html</code>会为一个空的文件，Actions的生成 logs 也会产生Warning。</p>
+<p>在所有事情完成后，第一步，先在本地创建访问RSA密匙，使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">ssh-keygen -t rsa -C <span class="string">&quot;这里面可以随便写&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>创建完成后可以得到 <code>id_rsa</code> 和 <code>id_rsa.pub</code>两个文件，分别为私钥和公钥文件。</p>
+<p>将<code>id_rsa.pub</code>的内容复制到 <code>&lt;username&gt;.github.io</code>的Settings中的 Deploy keys.  Keys的名称可以随便写。</p>
+<p><img src="https://i.imgur.com/ucHcW9g.png"></p>
+<p>接下来配置 Blog仓库，也就是存放我们Blog 源代码的仓库。在Settings -&gt; Secrets -&gt; Actions 中点击 New repository secret , 将<code>id_rsa</code>文件中的内容复制到里面。&#x3D;&#x3D;注意名称命名为 DEPLOY_KEY&#x3D;&#x3D;</p>
+<p><img src="https://i.imgur.com/4xO8Dug.png"></p>
+<p>在配置完Secret Key 之后点击进入 Blog 的 Actions 界面。选择New workflow。添加如下内容。&#x3D;&#x3D;注意参数中的deploy_key &#x3D; $&#x3D;&#x3D;这个也就是我们刚刚设置的Secret Key 的名称。代码更新的内容可参照<a class="link"   target="_blank" rel="noopener" href="https://github.com/marketplace/actions/hexo-action" >hexo actions<i class="fas fa-external-link-alt"></i></a>。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This is a basic workflow to help you get started with Actions</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Hexo</span> <span class="string">Blog</span></span><br><span class="line"><span class="comment"># Controls when the workflow will run</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="comment"># Triggers the workflow on push or pull request events but only for the main branch</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> [ <span class="string">main</span> ]</span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">A</span> <span class="string">job</span> <span class="string">to</span> <span class="string">deploy</span> <span class="string">blog.</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@v3.0.0</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">submodules:</span> <span class="literal">true</span> <span class="comment"># Checkout private submodules(themes or something else).</span></span><br><span class="line">    <span class="comment"># Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Cache</span> <span class="string">node</span> <span class="string">modules</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/cache@v1</span></span><br><span class="line">      <span class="attr">id:</span> <span class="string">cache</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">node_modules</span></span><br><span class="line">        <span class="attr">key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-node-$&#123;&#123;</span> <span class="string">hashFiles(&#x27;**/package-lock.json&#x27;)</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          $&#123;&#123; runner.os &#125;&#125;-node-</span></span><br><span class="line"><span class="string"></span>    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">Dependencies</span></span><br><span class="line">      <span class="attr">if:</span> <span class="string">steps.cache.outputs.cache-hit</span> <span class="type">!=</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Deploy hexo blog website.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">id:</span> <span class="string">deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">sma11black/hexo-action@v1.0.3</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">deploy_key:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DEPLOY_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">user_name:</span> <span class="string">your</span> <span class="string">github</span> <span class="string">username</span>  <span class="comment"># (or delete this input setting to use bot account)</span></span><br><span class="line">        <span class="attr">user_email:</span> <span class="string">your</span> <span class="string">github</span> <span class="string">useremail</span>  <span class="comment"># (or delete this input setting to use bot account)</span></span><br><span class="line">        <span class="attr">commit_msg:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.event.head_commit.message</span> <span class="string">&#125;&#125;</span>  <span class="comment"># (or delete this input setting to use hexo default settings)</span></span><br><span class="line">    <span class="comment"># Use the output from the `deploy` step(use for test action)</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Get</span> <span class="string">the</span> <span class="string">output</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line">        <span class="string">echo</span> <span class="string">&quot;$<span class="template-variable">&#123;&#123; steps.deploy.outputs.notify &#125;&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="更新测试"><a href="#更新测试" class="headerlink" title="更新测试"></a>更新测试</h4><p>在设置两个仓库后就可以向Blog 仓库中commit 代码了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> Blog  <span class="comment"># 进入Blog 目录</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init <span class="comment"># 初始化仓库</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git config --global user.name <span class="string">&quot;username&quot;</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git config --global user.email <span class="string">&quot;email@email.com&quot;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git remote add origin &lt;github repository address&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">add 之前记得先添加 .gitignore 文件</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add .</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git push</span></span><br></pre></td></tr></table></figure>
+
+<p>完成推送之后就可以在Actions 那里查看是否正常编译部署。部署完成再等一会儿，就可以打开<code>&lt;username&gt;.github.io</code>查看部署是否完成了。</p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
+<li>在自动部署中，配置的主题需要使用 submodule 的形式引入，如果没有以该种形式引入的话，最终生成的<code>index.html</code>会为一个空的文件，Actions的生成 logs 也会产生Warning。</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule add https://github.com/litten/hexo-theme-yilia.git themes/yilia #以yilia 主题为例</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>为了访问 Fork 的主题，需要在Blog源代码仓库的Settings 中给 Actions 设置访问Fork仓库的权限，否则会Checkout 失败。</p>
+</li>
+<li><p>因为 BLM 运动，GitHub 把默认主分支的名字改成了Main，但本地的git 默认的分支名称还是 master，所以最好把git默认的分支名称也改成 main</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global init.defaultBranch main</span><br><span class="line">git branch -M main # 如果是已经新建了的仓库，修改当前的分支名称为 main</span><br></pre></td></tr></table></figure>
 
         </div>
 
@@ -225,21 +302,21 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
                            href="/2022/03/11/MLP%E7%9A%84BP%E6%8E%A8%E5%AF%BC%E4%B8%8E%E5%AE%9E%E7%8E%B0/"
                         >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
                             <span class="title flex-center">
                                 <span class="post-nav-title-item">MLP的BP推导与实现</span>
-                                <span class="post-nav-item">Prev posts</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
                             </span>
                         </a>
                     </div>
-                
                 
             </div>
         
@@ -344,7 +421,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96Hexo"><span class="nav-text">初始化Hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%88%9D%E5%A7%8B%E5%8C%96Hexo"><span class="nav-text">本地初始化Hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">Hexo 的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Github-Actions-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="nav-text">使用Github Actions 自动部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%B5%8B%E8%AF%95"><span class="nav-text">更新测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>
@@ -354,6 +431,35 @@
     <img src="">
 </div>
 
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
     
 
@@ -372,6 +478,10 @@
 
 <script src="/js/dark-light-toggle.js"></script>
 
+
+
+    
+<script src="/js/local-search.js"></script>
 
 
 
