@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="系统学习Git的常用命令">
+    <meta name="description" content="记录Docker的常见用法，主要是用在机器学习上">
     <meta name="author" content="Jiaming Yang">
     
     <title>
         
-            Git使用基础 |
+            docker搭建深度学习环境 |
         
         Jiaming&#39;s Blog
     </title>
@@ -165,7 +165,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Git使用基础</span>
+            <span class="title-hover-animation">docker搭建深度学习环境</span>
         </div>
 
         
@@ -182,8 +182,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-03-12 04:54:29</span>
-        <span class="mobile">2022-03-12 04:54</span>
+        <span class="pc">2022-03-13 11:29:35</span>
+        <span class="mobile">2022-03-13 11:29</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -203,7 +203,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
+                        <a href="/tags/Docker/">Docker</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
                     </li>
                 
             </ul>
@@ -213,12 +217,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>48 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>462 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>2 Mins</span>
         </span>
     
     
@@ -230,7 +234,37 @@
         
 
         <div class="article-content markdown-body">
-            <h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
+            <h4 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker pull &lt;image_name&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker rmi &lt;image_id&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看本地已经下载的镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker images <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">基本运行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;image_name&gt;:tag &lt;commands&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run ubuntu:leatest /bin/echo <span class="string">&quot;hello world&quot;</span></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">以后台模式运行(detach mode)</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run -d &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看运行中的container，可以查看Container <span class="built_in">id</span> 和 name</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker ps</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">停止和重启container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker stop &lt;container_name&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker restart &lt;container_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">detach/ escape <span class="keyword">in</span> a iteractive containner</span></span><br><span class="line">&lt;C-p&gt;+&lt;C+q&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">attach to a container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker attach &lt;container_name&gt;/&lt;container_id&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="高级运行"><a href="#高级运行" class="headerlink" title="高级运行"></a>高级运行</h3><p>可以在执行 <code>run</code>命令的时候添加各种参数设置 container的各种参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;parameters&gt; &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"></span><br><span class="line">&lt;parameter list&gt;</span><br><span class="line">-it # 交互模式运行</span><br><span class="line">--name &lt;container_name&gt; # 指定container运行名字</span><br><span class="line">-v &lt;host_folder&gt;:&lt;container_folder&gt; # 映射宿主机文件夹到container，也就是 volume</span><br><span class="line">-p &lt;host_port&gt;:&lt;container_port&gt; # 映射container端口到宿主机</span><br></pre></td></tr></table></figure>
+
+<p>给Container挂载GPU，在运行的时候添加参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--gpus all</span><br><span class="line"><span class="meta"># </span><span class="language-bash">or</span></span><br><span class="line">--runtime=nvidia</span><br></pre></td></tr></table></figure>
+
+<p>最终运行例子，这里以运行 Pytorch 环境为例子。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run --gpus all \</span><br><span class="line">-it \</span><br><span class="line">--name pytorch_yjm \</span><br><span class="line">-v /home/jiaming:/workspace \</span><br><span class="line">-p 8022:22 \</span><br><span class="line">pytorch/pytorch:1.9.0-cuda10.2-cudnn7-devel \</span><br><span class="line">/bin/bash</span><br></pre></td></tr></table></figure>
+
+<h4 id="深度学习工具配置"><a href="#深度学习工具配置" class="headerlink" title="深度学习工具配置"></a>深度学习工具配置</h4><ul>
+<li>配置SSH</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt install update</span><br><span class="line">apt install -y openssh-server vim</span><br><span class="line">vim \etc\ssh\sshd_config # 配置ssh</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Port <span class="number">22</span></span><br><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 root 密码，并重启ssh服务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service ssh restart</span><br><span class="line">passwd root</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>炼丹专用库的安装</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda install -y numpy seaborn opencv pandas</span><br><span class="line"><span class="meta"># </span><span class="language-bash">如果需要使用 jupyter 的话</span></span><br><span class="line">conda install -y jupyter</span><br></pre></td></tr></table></figure>
+
+<h4 id="Save-container-to-an-image"><a href="#Save-container-to-an-image" class="headerlink" title="Save container to an image"></a>Save container to an image</h4><p>我们以交互方式配置完环境后，为了不用每次都自定镜像的方法有 通过<code>dockerfile</code>编译生成 和 通过 commit 的方式。这里展示 commit 的方式，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;author_name&quot;</span> -m <span class="string">&quot;messages&quot;</span> &lt;container_id&gt; &lt;save_image_name&gt;:&lt;tag&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;jiaming&quot;</span> -m <span class="string">&quot;pytorch&quot;</span> a404c6c174a2  mytorch:v1</span></span><br></pre></td></tr></table></figure>
 
 
         </div>
@@ -241,7 +275,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">#工具使用</a>&nbsp;
+                        <a href="/tags/Docker/">#Docker</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>&nbsp;
                     </li>
                 
             </ul>
@@ -250,29 +288,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/03/13/docker%E6%90%AD%E5%BB%BA%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">docker搭建深度学习环境</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/03/11/Access-Github-Without-Password/"
+                           href="/2022/03/12/Git%E4%BD%BF%E7%94%A8%E5%9F%BA%E7%A1%80/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Access Github Without Password</span>
+                                <span class="post-nav-title-item">Git使用基础</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -384,7 +407,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Git-%E5%9F%BA%E7%A1%80"><span class="nav-text">Git 基础</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker%E5%9F%BA%E7%A1%80"><span class="nav-text">Docker基础</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E8%BF%90%E8%A1%8C"><span class="nav-text">高级运行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE"><span class="nav-text">深度学习工具配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Save-container-to-an-image"><span class="nav-text">Save container to an image</span></a></li></ol>
     </div>
 </div>
         </aside>
