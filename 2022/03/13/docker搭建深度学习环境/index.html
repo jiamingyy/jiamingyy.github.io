@@ -22,8 +22,8 @@
 
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"jiamingyy.github.io","root":"/","language":"zh_cn"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg1.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.hexo_config = {"hostname":"jiamingyy.github.io","root":"/","language":"zh_cn","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg1.svg","description":"May the Force be with you."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -182,8 +182,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-03-13 11:29:35</span>
-        <span class="mobile">2022-03-13 11:29</span>
+        <span class="pc">2022-03-13 03:29:35</span>
+        <span class="mobile">2022-03-13 03:29</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -217,7 +217,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>462 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>491 Words</span>
         </span>
     
     
@@ -263,7 +263,7 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda install -y numpy seaborn opencv pandas</span><br><span class="line"><span class="meta"># </span><span class="language-bash">如果需要使用 jupyter 的话</span></span><br><span class="line">conda install -y jupyter</span><br></pre></td></tr></table></figure>
 
-<h4 id="Save-container-to-an-image"><a href="#Save-container-to-an-image" class="headerlink" title="Save container to an image"></a>Save container to an image</h4><p>我们以交互方式配置完环境后，为了不用每次都自定镜像的方法有 通过<code>dockerfile</code>编译生成 和 通过 commit 的方式。这里展示 commit 的方式，</p>
+<h4 id="Save-container-to-an-image"><a href="#Save-container-to-an-image" class="headerlink" title="Save container to an image"></a>Save container to an image</h4><p>我们以交互方式配置完环境后，为了不用每次都重新配置，可以将Container 保存为image。 这样每次只用Run一下这个镜像就可以了。自定镜像的方法有 通过<code>dockerfile</code>编译生成 和 通过 commit 的方式。这里展示 commit 的方式，</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;author_name&quot;</span> -m <span class="string">&quot;messages&quot;</span> &lt;container_id&gt; &lt;save_image_name&gt;:&lt;tag&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;jiaming&quot;</span> -m <span class="string">&quot;pytorch&quot;</span> a404c6c174a2  mytorch:v1</span></span><br></pre></td></tr></table></figure>
 
 
@@ -308,6 +308,85 @@
         
 
         
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script 
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script >
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: 'mCYoD4V58M8x15XLYYJ0IAnT-gzGzoHsz',
+                    appKey: '9uR6tAa1epTWzS1NHg8Ftilz',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '欢迎各位大佬留言😘',
+                    lang: 'zh_cn'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Jiaming Yang';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('false') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
     </div>
 </div>
 
@@ -323,7 +402,7 @@
         <div class="copyright-info info-item">
             &copy;
             
-              <span>2020</span>
+              <span>2022</span>
               -
             
             2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Jiaming Yang</a>
@@ -352,6 +431,10 @@
         
 
         <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
         
     </ul>
 </div>

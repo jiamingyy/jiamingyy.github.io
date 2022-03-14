@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Access Github Without Password</title>
+    <url>/2022/03/11/Access-Github-Without-Password/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>两种场景下需要用到免密访问</p>
+<ol>
+<li>将 仓库push 到Github</li>
+<li>使用 git@ 开头的地址Clone 仓库到本地</li>
+</ol>
+<h4 id="生成RSA"><a href="#生成RSA" class="headerlink" title="生成RSA"></a>生成RSA</h4><p>执行下面的命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">ssh-keygen -t rsa -C <span class="string">&quot;&lt;any text&gt;&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>执行之后按两次回车，会在<code>~/.ssh/</code> 目录下生成一个 <code>id_rsa</code>和 <code>id_rsa.pub</code> 文件，分别对应私钥和公钥文件。</p>
+<h4 id="设置Github访问公钥"><a href="#设置Github访问公钥" class="headerlink" title="设置Github访问公钥"></a>设置Github访问公钥</h4><p>依次进入 Accounts -&gt; Settings -&gt; SSH and GPG keys。点击New SSH key 将 <code>id_rsa.pub</code>文件的内容复制带Key里面，title 可以随便写。</p>
+<p><img src="https://i.imgur.com/UqSMEjK.png" alt="image-20220312132811032"></p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
+<li>不要修改 <code>id_rsa</code>和 <code>id_rsa.pub</code>文件的默认存放路径，git 会在每次上传的时候从<code>~/.ssh</code>文件夹中自动读取私钥并加密，这样就不用再输入密码了。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>工具使用</category>
+      </categories>
+      <tags>
+        <tag>工具使用</tag>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MLP的BP推导与实现</title>
+    <url>/2022/03/11/MLP%E7%9A%84BP%E6%8E%A8%E5%AF%BC%E4%B8%8E%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>用<code>numpy</code>实BP神经网络，内容包括梯度下降基本原理，矩阵求导基础，Numpy 实现细节和踩到的坑。</p>
+<span id="more"></span>
+
+<h4 id="梯度下降原理"><a href="#梯度下降原理" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h4><ul>
+<li><p>一阶导数定义<br>$$<br>f{‘}(x) &#x3D; \displaystyle{\lim_{\Delta x \to 0}} \frac{\Delta y}{\Delta x} &#x3D; \frac{f(\Delta x +x) - f(x)}{\Delta x}<br>$$</p>
+</li>
+<li><p>多元导数定义</p>
+</li>
+</ul>
+<p>在多元函数中，求出函数沿着某个坐标轴的导数可类比一阶导数的定义写为<br>$$<br>\frac{\partial \mathrm{f}}{\partial x_{i}}\left(a_{1}, \ldots, a_{n}\right)&#x3D;\lim <em>{h \rightarrow 0} \frac{f\left(a</em>{1}, \ldots, a_{i}+h, \ldots, a_{n}\right)-f\left(\mathrm{a}<em>{1}, \ldots, \mathrm{a}</em>{\mathrm{n}}\right)}{\mathrm{h}}<br>$$</p>
+<ul>
+<li><p>方向导数的定义</p>
+</li>
+<li><p>梯度的定义</p>
+</li>
+<li><p>梯度下降原理</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker搭建深度学习环境</title>
+    <url>/2022/03/13/docker%E6%90%AD%E5%BB%BA%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h4 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker pull &lt;image_name&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker rmi &lt;image_id&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看本地已经下载的镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker images <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">基本运行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;image_name&gt;:tag &lt;commands&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run ubuntu:leatest /bin/echo <span class="string">&quot;hello world&quot;</span></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">以后台模式运行(detach mode)</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run -d &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看运行中的container，可以查看Container <span class="built_in">id</span> 和 name</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker ps</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">停止和重启container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker stop &lt;container_name&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker restart &lt;container_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">detach/ escape <span class="keyword">in</span> a iteractive containner</span></span><br><span class="line">&lt;C-p&gt;+&lt;C+q&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">attach to a container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker attach &lt;container_name&gt;/&lt;container_id&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="高级运行"><a href="#高级运行" class="headerlink" title="高级运行"></a>高级运行</h3><p>可以在执行 <code>run</code>命令的时候添加各种参数设置 container的各种参数</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;parameters&gt; &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"></span><br><span class="line">&lt;parameter list&gt;</span><br><span class="line">-it # 交互模式运行</span><br><span class="line">--name &lt;container_name&gt; # 指定container运行名字</span><br><span class="line">-v &lt;host_folder&gt;:&lt;container_folder&gt; # 映射宿主机文件夹到container，也就是 volume</span><br><span class="line">-p &lt;host_port&gt;:&lt;container_port&gt; # 映射container端口到宿主机</span><br></pre></td></tr></table></figure>
+
+<p>给Container挂载GPU，在运行的时候添加参数</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">--gpus all</span><br><span class="line"><span class="meta"># </span><span class="language-bash">or</span></span><br><span class="line">--runtime=nvidia</span><br></pre></td></tr></table></figure>
+
+<p>最终运行例子，这里以运行 Pytorch 环境为例子。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --gpus all \</span><br><span class="line">-it \</span><br><span class="line">--name pytorch_yjm \</span><br><span class="line">-v /home/jiaming:/workspace \</span><br><span class="line">-p 8022:22 \</span><br><span class="line">pytorch/pytorch:1.9.0-cuda10.2-cudnn7-devel \</span><br><span class="line">/bin/bash</span><br></pre></td></tr></table></figure>
+
+<h4 id="深度学习工具配置"><a href="#深度学习工具配置" class="headerlink" title="深度学习工具配置"></a>深度学习工具配置</h4><ul>
+<li>配置SSH</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt install update</span><br><span class="line">apt install -y openssh-server vim</span><br><span class="line">vim \etc\ssh\sshd_config # 配置ssh</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">Port <span class="number">22</span></span><br><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 root 密码，并重启ssh服务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service ssh restart</span><br><span class="line">passwd root</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>炼丹专用库的安装</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda install -y numpy seaborn opencv pandas</span><br><span class="line"><span class="meta"># </span><span class="language-bash">如果需要使用 jupyter 的话</span></span><br><span class="line">conda install -y jupyter</span><br></pre></td></tr></table></figure>
+
+<h4 id="Save-container-to-an-image"><a href="#Save-container-to-an-image" class="headerlink" title="Save container to an image"></a>Save container to an image</h4><p>我们以交互方式配置完环境后，为了不用每次都重新配置，可以将Container 保存为image。 这样每次只用Run一下这个镜像就可以了。自定镜像的方法有 通过<code>dockerfile</code>编译生成 和 通过 commit 的方式。这里展示 commit 的方式，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;author_name&quot;</span> -m <span class="string">&quot;messages&quot;</span> &lt;container_id&gt; &lt;save_image_name&gt;:&lt;tag&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;jiaming&quot;</span> -m <span class="string">&quot;pytorch&quot;</span> a404c6c174a2  mytorch:v1</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>工具使用</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git使用基础</title>
+    <url>/2022/03/12/Git%E4%BD%BF%E7%94%A8%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>工具使用</category>
+      </categories>
+      <tags>
+        <tag>工具使用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Github Actions 自动化部署 Hexo</title>
+    <url>/2022/03/11/%E4%BD%BF%E7%94%A8Github-Action-%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2-Hexo/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前立的每天写点东西的Flag感觉都差不多遗忘了，注册的博客园感觉也不好玩，默认的界面太丑了，写东西都没感觉（好吧，这是借口）。觉得还是搭建自己的博客比较Geek 一点，自己DIY也比较方便（就是想折腾）。</p>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ul>
+<li>新建一个<code>&lt;username&gt;.github.io</code>的Github仓库。</li>
+<li>新建一个Blog 的私有仓库用于保存Blog 源代码</li>
+<li>在本地安装 Node.js</li>
+</ul>
+<h4 id="本地初始化Hexo"><a href="#本地初始化Hexo" class="headerlink" title="本地初始化Hexo"></a>本地初始化Hexo</h4><p>安装完Node.js后</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">安装 hexo</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">npm install hexo-cli -g</span> </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">hexo 初始化</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo init &lt;folder&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">npm install</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Hexo-的配置"><a href="#Hexo-的配置" class="headerlink" title="Hexo 的配置"></a>Hexo 的配置</h4><p>因为 Github的限制，所以在访问仓库时需要设置 Taken。</p>
+<p>Token 获取步骤 ：依次选择，下面的选项，创建一个Token。</p>
+<p>Account -&gt; settings -&gt; Developer settings -&gt; Personal access tokens</p>
+<p>&#x3D;&#x3D;创建时记得勾选全部权限&#x3D;&#x3D;</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Jiaming&#x27;s</span> <span class="string">Blog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;写点啥&#x27;</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;希望坚持每天都写点啥&#x27;</span></span><br><span class="line"><span class="comment"># 设置主题</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">keep</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置推送选项</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span></span><br><span class="line">    <span class="attr">github:</span></span><br><span class="line">      <span class="attr">url:</span> <span class="string">git@github.com:jiamingyy/jiamingyy.github.io.git</span></span><br><span class="line">      <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">      <span class="attr">taken:</span> <span class="string">&lt;personel</span> <span class="string">access</span> <span class="string">token&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>设置完 deploy 之后，就可以通过<code>hexo d</code> 命令发布网页到github了。</p>
+<p>Hexo 的常用操作如下。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">hexo g <span class="comment"># 编译生成发布文件</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo s <span class="comment"># 开启本地服务器预览</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo new &lt;post&gt; <span class="string">&quot;title&quot;</span> <span class="comment"># 新建一个文章</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">新建一个页面，类似于 About me 的功能，新建之后可以在相应的主题config中进行开启</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo new page <span class="string">&quot;title&quot;</span></span>  </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo d <span class="comment"># 部署</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用Github-Actions-自动部署"><a href="#使用Github-Actions-自动部署" class="headerlink" title="使用Github Actions 自动部署"></a>使用Github Actions 自动部署</h4><p>为了可以在多台设备上随时进行写作和同步，我们可以利用 Github 提供的Actions 服务自动化对博客进行部署。也可以省去我们在本地配置环境的时间，专注于写作。当我们写了新的文章，只需要将Blog 的源代码推送到Github 的 Blog 仓库，Github actions 就可以在直接云端执行 <code>hexo g</code>、<code>hexo d</code>这些操作，自动帮我们部署到page中。</p>
+<p>在开始配置之前需要确定以下事情：</p>
+<ol>
+<li><p>本地Blog部署生成和部署正常</p>
+</li>
+<li><p>Blog 仓库已经创建完毕</p>
+</li>
+</ol>
+<p>在所有事情完成后，第一步，先在本地创建访问RSA密匙，使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">ssh-keygen -t rsa -C <span class="string">&quot;这里面可以随便写&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>创建完成后可以得到 <code>id_rsa</code> 和 <code>id_rsa.pub</code>两个文件，分别为私钥和公钥文件。</p>
+<p>将<code>id_rsa.pub</code>的内容复制到 <code>&lt;username&gt;.github.io</code>的Settings中的 Deploy keys.  Keys的名称可以随便写。</p>
+<p><img src="https://i.imgur.com/ucHcW9g.png"></p>
+<p>接下来配置 Blog仓库，也就是存放我们Blog 源代码的仓库。在Settings -&gt; Secrets -&gt; Actions 中点击 New repository secret , 将<code>id_rsa</code>文件中的内容复制到里面。&#x3D;&#x3D;注意名称命名为 DEPLOY_KEY&#x3D;&#x3D;</p>
+<p><img src="https://i.imgur.com/4xO8Dug.png"></p>
+<p>在配置完Secret Key 之后点击进入 Blog 的 Actions 界面。选择New workflow。添加如下内容。&#x3D;&#x3D;注意参数中的deploy_key &#x3D; $&#x3D;&#x3D;这个也就是我们刚刚设置的Secret Key 的名称。代码更新的内容可参照<a class="link"   href="https://github.com/marketplace/actions/hexo-action" >hexo actions<i class="fas fa-external-link-alt"></i></a>。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># This is a basic workflow to help you get started with Actions</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Hexo</span> <span class="string">Blog</span></span><br><span class="line"><span class="comment"># Controls when the workflow will run</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="comment"># Triggers the workflow on push or pull request events but only for the main branch</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> [ <span class="string">main</span> ]</span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">A</span> <span class="string">job</span> <span class="string">to</span> <span class="string">deploy</span> <span class="string">blog.</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@v3.0.0</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">submodules:</span> <span class="literal">true</span> <span class="comment"># Checkout private submodules(themes or something else).</span></span><br><span class="line">    <span class="comment"># Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Cache</span> <span class="string">node</span> <span class="string">modules</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/cache@v1</span></span><br><span class="line">      <span class="attr">id:</span> <span class="string">cache</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">node_modules</span></span><br><span class="line">        <span class="attr">key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-node-$&#123;&#123;</span> <span class="string">hashFiles(&#x27;**/package-lock.json&#x27;)</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          $&#123;&#123; runner.os &#125;&#125;-node-</span></span><br><span class="line"><span class="string"></span>    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">Dependencies</span></span><br><span class="line">      <span class="attr">if:</span> <span class="string">steps.cache.outputs.cache-hit</span> <span class="type">!=</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Deploy hexo blog website.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">id:</span> <span class="string">deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">sma11black/hexo-action@v1.0.3</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">deploy_key:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DEPLOY_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">user_name:</span> <span class="string">your</span> <span class="string">github</span> <span class="string">username</span>  <span class="comment"># (or delete this input setting to use bot account)</span></span><br><span class="line">        <span class="attr">user_email:</span> <span class="string">your</span> <span class="string">github</span> <span class="string">useremail</span>  <span class="comment"># (or delete this input setting to use bot account)</span></span><br><span class="line">        <span class="attr">commit_msg:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.event.head_commit.message</span> <span class="string">&#125;&#125;</span>  <span class="comment"># (or delete this input setting to use hexo default settings)</span></span><br><span class="line">    <span class="comment"># Use the output from the `deploy` step(use for test action)</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Get</span> <span class="string">the</span> <span class="string">output</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line">        <span class="string">echo</span> <span class="string">&quot;$<span class="template-variable">&#123;&#123; steps.deploy.outputs.notify &#125;&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="更新测试"><a href="#更新测试" class="headerlink" title="更新测试"></a>更新测试</h4><p>在设置两个仓库后就可以向Blog 仓库中commit 代码了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> Blog  <span class="comment"># 进入Blog 目录</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init <span class="comment"># 初始化仓库</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git config --global user.name <span class="string">&quot;username&quot;</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git config --global user.email <span class="string">&quot;email@email.com&quot;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git remote add origin &lt;github repository address&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">add 之前记得先添加 .gitignore 文件</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add .</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git push</span></span><br></pre></td></tr></table></figure>
+
+<p>完成推送之后就可以在Actions 那里查看是否正常编译部署。部署完成再等一会儿，就可以打开<code>&lt;username&gt;.github.io</code>查看部署是否完成了。</p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
+<li>在自动部署中，配置的主题需要使用 submodule 的形式引入，如果没有以该种形式引入的话，最终生成的<code>index.html</code>会为一个空的文件，Actions的生成 logs 也会产生Warning。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">git submodule add https://github.com/litten/hexo-theme-yilia.git themes/yilia <span class="comment">#以yilia 主题为例</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>为了访问 Fork 的主题，需要在Blog源代码仓库的Settings 中给 Actions 设置访问Fork仓库的权限，否则会Checkout 失败。</p>
+</li>
+<li><p>因为 BLM 运动，GitHub 把默认主分支的名字改成了Main，但本地的git 默认的分支名称还是 master，所以最好把git默认的分支名称也改成 main</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">git config --global init.defaultBranch main</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git branch -M main <span class="comment"># 如果是已经新建了的仓库，修改当前的分支名称为 main</span></span></span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>工具使用</tag>
+      </tags>
+  </entry>
+</search>
