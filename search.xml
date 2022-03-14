@@ -27,6 +27,19 @@
       </tags>
   </entry>
   <entry>
+    <title>Git使用基础</title>
+    <url>/2022/03/12/Git%E4%BD%BF%E7%94%A8%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>工具使用</category>
+      </categories>
+      <tags>
+        <tag>工具使用</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MLP的BP推导与实现</title>
     <url>/2022/03/11/MLP%E7%9A%84BP%E6%8E%A8%E5%AF%BC%E4%B8%8E%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<p>用<code>numpy</code>实BP神经网络，内容包括梯度下降基本原理，矩阵求导基础，Numpy 实现细节和踩到的坑。</p>
@@ -38,7 +51,7 @@
 <li><p>多元导数定义</p>
 </li>
 </ul>
-<p>在多元函数中，求出函数沿着某个坐标轴的导数可类比一阶导数的定义写为<br>$$<br>\frac{\partial \mathrm{f}}{\partial x_{i}}\left(a_{1}, \ldots, a_{n}\right)&#x3D;\lim <em>{h \rightarrow 0} \frac{f\left(a</em>{1}, \ldots, a_{i}+h, \ldots, a_{n}\right)-f\left(\mathrm{a}<em>{1}, \ldots, \mathrm{a}</em>{\mathrm{n}}\right)}{\mathrm{h}}<br>$$</p>
+<p>$$<br>f_{x}(x, y, z)&#x3D;\lim _{\Delta x \to 0} \frac{f(x+\Delta x, y, z)-f(x, y, z)}{\Delta x}<br>$$</p>
 <ul>
 <li><p>方向导数的定义</p>
 </li>
@@ -48,6 +61,9 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
       <tags>
         <tag>机器学习</tag>
       </tags>
@@ -92,21 +108,8 @@
         <category>工具使用</category>
       </categories>
       <tags>
-        <tag>Docker</tag>
         <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git使用基础</title>
-    <url>/2022/03/12/Git%E4%BD%BF%E7%94%A8%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>工具使用</category>
-      </categories>
-      <tags>
-        <tag>工具使用</tag>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
