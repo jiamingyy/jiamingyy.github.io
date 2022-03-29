@@ -23,7 +23,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"jiamingyy.github.io","root":"/","language":"zh_cn","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg1.svg","description":"May the Force be with you."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg1.svg","description":"May the Force be with you."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -171,7 +171,7 @@
         
             <div class="article-header">
                 <div class="avatar">
-                    <img src="/images/avatar.svg">
+                    <img src="/images/logo.svg">
                 </div>
                 <div class="info">
                     <div class="author">
@@ -182,8 +182,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-03-11 10:21:40</span>
-        <span class="mobile">2022-03-11 10:21</span>
+        <span class="pc">2022-03-11 02:21:40</span>
+        <span class="mobile">2022-03-11 02:21</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -213,7 +213,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>120 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>383 Words</span>
         </span>
     
     
@@ -236,18 +236,24 @@
 <h4 id="梯度下降原理"><a href="#梯度下降原理" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h4><ul>
 <li><p>一阶导数定义<br>$$<br>f{‘}(x) &#x3D; \displaystyle{\lim_{\Delta x \to 0}} \frac{\Delta y}{\Delta x} &#x3D; \frac{f(\Delta x +x) - f(x)}{\Delta x}<br>$$</p>
 </li>
-<li><p>多元导数定义</p>
+<li><p>多元函数偏导数定义，</p>
 </li>
 </ul>
-<p>$$<br>f_{x}(x, y, z)&#x3D;\lim _{\Delta x \to 0} \frac{f(x+\Delta x, y, z)-f(x, y, z)}{\Delta x}<br>$$</p>
+<p>$$<br>f_{x1}(x1, x2,…)&#x3D;\lim _{\Delta x \to 0} \frac{f(x1+\Delta x, x2, x3, …)-f(x1, x2, x3,…)}{\Delta x}<br>$$</p>
 <ul>
-<li><p>方向导数的定义</p>
-</li>
-<li><p>梯度的定义</p>
-</li>
-<li><p>梯度下降原理</p>
-</li>
+<li>方向导数的定义</li>
 </ul>
+<p>偏导数定义只是沿着某个坐标轴方向的导数，多元函数的自变量在某点可以沿无数个方向运动，多元函数沿着某个方向上的变换率称为 &#x3D;&#x3D;方向导数&#x3D;&#x3D; </p>
+<ul>
+<li>梯度的定义</li>
+</ul>
+<p>多元函数在某一点的梯度是一个非常特殊的向量，其由多元函数对每个变量的偏导数组成,（这即是为什么求梯度的时候需要对各个变量求偏导的原因），其方向为函数在该点增加最快的方向，大小（向量的模长）为函数在该点的最大变化率。</p>
+<ul>
+<li>梯度下降原理</li>
+</ul>
+<h4 id="矩阵求导"><a href="#矩阵求导" class="headerlink" title="矩阵求导"></a>矩阵求导</h4><p>矩阵求导和函数求导还是不太一样的，具体学习可以参考下面这两个链接。</p>
+<p>由于神经网络的训练阶段，输入一个由数据构成的矩阵<code>x</code>，经过一个由神经网络构成的函数<code>f(x)</code>。<code>f(x)</code>中含有<code>w</code>和<code>b</code>参数，而我们训练的阶段就可以抽象为<br>$$</p>
+<p>$$</p>
 
         </div>
 
@@ -504,7 +510,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%8E%9F%E7%90%86"><span class="nav-text">梯度下降原理</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%8E%9F%E7%90%86"><span class="nav-text">梯度下降原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC"><span class="nav-text">矩阵求导</span></a></li></ol>
     </div>
 </div>
         </aside>

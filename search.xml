@@ -3,7 +3,10 @@
   <entry>
     <title>Access Github Without Password</title>
     <url>/2022/03/11/Access-Github-Without-Password/</url>
-    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>两种场景下需要用到免密访问</p>
+    <content><![CDATA[<p>为了更方便使用 Github，需要配置Github 的免密访问。</p>
+<span id="more"></span>
+
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>两种场景下需要用到免密访问</p>
 <ol>
 <li>将 仓库push 到Github</li>
 <li>使用 git@ 开头的地址Clone 仓库到本地</li>
@@ -29,7 +32,10 @@
   <entry>
     <title>Git使用基础</title>
     <url>/2022/03/12/Git%E4%BD%BF%E7%94%A8%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>记录Git的常见用法</p>
+<span id="more"></span>
+
+<h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -48,18 +54,24 @@
 <h4 id="梯度下降原理"><a href="#梯度下降原理" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h4><ul>
 <li><p>一阶导数定义<br>$$<br>f{‘}(x) &#x3D; \displaystyle{\lim_{\Delta x \to 0}} \frac{\Delta y}{\Delta x} &#x3D; \frac{f(\Delta x +x) - f(x)}{\Delta x}<br>$$</p>
 </li>
-<li><p>多元导数定义</p>
+<li><p>多元函数偏导数定义，</p>
 </li>
 </ul>
-<p>$$<br>f_{x}(x, y, z)&#x3D;\lim _{\Delta x \to 0} \frac{f(x+\Delta x, y, z)-f(x, y, z)}{\Delta x}<br>$$</p>
+<p>$$<br>f_{x1}(x1, x2,…)&#x3D;\lim _{\Delta x \to 0} \frac{f(x1+\Delta x, x2, x3, …)-f(x1, x2, x3,…)}{\Delta x}<br>$$</p>
 <ul>
-<li><p>方向导数的定义</p>
-</li>
-<li><p>梯度的定义</p>
-</li>
-<li><p>梯度下降原理</p>
-</li>
+<li>方向导数的定义</li>
 </ul>
+<p>偏导数定义只是沿着某个坐标轴方向的导数，多元函数的自变量在某点可以沿无数个方向运动，多元函数沿着某个方向上的变换率称为 &#x3D;&#x3D;方向导数&#x3D;&#x3D; </p>
+<ul>
+<li>梯度的定义</li>
+</ul>
+<p>多元函数在某一点的梯度是一个非常特殊的向量，其由多元函数对每个变量的偏导数组成,（这即是为什么求梯度的时候需要对各个变量求偏导的原因），其方向为函数在该点增加最快的方向，大小（向量的模长）为函数在该点的最大变化率。</p>
+<ul>
+<li>梯度下降原理</li>
+</ul>
+<h4 id="矩阵求导"><a href="#矩阵求导" class="headerlink" title="矩阵求导"></a>矩阵求导</h4><p>矩阵求导和函数求导还是不太一样的，具体学习可以参考下面这两个链接。</p>
+<p>由于神经网络的训练阶段，输入一个由数据构成的矩阵<code>x</code>，经过一个由神经网络构成的函数<code>f(x)</code>。<code>f(x)</code>中含有<code>w</code>和<code>b</code>参数，而我们训练的阶段就可以抽象为<br>$$</p>
+<p>$$</p>
 ]]></content>
       <categories>
         <category>机器学习</category>
@@ -71,7 +83,10 @@
   <entry>
     <title>docker搭建深度学习环境</title>
     <url>/2022/03/13/docker%E6%90%AD%E5%BB%BA%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<h4 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker pull &lt;image_name&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker rmi &lt;image_id&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看本地已经下载的镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker images <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">基本运行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;image_name&gt;:tag &lt;commands&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run ubuntu:leatest /bin/echo <span class="string">&quot;hello world&quot;</span></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">以后台模式运行(detach mode)</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run -d &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看运行中的container，可以查看Container <span class="built_in">id</span> 和 name</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker ps</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">停止和重启container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker stop &lt;container_name&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker restart &lt;container_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">detach/ escape <span class="keyword">in</span> a iteractive containner</span></span><br><span class="line">&lt;C-p&gt;+&lt;C+q&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">attach to a container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker attach &lt;container_name&gt;/&lt;container_id&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>记录Docker的常见用法，主要是用在机器学习上。</p>
+<span id="more"></span>
+
+<h4 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker pull &lt;image_name&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker rmi &lt;image_id&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看本地已经下载的镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker images <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">基本运行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;image_name&gt;:tag &lt;commands&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run ubuntu:leatest /bin/echo <span class="string">&quot;hello world&quot;</span></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">以后台模式运行(detach mode)</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run -d &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看运行中的container，可以查看Container <span class="built_in">id</span> 和 name</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker ps</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">停止和重启container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker stop &lt;container_name&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker restart &lt;container_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">detach/ escape <span class="keyword">in</span> a iteractive containner</span></span><br><span class="line">&lt;C-p&gt;+&lt;C+q&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">attach to a container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker attach &lt;container_name&gt;/&lt;container_id&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="高级运行"><a href="#高级运行" class="headerlink" title="高级运行"></a>高级运行</h3><p>可以在执行 <code>run</code>命令的时候添加各种参数设置 container的各种参数</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;parameters&gt; &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"></span><br><span class="line">&lt;parameter list&gt;</span><br><span class="line">-it # 交互模式运行</span><br><span class="line">--name &lt;container_name&gt; # 指定container运行名字</span><br><span class="line">-v &lt;host_folder&gt;:&lt;container_folder&gt; # 映射宿主机文件夹到container，也就是 volume</span><br><span class="line">-p &lt;host_port&gt;:&lt;container_port&gt; # 映射container端口到宿主机</span><br></pre></td></tr></table></figure>
@@ -173,6 +188,225 @@
 ]]></content>
       <tags>
         <tag>工具使用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数字电路基础(一)</title>
+    <url>/2022/03/16/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80-%E4%B8%80/</url>
+    <content><![CDATA[<p>复习基本的数字电路知识。包括基本的编码方式、基本门电路的符号、逻辑代数化简方法、常见的组合逻辑设计方法。</p>
+<span id="more"></span>
+
+<h4 id="常见编码"><a href="#常见编码" class="headerlink" title="常见编码"></a>常见编码</h4><p>我们比较的编码有8421码，其他的码感觉用的不多。</p>
+<p><img src="https://i.imgur.com/ZgH7ncQ.png" alt="常用编码"></p>
+<p>这里着重学习以下 格雷码，格雷码又叫循环二进制码或反射二进制码。格雷码相邻的两个码之间仅有一个位不一样，其与8421码可通过以下步骤互转：</p>
+<p><strong>8421 转格雷码（编码）</strong>：从&#x3D;&#x3D;右往左&#x3D;&#x3D;的第 N 位和 第 N+1 位进行异或，最后一位两个码相同。</p>
+<p><strong>格雷码转 8421（译码）</strong>: 从&#x3D;&#x3D;右往左&#x3D;&#x3D;的第 N 位和 第 N+1 位进行异或，最后一位两个码相同。</p>
+<p>两个步骤是一样的。一个数异或同一个数两次得到的结果不变。</p>
+<img src="https://i.imgur.com/YkyZHbq.png" alt="格雷码" style="zoom:67%;" />
+
+<h4 id="基本门电路"><a href="#基本门电路" class="headerlink" title="基本门电路"></a>基本门电路</h4><p>这部分比较简单，记住下面这个表就可以了。</p>
+<ul>
+<li>记住常见的门电路符号</li>
+<li>可以根据电路图写出逻辑代数表达式<br><img src="https://i.imgur.com/XPak1sq.png" alt="常见门电路的符号"></li>
+</ul>
+<h4 id="逻辑表达式化简"><a href="#逻辑表达式化简" class="headerlink" title="逻辑表达式化简"></a>逻辑表达式化简</h4><p>在使用逻辑代数表达式描述完之后功能之后还需要对表达式进行化简，化简的表达式所转化得到的电路具有更少的元件，使电路图可以更加直观，同时也可以节省成本。化简的方法有下面两种。</p>
+<ul>
+<li>公式法化简 （这个得看熟练程度）</li>
+</ul>
+<p><img src="https://i.imgur.com/jFJklb4.png" alt="逻辑代数公式表"></p>
+<ul>
+<li>卡诺图化简方法 （这个要实用一点，但需要列的表比较多）</li>
+</ul>
+<p>将所有的输入变量构成最小项，并将最小项根据格雷码的顺序写成表格，保证相邻的两项只有一个输入变量变化，如由 A, B 构成的最小项包括 AB, A’B, AB’, A’B’，就可以构成下图这种两变量 卡诺图</p>
+<table>
+<thead>
+<tr>
+<th>A&#x2F;B</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>m0</td>
+<td>m1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>m2</td>
+<td>m3</td>
+</tr>
+</tbody></table>
+<p>卡诺图利用 $\bar{A}B + AB &#x3D; (\bar{A} + A)B &#x3D; B$进行化简，在卡诺图中画的圆圈跨过两个格子则说明所跨过的变量可以消去。</p>
+<p>卡诺图的化简步骤需要遵循:</p>
+<ol>
+<li>所有的标1方格都需要被圈覆盖</li>
+<li>每个圈中包含的相邻小方格数必须为2的整数次幂</li>
+<li>圈需要尽可能大，圈和圈之间可以重叠</li>
+<li>每个圈中至少有一个标1的方格未被其他圈所覆盖</li>
+</ol>
+<p><img src="https://i.imgur.com/poel6EW.png" alt="常见卡诺图化简"></p>
+<h4 id="组合逻辑电路设计过程"><a href="#组合逻辑电路设计过程" class="headerlink" title="组合逻辑电路设计过程"></a>组合逻辑电路设计过程</h4><ol>
+<li>根据需求确定功能</li>
+<li>根据功能列出真值表</li>
+<li>根据真值表写出逻辑表达式</li>
+<li>将逻辑表达式化简</li>
+<li>逻辑表达式转化为逻辑电路图</li>
+</ol>
+<h4 id="编码器实现"><a href="#编码器实现" class="headerlink" title="编码器实现"></a>编码器实现</h4><p>8-3编码器的实现</p>
+<h4 id="译码器实现"><a href="#译码器实现" class="headerlink" title="译码器实现"></a>译码器实现</h4><h4 id="加法器实现"><a href="#加法器实现" class="headerlink" title="加法器实现"></a>加法器实现</h4>]]></content>
+      <tags>
+        <tag>数字电路</tag>
+        <tag>FPGA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数字电路基础(三)</title>
+    <url>/2022/03/17/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80-%E4%B8%89/</url>
+    <content><![CDATA[<p>学习Verilog的基本语法.</p>
+<span id="more"></span>
+
+<h4 id="可综合语言"><a href="#可综合语言" class="headerlink" title="可综合语言"></a>可综合语言</h4><p>可以被综合器转化为相应的逻辑门电路的语句称为可综合语言。</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>module&#x2F; endmodule</td>
+<td>Verlog 的基本单元，成对使用</td>
+</tr>
+<tr>
+<td>input</td>
+<td>输入端口定义</td>
+</tr>
+<tr>
+<td>output</td>
+<td>输出端口定义</td>
+</tr>
+<tr>
+<td>inout</td>
+<td>输入&#x2F;输出端口定义</td>
+</tr>
+<tr>
+<td>begin</td>
+<td>成对和end使用相当于 {}</td>
+</tr>
+<tr>
+<td>end</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>数据类型</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wire</td>
+<td>线网类型</td>
+</tr>
+<tr>
+<td>reg</td>
+<td>寄存器类型</td>
+</tr>
+<tr>
+<td>parameter</td>
+<td>参数类型 &#x2F; 类似于常量</td>
+</tr>
+</tbody></table>
+<p>逻辑判断</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>if</td>
+<td>逻辑判断</td>
+</tr>
+<tr>
+<td>else</td>
+<td>逻辑判断</td>
+</tr>
+<tr>
+<td>case</td>
+<td></td>
+</tr>
+<tr>
+<td>endcase</td>
+<td></td>
+</tr>
+<tr>
+<td>default</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>连续赋值</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>always</td>
+<td>过程赋值</td>
+</tr>
+<tr>
+<td>assign</td>
+<td>连续赋值</td>
+</tr>
+</tbody></table>
+<p>过程赋值条件</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>posedge</td>
+<td>上升沿</td>
+</tr>
+<tr>
+<td>negedge</td>
+<td>下降沿</td>
+</tr>
+<tr>
+<td>posedge or negedge</td>
+<td>上升沿或者下降沿</td>
+</tr>
+</tbody></table>
+<h4 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h4><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这里演示一个与门的代码结构</span></span><br><span class="line"><span class="keyword">module</span> module_name</span><br><span class="line">(</span><br><span class="line">	a, b, c</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">input</span> a; <span class="comment">// 输入</span></span><br><span class="line"><span class="keyword">input</span> b;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">output</span> c; <span class="comment">// 输出</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">assign</span> c = a &amp; b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>数字电路</tag>
+        <tag>FPGA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数字电路基础(二)</title>
+    <url>/2022/03/17/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80-%E4%BA%8C/</url>
+    <content><![CDATA[<p>学习时序逻辑电路的设计方法，锁存器，触发器，边缘触发器，最后使用触发器。</p>
+<span id="more"></span>
+
+]]></content>
+      <tags>
+        <tag>数字电路</tag>
+        <tag>FPGA</tag>
       </tags>
   </entry>
 </search>

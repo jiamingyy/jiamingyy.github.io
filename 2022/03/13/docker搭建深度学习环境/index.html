@@ -23,7 +23,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"jiamingyy.github.io","root":"/","language":"zh_cn","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg1.svg","description":"May the Force be with you."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg1.svg","description":"May the Force be with you."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -171,7 +171,7 @@
         
             <div class="article-header">
                 <div class="avatar">
-                    <img src="/images/avatar.svg">
+                    <img src="/images/logo.svg">
                 </div>
                 <div class="info">
                     <div class="author">
@@ -217,7 +217,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>491 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>509 Words</span>
         </span>
     
     
@@ -234,7 +234,10 @@
         
 
         <div class="article-content markdown-body">
-            <h4 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker pull &lt;image_name&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker rmi &lt;image_id&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看本地已经下载的镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker images <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">基本运行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;image_name&gt;:tag &lt;commands&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run ubuntu:leatest /bin/echo <span class="string">&quot;hello world&quot;</span></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">以后台模式运行(detach mode)</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run -d &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看运行中的container，可以查看Container <span class="built_in">id</span> 和 name</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker ps</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">停止和重启container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker stop &lt;container_name&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker restart &lt;container_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">detach/ escape <span class="keyword">in</span> a iteractive containner</span></span><br><span class="line">&lt;C-p&gt;+&lt;C+q&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">attach to a container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker attach &lt;container_name&gt;/&lt;container_id&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+            <p>记录Docker的常见用法，主要是用在机器学习上。</p>
+<span id="more"></span>
+
+<h4 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker pull &lt;image_name&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker rmi &lt;image_id&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看本地已经下载的镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker images <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">基本运行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;image_name&gt;:tag &lt;commands&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run ubuntu:leatest /bin/echo <span class="string">&quot;hello world&quot;</span></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">以后台模式运行(detach mode)</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run -d &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看运行中的container，可以查看Container <span class="built_in">id</span> 和 name</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker ps</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">停止和重启container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker stop &lt;container_name&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker restart &lt;container_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">detach/ escape <span class="keyword">in</span> a iteractive containner</span></span><br><span class="line">&lt;C-p&gt;+&lt;C+q&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">attach to a container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker attach &lt;container_name&gt;/&lt;container_id&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="高级运行"><a href="#高级运行" class="headerlink" title="高级运行"></a>高级运行</h3><p>可以在执行 <code>run</code>命令的时候添加各种参数设置 container的各种参数</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;parameters&gt; &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"></span><br><span class="line">&lt;parameter list&gt;</span><br><span class="line">-it # 交互模式运行</span><br><span class="line">--name &lt;container_name&gt; # 指定container运行名字</span><br><span class="line">-v &lt;host_folder&gt;:&lt;container_folder&gt; # 映射宿主机文件夹到container，也就是 volume</span><br><span class="line">-p &lt;host_port&gt;:&lt;container_port&gt; # 映射container端口到宿主机</span><br></pre></td></tr></table></figure>
@@ -287,6 +290,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/03/16/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80-%E4%B8%80/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">数字电路基础(一)</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">

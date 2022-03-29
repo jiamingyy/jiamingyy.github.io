@@ -1,41 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1417" height="1417" viewBox="0 0 1417 1417">
-  <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c140 79.160451, 2017/05/06-01:08:21        ">
-   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <rdf:Description rdf:about=""/>
-   </rdf:RDF>
-</x:xmpmeta>
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                           
-<?xpacket end="w"?></metadata>
-<defs>
-    <style>
-      .cls-1 {
-        fill: #06c;
-        fill-rule: evenodd;
-      }
-    </style>
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="124.23 112.279 295.949 273.691" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <style bx:fonts="Averia Sans Libre">@import url(https://fonts.googleapis.com/css2?family=Averia+Sans+Libre%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C700%3B1%2C300%3B1%2C400%3B1%2C700&amp;display=swap);</style>
   </defs>
-  <path id="rectangular" class="cls-1" d="M170.35,170.525h359.1V1254.47H170.35V170.525Z"/>
-  <path id="triangle-down" class="cls-1" d="M888.55,1254.47h359.1L888.55,886.825V1254.47Z"/>
-  <path id="triangle-up" class="cls-1" d="M888.55,170.525h359.1l-359.1,359.1v-359.1Z"/>
+  <rect width="295.949" height="273.691" rx="5" x="124.23" y="112.279" style=""/>
+  <path d="M 165.154 157.096 C 164.299 156.251 163.266 155.828 162.056 155.828 C 160.846 155.828 159.81 156.255 158.946 157.108 C 158.094 157.949 157.662 158.971 157.662 160.166 C 157.662 161.36 158.094 162.384 158.946 163.224 L 172.388 176.494 L 158.958 189.751 C 158.094 190.604 157.662 191.627 157.65 192.822 C 157.662 194.016 158.094 195.04 158.946 195.88 C 159.81 196.721 160.846 197.147 162.044 197.159 C 163.266 197.159 164.303 196.733 165.167 195.88 L 180.102 181.125 C 183.237 178.042 183.237 174.947 180.102 171.851 L 165.154 157.096 Z M 223.699 189.775 C 222.835 188.922 221.786 188.496 220.564 188.496 L 220.564 188.49 L 191.73 188.49 L 191.73 188.496 C 190.508 188.496 189.47 188.922 188.607 189.775 C 187.743 190.628 187.311 191.652 187.311 192.858 C 187.311 194.064 187.743 195.1 188.607 195.953 C 189.471 196.806 190.507 197.232 191.73 197.232 L 191.73 197.226 L 220.563 197.226 L 220.563 197.232 C 221.785 197.232 222.833 196.806 223.698 195.953 C 224.562 195.1 224.994 194.064 224.994 192.858 C 224.994 191.652 224.562 190.628 223.698 189.775 L 223.699 189.775 Z" fill="#FFF" style=""/>
+  <text style="fill: rgb(255, 255, 255); font-family: &quot;Averia Sans Libre&quot;; font-size: 25.1px; stroke-width: 0px; white-space: pre;" transform="matrix(1.810877, 0, 0, 1.941868, -118.538322, -163.212601)" x="164.62" y="244.902">Jiaming's</text>
 </svg>

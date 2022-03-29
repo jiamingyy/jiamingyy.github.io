@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="系统学习Git的常用命令">
+    <meta name="description" content="希望坚持每天都写点啥">
     <meta name="author" content="Jiaming Yang">
     
     <title>
         
-            Git使用基础 |
+            数字电路基础(一) |
         
         Jiaming&#39;s Blog
     </title>
@@ -165,7 +165,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Git使用基础</span>
+            <span class="title-hover-animation">数字电路基础(一)</span>
         </div>
 
         
@@ -182,20 +182,9 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-03-12 04:54:29</span>
-        <span class="mobile">2022-03-12 04:54</span>
+        <span class="pc">2022-03-16 08:06:16</span>
+        <span class="mobile">2022-03-16 08:06</span>
     </span>
-    
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
     
         <span class="article-tags article-meta-item">
@@ -203,7 +192,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
+                        <a href="/tags/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF/">数字电路</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/FPGA/">FPGA</a>&nbsp;
                     </li>
                 
             </ul>
@@ -213,12 +206,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>56 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>712 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>2 Mins</span>
         </span>
     
     
@@ -230,12 +223,68 @@
         
 
         <div class="article-content markdown-body">
-            <p>记录Git的常见用法</p>
+            <p>复习基本的数字电路知识。包括基本的编码方式、基本门电路的符号、逻辑代数化简方法、常见的组合逻辑设计方法。</p>
 <span id="more"></span>
 
-<h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="常见编码"><a href="#常见编码" class="headerlink" title="常见编码"></a>常见编码</h4><p>我们比较的编码有8421码，其他的码感觉用的不多。</p>
+<p><img src="https://i.imgur.com/ZgH7ncQ.png" alt="常用编码"></p>
+<p>这里着重学习以下 格雷码，格雷码又叫循环二进制码或反射二进制码。格雷码相邻的两个码之间仅有一个位不一样，其与8421码可通过以下步骤互转：</p>
+<p><strong>8421 转格雷码（编码）</strong>：从&#x3D;&#x3D;右往左&#x3D;&#x3D;的第 N 位和 第 N+1 位进行异或，最后一位两个码相同。</p>
+<p><strong>格雷码转 8421（译码）</strong>: 从&#x3D;&#x3D;右往左&#x3D;&#x3D;的第 N 位和 第 N+1 位进行异或，最后一位两个码相同。</p>
+<p>两个步骤是一样的。一个数异或同一个数两次得到的结果不变。</p>
+<img src="https://i.imgur.com/YkyZHbq.png" alt="格雷码" style="zoom:67%;" />
 
-
+<h4 id="基本门电路"><a href="#基本门电路" class="headerlink" title="基本门电路"></a>基本门电路</h4><p>这部分比较简单，记住下面这个表就可以了。</p>
+<ul>
+<li>记住常见的门电路符号</li>
+<li>可以根据电路图写出逻辑代数表达式<br><img src="https://i.imgur.com/XPak1sq.png" alt="常见门电路的符号"></li>
+</ul>
+<h4 id="逻辑表达式化简"><a href="#逻辑表达式化简" class="headerlink" title="逻辑表达式化简"></a>逻辑表达式化简</h4><p>在使用逻辑代数表达式描述完之后功能之后还需要对表达式进行化简，化简的表达式所转化得到的电路具有更少的元件，使电路图可以更加直观，同时也可以节省成本。化简的方法有下面两种。</p>
+<ul>
+<li>公式法化简 （这个得看熟练程度）</li>
+</ul>
+<p><img src="https://i.imgur.com/jFJklb4.png" alt="逻辑代数公式表"></p>
+<ul>
+<li>卡诺图化简方法 （这个要实用一点，但需要列的表比较多）</li>
+</ul>
+<p>将所有的输入变量构成最小项，并将最小项根据格雷码的顺序写成表格，保证相邻的两项只有一个输入变量变化，如由 A, B 构成的最小项包括 AB, A’B, AB’, A’B’，就可以构成下图这种两变量 卡诺图</p>
+<table>
+<thead>
+<tr>
+<th>A&#x2F;B</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>m0</td>
+<td>m1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>m2</td>
+<td>m3</td>
+</tr>
+</tbody></table>
+<p>卡诺图利用 $\bar{A}B + AB &#x3D; (\bar{A} + A)B &#x3D; B$进行化简，在卡诺图中画的圆圈跨过两个格子则说明所跨过的变量可以消去。</p>
+<p>卡诺图的化简步骤需要遵循:</p>
+<ol>
+<li>所有的标1方格都需要被圈覆盖</li>
+<li>每个圈中包含的相邻小方格数必须为2的整数次幂</li>
+<li>圈需要尽可能大，圈和圈之间可以重叠</li>
+<li>每个圈中至少有一个标1的方格未被其他圈所覆盖</li>
+</ol>
+<p><img src="https://i.imgur.com/poel6EW.png" alt="常见卡诺图化简"></p>
+<h4 id="组合逻辑电路设计过程"><a href="#组合逻辑电路设计过程" class="headerlink" title="组合逻辑电路设计过程"></a>组合逻辑电路设计过程</h4><ol>
+<li>根据需求确定功能</li>
+<li>根据功能列出真值表</li>
+<li>根据真值表写出逻辑表达式</li>
+<li>将逻辑表达式化简</li>
+<li>逻辑表达式转化为逻辑电路图</li>
+</ol>
+<h4 id="编码器实现"><a href="#编码器实现" class="headerlink" title="编码器实现"></a>编码器实现</h4><p>8-3编码器的实现</p>
+<h4 id="译码器实现"><a href="#译码器实现" class="headerlink" title="译码器实现"></a>译码器实现</h4><h4 id="加法器实现"><a href="#加法器实现" class="headerlink" title="加法器实现"></a>加法器实现</h4>
         </div>
 
         
@@ -244,7 +293,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">#工具使用</a>&nbsp;
+                        <a href="/tags/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF/">#数字电路</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/FPGA/">#FPGA</a>&nbsp;
                     </li>
                 
             </ul>
@@ -256,13 +309,13 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2022/03/13/docker%E6%90%AD%E5%BB%BA%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/"
+                           href="/2022/03/17/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80-%E4%BA%8C/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">docker搭建深度学习环境</span>
+                                <span class="post-nav-title-item">数字电路基础(二)</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>
@@ -272,10 +325,10 @@
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/03/11/Access-Github-Without-Password/"
+                           href="/2022/03/13/docker%E6%90%AD%E5%BB%BA%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Access Github Without Password</span>
+                                <span class="post-nav-title-item">docker搭建深度学习环境</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -491,7 +544,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Git-%E5%9F%BA%E7%A1%80"><span class="nav-text">Git 基础</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A0%81"><span class="nav-text">常见编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%97%A8%E7%94%B5%E8%B7%AF"><span class="nav-text">基本门电路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%96%E7%AE%80"><span class="nav-text">逻辑表达式化简</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E8%BF%87%E7%A8%8B"><span class="nav-text">组合逻辑电路设计过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E5%99%A8%E5%AE%9E%E7%8E%B0"><span class="nav-text">编码器实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%91%E7%A0%81%E5%99%A8%E5%AE%9E%E7%8E%B0"><span class="nav-text">译码器实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95%E5%99%A8%E5%AE%9E%E7%8E%B0"><span class="nav-text">加法器实现</span></a></li></ol>
     </div>
 </div>
         </aside>

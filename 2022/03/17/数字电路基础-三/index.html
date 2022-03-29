@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="系统学习Git的常用命令">
+    <meta name="description" content="希望坚持每天都写点啥">
     <meta name="author" content="Jiaming Yang">
     
     <title>
         
-            Git使用基础 |
+            数字电路基础(三) |
         
         Jiaming&#39;s Blog
     </title>
@@ -165,7 +165,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Git使用基础</span>
+            <span class="title-hover-animation">数字电路基础(三)</span>
         </div>
 
         
@@ -182,20 +182,9 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-03-12 04:54:29</span>
-        <span class="mobile">2022-03-12 04:54</span>
+        <span class="pc">2022-03-17 09:10:36</span>
+        <span class="mobile">2022-03-17 09:10</span>
     </span>
-    
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
     
         <span class="article-tags article-meta-item">
@@ -203,7 +192,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
+                        <a href="/tags/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF/">数字电路</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/FPGA/">FPGA</a>&nbsp;
                     </li>
                 
             </ul>
@@ -213,7 +206,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>56 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>238 Words</span>
         </span>
     
     
@@ -230,10 +223,133 @@
         
 
         <div class="article-content markdown-body">
-            <p>记录Git的常见用法</p>
+            <p>学习Verilog的基本语法.</p>
 <span id="more"></span>
 
-<h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="可综合语言"><a href="#可综合语言" class="headerlink" title="可综合语言"></a>可综合语言</h4><p>可以被综合器转化为相应的逻辑门电路的语句称为可综合语言。</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>module&#x2F; endmodule</td>
+<td>Verlog 的基本单元，成对使用</td>
+</tr>
+<tr>
+<td>input</td>
+<td>输入端口定义</td>
+</tr>
+<tr>
+<td>output</td>
+<td>输出端口定义</td>
+</tr>
+<tr>
+<td>inout</td>
+<td>输入&#x2F;输出端口定义</td>
+</tr>
+<tr>
+<td>begin</td>
+<td>成对和end使用相当于 {}</td>
+</tr>
+<tr>
+<td>end</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>数据类型</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wire</td>
+<td>线网类型</td>
+</tr>
+<tr>
+<td>reg</td>
+<td>寄存器类型</td>
+</tr>
+<tr>
+<td>parameter</td>
+<td>参数类型 &#x2F; 类似于常量</td>
+</tr>
+</tbody></table>
+<p>逻辑判断</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>if</td>
+<td>逻辑判断</td>
+</tr>
+<tr>
+<td>else</td>
+<td>逻辑判断</td>
+</tr>
+<tr>
+<td>case</td>
+<td></td>
+</tr>
+<tr>
+<td>endcase</td>
+<td></td>
+</tr>
+<tr>
+<td>default</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>连续赋值</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>always</td>
+<td>过程赋值</td>
+</tr>
+<tr>
+<td>assign</td>
+<td>连续赋值</td>
+</tr>
+</tbody></table>
+<p>过程赋值条件</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>posedge</td>
+<td>上升沿</td>
+</tr>
+<tr>
+<td>negedge</td>
+<td>下降沿</td>
+</tr>
+<tr>
+<td>posedge or negedge</td>
+<td>上升沿或者下降沿</td>
+</tr>
+</tbody></table>
+<h4 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h4><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里演示一个与门的代码结构</span></span><br><span class="line"><span class="keyword">module</span> module_name</span><br><span class="line">(</span><br><span class="line">	a, b, c</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">input</span> a; <span class="comment">// 输入</span></span><br><span class="line"><span class="keyword">input</span> b;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">output</span> c; <span class="comment">// 输出</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">assign</span> c = a &amp; b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+
 
 
         </div>
@@ -244,7 +360,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">#工具使用</a>&nbsp;
+                        <a href="/tags/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF/">#数字电路</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/FPGA/">#FPGA</a>&nbsp;
                     </li>
                 
             </ul>
@@ -253,29 +373,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/03/13/docker%E6%90%AD%E5%BB%BA%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">docker搭建深度学习环境</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/03/11/Access-Github-Without-Password/"
+                           href="/2022/03/17/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80-%E4%BA%8C/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Access Github Without Password</span>
+                                <span class="post-nav-title-item">数字电路基础(二)</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -491,7 +596,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Git-%E5%9F%BA%E7%A1%80"><span class="nav-text">Git 基础</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E7%BB%BC%E5%90%88%E8%AF%AD%E8%A8%80"><span class="nav-text">可综合语言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#verilog-%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="nav-text">verilog 程序的基本结构</span></a></li></ol>
     </div>
 </div>
         </aside>
