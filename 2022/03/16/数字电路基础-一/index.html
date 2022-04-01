@@ -182,8 +182,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-03-16 08:06:16</span>
-        <span class="mobile">2022-03-16 08:06</span>
+        <span class="pc">2022-03-16 16:06:16</span>
+        <span class="mobile">2022-03-16 16:06</span>
     </span>
     
     
@@ -206,12 +206,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>712 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.4k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>2 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>5 Mins</span>
         </span>
     
     
@@ -283,8 +283,29 @@
 <li>将逻辑表达式化简</li>
 <li>逻辑表达式转化为逻辑电路图</li>
 </ol>
-<h4 id="编码器实现"><a href="#编码器实现" class="headerlink" title="编码器实现"></a>编码器实现</h4><p>8-3编码器的实现</p>
-<h4 id="译码器实现"><a href="#译码器实现" class="headerlink" title="译码器实现"></a>译码器实现</h4><h4 id="加法器实现"><a href="#加法器实现" class="headerlink" title="加法器实现"></a>加法器实现</h4>
+<h4 id="编码器实现"><a href="#编码器实现" class="headerlink" title="编码器实现"></a>编码器实现</h4><p>译码器的作用就是按照输入的类似并行的数据格式转换为BCD码，常用的集成芯片是<strong>74LS148</strong>。它的真值表如下图。$\bar{EI}$的作用是作为输入使能端口，$\bar{GS}$ 是编码器的工作标志位低电平有效，$EO$扩展端口可以用于多个芯片进行互联。</p>
+<img src="https://i.imgur.com/ApP7YKY.png" alt="image-20220401102707582" style="zoom:50%;" />
+
+<p>因此可以根据它的真值表写出输出的表达式为（这里写的是最基本的编码器的逻辑代数表达式，跟上图对比需要再取反）<br>$$<br>A_0 &#x3D; I_6 + I_4 + I_2 + I_0 \<br>A_1 &#x3D; I_5 + I_4 + I_1 + I_0 \<br>A_2 &#x3D; I_0 + I_1 + I_2 + I_3<br>$$</p>
+<h4 id="译码器实现"><a href="#译码器实现" class="headerlink" title="译码器实现"></a>译码器实现</h4><p>译码器的作用与编码器相反，作用是将BCD码转换为对应序号的端口输出，这里是常用译码器74138的真值表。七段式数码管显示电路也可以借用这个思想进行设计。</p>
+<img src="https://i.imgur.com/NXA4DwK.png" alt="image-20220401102334971" style="zoom:50%;" />
+
+<p>同样是需要写出它的逻辑表达式。<br>$$<br>I_0 &#x3D; \bar{A_2}\bar{A_1}\bar{A_0},I_4 &#x3D; {A_2}\bar{A_1}\bar{A_0}\<br>I_1 &#x3D; \bar{A_2}\bar{A_1}{A_5}, I_5 &#x3D; {A_2}\bar{A_1}{A_0}\<br>I_2 &#x3D; \bar{A_2}{A_1}\bar{A_0},I_6 &#x3D; {A_2}{A_1}\bar{A_0}\<br>I_3 &#x3D; \bar{A_2}{A_1}{A_0},I_7 &#x3D; {A_2}{A_1}{A_0}\<br>$$</p>
+<h4 id="加法器实现"><a href="#加法器实现" class="headerlink" title="加法器实现"></a>加法器实现</h4><p>加法器是现代计算机中最基础的一个运算单元。加法器分为半加器和全加器，半加器不考虑进位，结构比较简单，只能计算一位二进制加法。</p>
+<p>半加器逻辑表达式为<br>$$<br>S &#x3D; A \oplus B &#x3D; \bar{A}B + A\bar{B}\<br>C &#x3D; A \times B<br>$$<br>全加器因为需要考虑到进位信息，所以稍微复杂一些，下面的就是全加器的真值表和逻辑表达式</p>
+<img src="https://i.imgur.com/B96VxDf.png" alt="image-20220401134832273" style="zoom: 67%;" />
+$$
+\begin{array}{l}
+S_{\mathrm{i}}=\overline{A_{\mathrm{i}}} \overline{B_{\mathrm{i}}} C_{\mathrm{i}-1}+\overline{A_{\mathrm{i}}} B_{\mathrm{i}} \overline{C_{\mathrm{i}-1}}+A_{\mathrm{i}} \overline{B_{\mathrm{i}}} \overline{C_{\mathrm{i}-1}}+A_{\mathrm{i}} B_{\mathrm{i}} C_{\mathrm{i}-1}=\left(\overline{A_{i}} \overline{B_{i}}+A_{i} B_{i}\right) C_{i-1}+\left(A_{i} \overline{B_{i}}+\overline{A_{i}} B_{i}\right) \overline{C_{i-1}} \\
+C_{\mathrm{i}}=\bar{A}_{\mathrm{i}} B_{\mathrm{i}} C_{\mathrm{i}-1}+A_{\mathrm{i}} \bar{B}_{\mathrm{i}} C_{\mathrm{i}-1}+A_{\mathrm{i}} B_{\mathrm{i}} \overline{C_{\mathrm{i}-1}}+A_{\mathrm{i}} B_{\mathrm{i}} C_{\mathrm{i}-1}=A_{i} B_{i}+\left(\overline{A_{i}} B_{i}+A_{i} B_{i}\right) C_{i-1}
+\end{array}
+$$
+如果要实现多位二进制数进行相加，可以通过将多个全加器进行级联，$c_{n - 1$和下一个全加器的$c_{n}$相连就可以实现多个位的相加。
+<img src="https://i.imgur.com/FVPfMgX.png" alt="image-20220401140923173" style="zoom:67%;" />
+
+<p>全加器的位数等于相加数的个数，最低位的 $c_{-1}$应接0，串行进位加法器电路比较简单，当时缺点是第N个全加器的输出必须要等到第N-1个全加器运算完成。如果运算的位数比较多，速度就会变的很慢。</p>
+<p>它的改进版称为<strong>超前进位加法器</strong>。</p>
+
         </div>
 
         
