@@ -265,27 +265,18 @@
 <li>逻辑表达式转化为逻辑电路图</li>
 </ol>
 <h4 id="编码器实现"><a href="#编码器实现" class="headerlink" title="编码器实现"></a>编码器实现</h4><p>译码器的作用就是按照输入的类似并行的数据格式转换为BCD码，常用的集成芯片是<strong>74LS148</strong>。它的真值表如下图。$\bar{EI}$的作用是作为输入使能端口，$\bar{GS}$ 是编码器的工作标志位低电平有效，$EO$扩展端口可以用于多个芯片进行互联。</p>
-<img src="https://i.imgur.com/ApP7YKY.png" alt="image-20220401102707582" style="zoom:50%;" />
-
-<p>因此可以根据它的真值表写出输出的表达式为（这里写的是最基本的编码器的逻辑代数表达式，跟上图对比需要再取反）<br>$$<br>A_0 &#x3D; I_6 + I_4 + I_2 + I_0 \<br>A_1 &#x3D; I_5 + I_4 + I_1 + I_0 \<br>A_2 &#x3D; I_0 + I_1 + I_2 + I_3<br>$$</p>
+<p><img src="https://i.imgur.com/ApP7YKY.png"></p>
+<p>因此可以根据它的真值表写出输出的表达式为（这里写的是最基本的编码器的逻辑代数表达式，跟上图对比需要再取反）<br>$$<br>\begin{array}{I}<br>A_0 &#x3D; I_6 + I_4 + I_2 + I_0  \\<br>A_1 &#x3D; I_5 + I_4 + I_1 + I_0  \\<br>A_2 &#x3D; I_0 + I_1 + I_2 + I_3  \\<br>\end{array}<br>$$</p>
 <h4 id="译码器实现"><a href="#译码器实现" class="headerlink" title="译码器实现"></a>译码器实现</h4><p>译码器的作用与编码器相反，作用是将BCD码转换为对应序号的端口输出，这里是常用译码器74138的真值表。七段式数码管显示电路也可以借用这个思想进行设计。</p>
-<img src="https://i.imgur.com/NXA4DwK.png" alt="image-20220401102334971" style="zoom:50%;" />
-
-<p>同样是需要写出它的逻辑表达式。<br>$$<br>I_0 &#x3D; \bar{A_2}\bar{A_1}\bar{A_0},I_4 &#x3D; {A_2}\bar{A_1}\bar{A_0}\<br>I_1 &#x3D; \bar{A_2}\bar{A_1}{A_5}, I_5 &#x3D; {A_2}\bar{A_1}{A_0}\<br>I_2 &#x3D; \bar{A_2}{A_1}\bar{A_0},I_6 &#x3D; {A_2}{A_1}\bar{A_0}\<br>I_3 &#x3D; \bar{A_2}{A_1}{A_0},I_7 &#x3D; {A_2}{A_1}{A_0}\<br>$$</p>
-<h4 id="加法器实现"><a href="#加法器实现" class="headerlink" title="加法器实现"></a>加法器实现</h4><p>加法器是现代计算机中最基础的一个运算单元。加法器分为半加器和全加器，半加器不考虑进位，结构比较简单，只能计算一位二进制加法。</p>
-<p>半加器逻辑表达式为<br>$$<br>S &#x3D; A \oplus B &#x3D; \bar{A}B + A\bar{B}\<br>C &#x3D; A \times B<br>$$<br>全加器因为需要考虑到进位信息，所以稍微复杂一些，下面的就是全加器的真值表和逻辑表达式</p>
-<img src="https://i.imgur.com/B96VxDf.png" alt="image-20220401134832273" style="zoom: 67%;" />
-$$
-\begin{array}{l}
-S_{\mathrm{i}}=\overline{A_{\mathrm{i}}} \overline{B_{\mathrm{i}}} C_{\mathrm{i}-1}+\overline{A_{\mathrm{i}}} B_{\mathrm{i}} \overline{C_{\mathrm{i}-1}}+A_{\mathrm{i}} \overline{B_{\mathrm{i}}} \overline{C_{\mathrm{i}-1}}+A_{\mathrm{i}} B_{\mathrm{i}} C_{\mathrm{i}-1}=\left(\overline{A_{i}} \overline{B_{i}}+A_{i} B_{i}\right) C_{i-1}+\left(A_{i} \overline{B_{i}}+\overline{A_{i}} B_{i}\right) \overline{C_{i-1}} \\
-C_{\mathrm{i}}=\bar{A}_{\mathrm{i}} B_{\mathrm{i}} C_{\mathrm{i}-1}+A_{\mathrm{i}} \bar{B}_{\mathrm{i}} C_{\mathrm{i}-1}+A_{\mathrm{i}} B_{\mathrm{i}} \overline{C_{\mathrm{i}-1}}+A_{\mathrm{i}} B_{\mathrm{i}} C_{\mathrm{i}-1}=A_{i} B_{i}+\left(\overline{A_{i}} B_{i}+A_{i} B_{i}\right) C_{i-1}
-\end{array}
-$$
-如果要实现多位二进制数进行相加，可以通过将多个全加器进行级联，$c_{n - 1$和下一个全加器的$c_{n}$相连就可以实现多个位的相加。
-<img src="https://i.imgur.com/FVPfMgX.png" alt="image-20220401140923173" style="zoom:67%;" />
-
-<p>全加器的位数等于相加数的个数，最低位的 $c_{-1}$应接0，串行进位加法器电路比较简单，当时缺点是第N个全加器的输出必须要等到第N-1个全加器运算完成。如果运算的位数比较多，速度就会变的很慢。</p>
-<p>它的改进版称为<strong>超前进位加法器</strong>。</p>
+<p><img src="https://i.imgur.com/NXA4DwK.png"></p>
+<p>同样是需要写出它的逻辑表达式。<br>$$<br>\begin{array}{l}<br>I_0 &#x3D; \bar{A_2}\bar{A_1}\bar{A_0},I_4 &#x3D; {A_2}\bar{A_1}\bar{A_0}  \\<br>I_1 &#x3D; \bar{A_2}\bar{A_1}{A_5}, I_5 &#x3D; {A_2}\bar{A_1}{A_0}  \\<br>I_2 &#x3D; \bar{A_2}{A_1}\bar{A_0},I_6 &#x3D; {A_2}{A_1}\bar{A_0}  \\<br>I_3 &#x3D; \bar{A_2}{A_1}{A_0},I_7 &#x3D; {A_2}{A_1}{A_0}  \\<br>\end{array}<br>$$</p>
+<h4 id="加法器实现"><a href="#加法器实现" class="headerlink" title="加法器实现"></a>加法器实现</h4><p>加法器是现代计算机中最基础的一个运算单元。加法器分为半加器和全加器，<br>半加器不考虑进位，结构比较简单，只能计算一位二进制加法。因为半加器比较简单，所以这里直接给出它的逻辑表达式。<br>半加器逻辑表达式为<br>$$<br>S &#x3D; A \oplus B &#x3D; \bar{A}B + A\bar{B} \\<br>C &#x3D; A \times B<br>$$<br>全加器因为需要考虑到进位信息，所以稍微复杂一些，下面的就是全加器的真值表</p>
+<p><img src="https://i.imgur.com/B96VxDf.png"></p>
+<p>通过化简可以得出全加器的逻辑表达式为，这里只涉及一个全加器。<br>$$<br>S&#x3D;\bar{A}\bar{B}C + \bar{A}B\bar{C} + A\bar{B}\bar{C}&#x3D;A \oplus B \oplus C \\<br>C&#x3D;AB + BC + AC<br>$$<br>**行波进位加法器(Ripple-Carry Adder，RCA)**，如果要实现多位二进制数进行相加，可以通过将多个全加器进行级联，$c_{n - 1}$和下一个全加器的$c_{n}$相连就可以实现多个位的相加。<br><img src="https://i.imgur.com/FVPfMgX.png"></p>
+<p>全加器的位数等于相加数的个数，最低位的 $c_{-1}$应接0，串行进位加法器电路比较简单，当时缺点是第N个全加器的输出必须要等到第N-1个全加器运算完成。</p>
+<p>电路的门延迟为，其中T是每个门电路的输出延迟。<br>$$<br>ST &#x3D; (2N + 1)T<br>$$<br>RLA的改进版称为<strong>超前进位加法器（Carry-lookhead Adder CLA）</strong>，具体原理如下。</p>
+<p>先对C的表达式进行化简, 其中$G_{i}$称为生成信号，$P_{i}$称为传播信号，$C_{i+1}$可以写为如下形式。<br>$$<br>C_{i+1} &#x3D; A_{i}B_{i} + (A_{i} + B_{i})C_{i}<br>G_{i} &#x3D; A_{i}B_{i} \\<br>P_{i} &#x3D; (A_{i} + B_{i}) \\<br>C_{i+1} &#x3D; G_{i} + P_{i}C_{i}<br>$$<br>按照形式，各级门电路的进位表达式可以写为:<br>$$<br>C_1 &#x3D; G_0+P_0C_0 \\<br>C_2 &#x3D; G_1+P_1C_1&#x3D;G_1 + P_1G_0+P_1P_0C_0 \\<br>C_3 &#x3D; G_2+P_2G_1+P_2P_1G_0 + P_2P_1P_0C_0<br>$$<br>规律也挺明显的，$C_{n+1}$ 等于 $C_{n}$ 乘一个 $P_n$ 再加 $G_n$（废话）。</p>
+<p>CLA相较与RCA的计算延迟时间固定为三级门延迟，且延迟和加法器的位数无关，但是如果进一步扩宽加法器的位宽，则电路会变得非常复杂。</p>
 ]]></content>
       <tags>
         <tag>数字电路</tag>
