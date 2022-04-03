@@ -46,32 +46,199 @@
       </tags>
   </entry>
   <entry>
-    <title>MLP的BP推导与实现</title>
-    <url>/2022/03/11/MLP%E7%9A%84BP%E6%8E%A8%E5%AF%BC%E4%B8%8E%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>用<code>numpy</code>实BP神经网络，内容包括梯度下降基本原理，矩阵求导基础，Numpy 实现细节和踩到的坑。</p>
+    <title>MLP的BP推导与实现(上)</title>
+    <url>/2022/03/11/MLP%E7%9A%84BP%E6%8E%A8%E5%AF%BC%E4%B8%8E%E5%AE%9E%E7%8E%B0(%E4%B8%8A)/</url>
+    <content><![CDATA[<p>内容包括梯度下降基本原理，矩阵求导基础。</p>
 <span id="more"></span>
 
-<h4 id="梯度下降原理"><a href="#梯度下降原理" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h4><ul>
-<li><p>一阶导数定义<br>$$<br>f{‘}(x) &#x3D; \displaystyle{\lim_{\Delta x \to 0}} \frac{\Delta y}{\Delta x} &#x3D; \frac{f(\Delta x +x) - f(x)}{\Delta x}<br>$$</p>
+<h4 id="梯度下降原理"><a href="#梯度下降原理" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h4><h5 id="一阶导数定义"><a href="#一阶导数定义" class="headerlink" title="一阶导数定义"></a>一阶导数定义</h5><p>$$<br>f{‘}(x) &#x3D; \displaystyle{\lim_{\Delta x \to 0}} \frac{\Delta y}{\Delta x} &#x3D; \frac{f(\Delta x +x) - f(x)}{\Delta x}<br>$$</p>
+<h5 id="多元函数偏导数定义，"><a href="#多元函数偏导数定义，" class="headerlink" title="多元函数偏导数定义，"></a>多元函数偏导数定义，</h5><p>$$<br>f_{x1}(x1, x2,…)&#x3D;\lim _{\Delta x \to 0} \frac{f(x1+\Delta x, x2, x3, …)-f(x1, x2, x3,…)}{\Delta x}<br>$$</p>
+<h5 id="方向导数的定义"><a href="#方向导数的定义" class="headerlink" title="方向导数的定义"></a>方向导数的定义</h5><p>偏导数定义只是沿着某个坐标轴方向的导数，多元函数的自变量在某点可以沿无数个方向运动，多元函数沿着某个方向上的变换率称为 &#x3D;&#x3D;方向导数&#x3D;&#x3D; ,它的推导过程如图所示（2个变元的情况）</p>
+
+$$
+\begin{array}{l}
+\lim _{t \to 0^{+}} \frac{f\left(x_{0}+t \cos \alpha, y_{0}+t \sin \alpha\right)-f\left(x_{0}, y_{0}\right)}{t} \\\\
+=\lim _{t \to 0^{+}}\left[\frac{f\left(x_{0}+t \cos \alpha, y_{0}+t \sin \alpha\right)-f\left(x_{0}, y_{0}+t \sin \alpha\right)}{t}+\frac{f\left(x_{0}, y_{0}+t \sin \alpha\right)-f\left(x_{0}, y_{0}\right)}{t}\right] \\\\
+=\lim _{t \to 0}\left[\frac{f_{x}\left(\xi_{x}, y_{0}+t \sin \alpha\right) t \cos \alpha}{t}+\frac{f_{y}\left(x_{0}, \xi_{y}\right) t \sin \alpha}{t}\right], \xi_{x} \in\left(x_{0}, x_{0}+t \cos \alpha\right), \xi_{y} \in\left(y_{0}, y_{0}+t \sin \alpha\right) \\\\
+=f_x (x_0,y_0 )cos⁡\alpha +f_y (x_0,y_0 )sin⁡\alpha
+\end{array}
+$$
+
+
+
+<h5 id="梯度的定义"><a href="#梯度的定义" class="headerlink" title="梯度的定义"></a>梯度的定义</h5><p>多元函数在某一点的梯度是一个非常特殊的向量，其由多元函数对每个变量的偏导数组成,（这即是为什么求梯度的时候需要对各个变量求偏导的原因），其方向为函数在该点增加最快的方向，大小（向量的模长）为函数在该点的最大变化率。</p>
+<p>将上面的方向导数写成两个向量相乘的格式，就得到了：</p>
+
+$$
+\begin{equation}
+ f_x (x_0,y_0 )cos⁡\alpha +f_y (x_0,y_0 )sin⁡\alpha
+  =\left(
+  \begin{array}{cc}
+          f_x (x_0,y_0 ) &
+          f_y (x_0,y_0 )
+  \end{array}
+  \right)
+  \left(
+  \begin{array}{c}
+          cos⁡\alpha \\
+          
+          sin⁡\alpha
+ \end{array}
+ \right)
+\end{equation}
+$$
+
+
+设有两个变量 $g = (f_x (x_0,y_0 ) \quad f_y (x_0,y_0 ))$和$e_l = (cos⁡\alpha \quad sin \alpha)$
+$$
+g \cdot e_l = |g||e_l|cos \theta = |g|cos\theta
+$$
+
+
+<p>$\theta$ 为两个向量之间的夹角，所以该向量点乘结果（也就是方向导数）</p>
+<ul>
+<li><p>在$\theta &#x3D; 0$的情况下。此时函数的变化率最大，函数呈上升趋势</p>
 </li>
-<li><p>多元函数偏导数定义，</p>
+<li><p>在$\theta &#x3D; \pi$的情况下函数的变化率最大，函数呈下降趋势</p>
 </li>
 </ul>
-<p>$$<br>f_{x1}(x1, x2,…)&#x3D;\lim _{\Delta x \to 0} \frac{f(x1+\Delta x, x2, x3, …)-f(x1, x2, x3,…)}{\Delta x}<br>$$</p>
-<ul>
-<li>方向导数的定义</li>
-</ul>
-<p>偏导数定义只是沿着某个坐标轴方向的导数，多元函数的自变量在某点可以沿无数个方向运动，多元函数沿着某个方向上的变换率称为 &#x3D;&#x3D;方向导数&#x3D;&#x3D; </p>
-<ul>
-<li>梯度的定义</li>
-</ul>
-<p>多元函数在某一点的梯度是一个非常特殊的向量，其由多元函数对每个变量的偏导数组成,（这即是为什么求梯度的时候需要对各个变量求偏导的原因），其方向为函数在该点增加最快的方向，大小（向量的模长）为函数在该点的最大变化率。</p>
-<ul>
-<li>梯度下降原理</li>
-</ul>
-<h4 id="矩阵求导"><a href="#矩阵求导" class="headerlink" title="矩阵求导"></a>矩阵求导</h4><p>矩阵求导和函数求导还是不太一样的，具体学习可以参考下面这两个链接。</p>
-<p>由于神经网络的训练阶段，输入一个由数据构成的矩阵<code>x</code>，经过一个由神经网络构成的函数<code>f(x)</code>。<code>f(x)</code>中含有<code>w</code>和<code>b</code>参数，而我们训练的阶段就可以抽象为<br>$$</p>
-<p>$$</p>
+<h5 id="梯度下降原理-1"><a href="#梯度下降原理-1" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h5><p>因为梯度指示了函数变化率最大的地方，因此只要每次沿着梯度指示方向的反方向更新当前网络的参数并一直迭代，就可以将$loss$函数优化到最低点。<br>$$<br>w &#x3D; w_j - \alpha \nabla J(W_j)<br>$$</p>
+<h4 id="矩阵求导"><a href="#矩阵求导" class="headerlink" title="矩阵求导"></a>矩阵求导</h4><p>由于在机器学习中，我们使用最多的数据一般都是向量或者矩阵形式的，很少有标量的情况，因此我们还需要学习矩阵求导的相关知识。</p>
+<p>矩阵求导和函数求导还是不太一样的，具体学习可以参考下面这两个链接。矩阵求导的本质就是 一个函数 $function$的每一个$f$对变元中的每个元素逐个求偏导。但是在神经网络中一般涉及到的形式一般是输入一组矩阵或者向量，最后输出的$loss$值一般为一个标量用于衡量网络的性能。所这里就只考虑$f$是一个矩阵变元的实值标量函数，我们需要使用梯度下降优化这个函数的参数，使该函数的输出值最小。</p>
+<p>这里推荐两篇文章，这里只是对这两篇文章的一些总结，更详细的内容可以直接看原文。</p>
+<p><a class="link"   href="https://zhuanlan.zhihu.com/p/24709748" >矩阵求导术<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   href="https://zhuanlan.zhihu.com/p/263777564" >矩阵求导<i class="fas fa-external-link-alt"></i></a></p>
+<h5 id="矩阵求导布局"><a href="#矩阵求导布局" class="headerlink" title="矩阵求导布局"></a>矩阵求导布局</h5><ol>
+<li>分子布局：求导的 $f$ 是列向量的形式，分子$X$是行向量的形式</li>
+<li>分母布局：求导的 $f$是行向量的形式，分子$X$是列向量的形式</li>
+</ol>
+<p>分子布局和分母布局互为转置。</p>
+<h5 id="矩阵求导常用的四个法则以及公式"><a href="#矩阵求导常用的四个法则以及公式" class="headerlink" title="矩阵求导常用的四个法则以及公式"></a>矩阵求导常用的四个法则以及公式</h5><p>矩阵求导的四个法则跟一元函数求导的法则是一致的，可以直接借鉴过来</p>
+
+
+
+$$
+\begin{align}
+&\frac{\partial C}{\partial X} = 0 \\\\
+&\frac{\partial\left[c_{1} f(x)+c_{2} g(x)\right]}{\partial z}=c_{1} \frac{\partial f(x)}{\partial z}+c_{2} \frac{\partial g(x)}{\partial z} \\\\
+&\frac{\partial[f(x) g(x)]}{\partial z}=\frac{\partial f(x)}{\partial z} g(x)+f(z) \frac{\partial g(z)}{\partial z} \\\\
+&\frac{\partial\left[\frac{f(x)}{g(x)}\right]}{\partial z}=\frac{1}{g^{2}(x)}\left[\frac{\partial f(x)}{\partial x} g(z)-f(z) \frac{\partial g(x)}{\partial x}\right]
+\end{align}
+$$
+
+
+<p>一些补充公式</p>
+
+$$
+\begin{align}
+&\frac{\partial\left(x^{T} a\right)}{\partial x}=\frac{\partial\left(a^{T} x\right)}{\partial x}=a \\\\
+&\frac{\partial\left(x^{T} x\right)}{\partial z}=2 x \\\\
+&\frac{\partial\left(x^{T} A x\right)}{\partial x}=A x+A^{T} x \\\\
+\end{align}
+$$
+
+
+
+<h5 id="矩阵求导的进阶技巧"><a href="#矩阵求导的进阶技巧" class="headerlink" title="矩阵求导的进阶技巧"></a>矩阵求导的进阶技巧</h5><p>上面写都是矩阵求导的基本法则，类似于使用定义法求一元函数的导数，使用的场合不多，更为常用的方法是使用<strong>迹技巧</strong>去求解。</p>
+<p>首先来看迹的定义：<br>$$<br>tr(A) &#x3D; a_{11} + a_{22} + \cdots + a_{nn} &#x3D; \sum_{i&#x3D;1}^{n}a_{i}<br>$$<br>一些常见的迹的公式</p>
+
+$$
+\begin{align}
+&tr(c) = c \newline
+&tr(c_1A + c_2B) = c_1tr(A) + c_2tr(B) \newline
+&tr(A) = tr(A^T) \newline
+&\underline{tr(ABC) = tr(CAB) = tr(BCA)} & A_{m\times n}, B_{n \times p}, C_{p \times m} \newline
+&tr(AB^T) = tr(B^TA) = tr(A^TB) = tr(BA^T) \newline
+&tr(|A|) = |A| tr(A^{-1}dA) = tr(|A|A^{-1}dA)
+\end{align}
+$$
+
+
+<p><em>注意上面画横线的那个公式的意思是两个矩阵相乘的迹，可以将后 一个的矩阵提到前面去，结果不改变。</em></p>
+<p>矩阵乘积的迹，（注意这里迹的表示，这对理解为什么可以利用迹来求导至关重要）</p>
+<p>设有两个矩阵，$A_{2\times3}$和$B_{3\times2}$</p>
+
+$$
+A = \left(
+  \begin{array}{ccc}
+    a_{11} & a_{12} & a_{13}\\ 
+    a_{21} & a_{22} & a_{23}\\
+  \end{array}
+\right)
+\quad B = \left(
+  \begin{array}{cc}
+    b_{11} & b_{12}\\ 
+    b_{21} & b_{22}\\
+    b_{31} & b_{32}\\
+  \end{array}
+\right)\\
+$$
+
+$$
+AB = \left(
+  \begin{array}{ccc}
+    a_{11}b_{11}+a_{12}b_{21}+a_{13}b_{31} & a_{11}b_{12}+a_{12}b_{22}+a_{13}b_{32}\\ 
+    a_{21}b_{11}+a_{22}b_{21}+a_{23}b_{31} & a_{21}b_{12}+a_{22}b_{22}+a_{23}b_{32}\\
+  \end{array}
+\right) \newline
+tr(AB) = a_{11}b_{11}+a_{12}b_{21}+a_{13}b_{31}+a_{21}b_{12}+a_{22}b_{22}+a_{23}b_{32}
+$$
+
+
+
+<p>如果有$A &#x3D; B^T$，则两个矩阵相乘的迹等于<strong>对应位置的元素相乘并相加</strong>，可以理解为<strong>向量的点积</strong>在矩阵上的推广。</p>
+<p>设有标量函数 $f(X), X_{m \times n}$，求$df(X)$</p>
+
+$$
+\begin{aligned}
+\mathrm{d} f(\boldsymbol{X}) &=\frac{\partial f}{\partial x_{11}} \mathrm{~d} x_{11}+\frac{\partial f}{\partial x_{12}} \mathrm{~d} x_{12}+\cdots+\frac{\partial f}{\partial x_{1 n}} \mathrm{~d} x_{1 n} \\
+&+\frac{\partial f}{\partial x_{21}} \mathrm{~d} x_{21}+\frac{\partial f}{\partial x_{22}} \mathrm{~d} x_{22}+\cdots+\frac{\partial f}{\partial x_{2 n}} \mathrm{~d} x_{2 n} \\
+&+\cdots \\
+&+\frac{\partial f}{\partial x_{m 1}} \mathrm{~d} x_{m 1}+\frac{\partial f}{\partial x_{m 2}} \mathrm{~d} x_{m 2}+\cdots+\frac{\partial f}{\partial x_{m n}} \mathrm{~d} x_{m n}
+\end{aligned}
+$$
+
+
+<p>可以发现，$df(X)$的结果其实就是两个矩阵$(\frac{\partial f}{\partial X_{ij}})<em>{i&#x3D;1,j&#x3D;1}^{m,n}$和$(dX</em>{ij})_{i&#x3D;1,j&#x3D;1}^{m,n}$对应位置相乘并相加，所以该式就可以写为迹的形式：</p>
+
+$$
+\begin{aligned}
+\mathrm{d} f(\boldsymbol{X}) &=\frac{\partial f}{\partial x_{11}} \mathrm{~d} x_{11}+\frac{\partial f}{\partial x_{12}} \mathrm{~d} x_{12}+\cdots+\frac{\partial f}{\partial x_{1 n}} \mathrm{~d} x_{1 n} \\
+&+\frac{\partial f}{\partial x_{21}} \mathrm{~d} x_{21}+\frac{\partial f}{\partial x_{22}} \mathrm{~d} x_{22}+\cdots+\frac{\partial f}{\partial x_{2 n}} \mathrm{~d} x_{2 n} \\
+&+\cdots \\
+&+\frac{\partial f}{\partial x_{m 1}} \mathrm{~d} x_{m 1}+\frac{\partial f}{\partial x_{m 2}} \mathrm{~d} x_{m 2}+\cdots+\frac{\partial f}{\partial x_{m n}} \mathrm{~d} x_{m n} \\
+&=\operatorname{tr}\left(\left[\begin{array}{cccc}
+\frac{\partial f}{\partial x_{11}} & \frac{\partial f}{\partial x_{21}} & \cdots & \frac{\partial f}{\partial x_{m 1}} \\
+\frac{\partial f}{\partial x_{12}} & \frac{\partial f}{\partial x_{22}} & \cdots & \frac{\partial f}{\partial x_{m 2}} \\
+\vdots & \vdots & \vdots & \vdots \\
+\frac{\partial f}{\partial x_{1 n}} & \frac{\partial f}{\partial x_{2 n}} & \cdots & \frac{\partial f}{\partial x_{m n}}
+\end{array}\right]_{n \times m}\left[\begin{array}{cccc}
+\mathrm{d} x_{11} & \mathrm{~d} x_{12} & \cdots & \mathrm{d} x_{1 n} \\
+\mathrm{~d} x_{21} & \mathrm{~d} x_{22} & \cdots & \mathrm{d} x_{2 n} \\
+\vdots & \vdots & \vdots & \vdots \\
+\mathrm{d} x_{m 1} & \mathrm{~d} x_{m 2} & \cdots & \mathrm{d} x_{m n}
+\end{array}\right]_{m \times n}\right)
+\end{aligned}
+$$
+
+
+<p>所以就可以得出结论：$df(X)&#x3D; tr(\frac{\partial f(X)}{\partial X^T} dX)$</p>
+<h5 id="如何使用矩阵微分求导"><a href="#如何使用矩阵微分求导" class="headerlink" title="如何使用矩阵微分求导"></a>如何使用矩阵微分求导</h5><p>对于实值标量函数$f(X)$，$tr(f(X)) &#x3D; f(X)$， $df(X) &#x3D; tr(df(X))$ ，所以有<br>$$<br>df(X) &#x3D; d(tr(f(X))) &#x3D; tr(df(X))<br>$$<br><em>上面的公式表明，迹和求微分是可以交换的</em></p>
+<p>下面计算一个简单的例题：证明正面下面结论。</p>
+
+$$
+\begin{align*}
+&\frac{\partial{tr(X^TX)}}{\partial{X}} = 2X \\
+&\Rightarrow d(tr(X^TX)) = tr(dX^TX)\\
+&=tr(dX^TX + X^TdX)\\
+&=tr(dX^T X) + tr(X^TdX)\\
+&=tr(XdX^T) + tr(X^TdX) = tr(X^TdX)+tr(X^TdX)\\
+&=tr(2X^TdX)\\
+&\Rightarrow \frac{\partial{tr(X^TX)}}{\partial{X}}=2X \\
+&\Rightarrow \frac{\partial{tr(X^TX)}}{\partial{X^T}}=2X^T
+\end{align*}
+$$
+
 ]]></content>
       <categories>
         <category>机器学习</category>
