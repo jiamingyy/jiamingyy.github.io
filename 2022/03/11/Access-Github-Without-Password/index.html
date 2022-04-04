@@ -237,18 +237,18 @@
             <p>为了更方便使用 Github，需要配置Github 的免密访问。</p>
 <span id="more"></span>
 
-<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>两种场景下需要用到免密访问</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>两种场景下需要用到免密访问</p>
 <ol>
 <li>将 仓库push 到Github</li>
 <li>使用 git@ 开头的地址Clone 仓库到本地</li>
 </ol>
-<h4 id="生成RSA"><a href="#生成RSA" class="headerlink" title="生成RSA"></a>生成RSA</h4><p>执行下面的命令</p>
+<h2 id="生成RSA"><a href="#生成RSA" class="headerlink" title="生成RSA"></a>生成RSA</h2><p>执行下面的命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">ssh-keygen -t rsa -C <span class="string">&quot;&lt;any text&gt;&quot;</span></span></span><br></pre></td></tr></table></figure>
 
 <p>执行之后按两次回车，会在<code>~/.ssh/</code> 目录下生成一个 <code>id_rsa</code>和 <code>id_rsa.pub</code> 文件，分别对应私钥和公钥文件。</p>
-<h4 id="设置Github访问公钥"><a href="#设置Github访问公钥" class="headerlink" title="设置Github访问公钥"></a>设置Github访问公钥</h4><p>依次进入 Accounts -&gt; Settings -&gt; SSH and GPG keys。点击New SSH key 将 <code>id_rsa.pub</code>文件的内容复制带Key里面，title 可以随便写。</p>
+<h2 id="设置Github访问公钥"><a href="#设置Github访问公钥" class="headerlink" title="设置Github访问公钥"></a>设置Github访问公钥</h2><p>依次进入 Accounts -&gt; Settings -&gt; SSH and GPG keys。点击New SSH key 将 <code>id_rsa.pub</code>文件的内容复制带Key里面，title 可以随便写。</p>
 <p><img src="https://i.imgur.com/UqSMEjK.png" alt="image-20220312132811032"></p>
-<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
 <li>不要修改 <code>id_rsa</code>和 <code>id_rsa.pub</code>文件的默认存放路径，git 会在每次上传的时候从<code>~/.ssh</code>文件夹中自动读取私钥并加密，这样就不用再输入密码了。</li>
 </ol>
 
@@ -315,7 +315,8 @@
           inlineMath: [ ['$','$'], ["\\(","\\)"] ],
           processEscapes: true,
           skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
+        },
+        displayAlign: "left"
       });
       MathJax.Hub.Queue(function() {
         var all = MathJax.Hub.getAllJax(), i;
@@ -511,7 +512,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E6%88%90RSA"><span class="nav-text">生成RSA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEGithub%E8%AE%BF%E9%97%AE%E5%85%AC%E9%92%A5"><span class="nav-text">设置Github访问公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90RSA"><span class="nav-text">生成RSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEGithub%E8%AE%BF%E9%97%AE%E5%85%AC%E9%92%A5"><span class="nav-text">设置Github访问公钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项</span></a></li></ol>
     </div>
 </div>
         </aside>

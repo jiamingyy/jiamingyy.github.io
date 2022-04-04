@@ -1,5 +1,5 @@
 .markdown-body {
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 .markdown-body blockquote {
   box-sizing: border-box;
@@ -42,10 +42,10 @@
   background: var(--primary-color);
 }
 .markdown-body strong {
-  color: var(--default-text-color);
+  color: var(--copyright-info-color);
 }
 .markdown-body em {
-  color: var(--default-text-color);
+  color: var(--copyright-info-color);
 }
 .markdown-body ul > li,
 .markdown-body ol > li {
@@ -79,8 +79,8 @@
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  color: var(--second-text-color);
-  line-height: 1.5;
+  line-height: 1.8;
+  color: var(--avatar-background-color);
 keep-tablet()
 }
 .markdown-body h1 {
@@ -89,22 +89,22 @@ keep-tablet()
 keep-tablet()
 }
 .markdown-body h2 {
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: 600;
 keep-tablet()
 }
 .markdown-body h3 {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 550;
 keep-tablet()
 }
 .markdown-body h4 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 550;
 keep-tablet()
 }
 .markdown-body h5 {
-  font-size: 1.28rem;
+  font-size: 1.2rem;
   font-weight: 500;
 keep-tablet()
 }
@@ -116,7 +116,7 @@ keep-tablet()
 }
 .markdown-body img {
   box-sizing: border-box;
-  max-width: 100%;
+  max-width: 70%;
   cursor: zoom-in;
   display: block;
   box-shadow: 0 0 2px var(--shadow-color);

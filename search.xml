@@ -6,18 +6,18 @@
     <content><![CDATA[<p>为了更方便使用 Github，需要配置Github 的免密访问。</p>
 <span id="more"></span>
 
-<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>两种场景下需要用到免密访问</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>两种场景下需要用到免密访问</p>
 <ol>
 <li>将 仓库push 到Github</li>
 <li>使用 git@ 开头的地址Clone 仓库到本地</li>
 </ol>
-<h4 id="生成RSA"><a href="#生成RSA" class="headerlink" title="生成RSA"></a>生成RSA</h4><p>执行下面的命令</p>
+<h2 id="生成RSA"><a href="#生成RSA" class="headerlink" title="生成RSA"></a>生成RSA</h2><p>执行下面的命令</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">ssh-keygen -t rsa -C <span class="string">&quot;&lt;any text&gt;&quot;</span></span></span><br></pre></td></tr></table></figure>
 
 <p>执行之后按两次回车，会在<code>~/.ssh/</code> 目录下生成一个 <code>id_rsa</code>和 <code>id_rsa.pub</code> 文件，分别对应私钥和公钥文件。</p>
-<h4 id="设置Github访问公钥"><a href="#设置Github访问公钥" class="headerlink" title="设置Github访问公钥"></a>设置Github访问公钥</h4><p>依次进入 Accounts -&gt; Settings -&gt; SSH and GPG keys。点击New SSH key 将 <code>id_rsa.pub</code>文件的内容复制带Key里面，title 可以随便写。</p>
+<h2 id="设置Github访问公钥"><a href="#设置Github访问公钥" class="headerlink" title="设置Github访问公钥"></a>设置Github访问公钥</h2><p>依次进入 Accounts -&gt; Settings -&gt; SSH and GPG keys。点击New SSH key 将 <code>id_rsa.pub</code>文件的内容复制带Key里面，title 可以随便写。</p>
 <p><img src="https://i.imgur.com/UqSMEjK.png" alt="image-20220312132811032"></p>
-<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
 <li>不要修改 <code>id_rsa</code>和 <code>id_rsa.pub</code>文件的默认存放路径，git 会在每次上传的时候从<code>~/.ssh</code>文件夹中自动读取私钥并加密，这样就不用再输入密码了。</li>
 </ol>
 ]]></content>
@@ -35,7 +35,7 @@
     <content><![CDATA[<p>记录Git的常见用法</p>
 <span id="more"></span>
 
-<h4 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -51,9 +51,10 @@
     <content><![CDATA[<p>内容包括梯度下降基本原理，矩阵求导基础。</p>
 <span id="more"></span>
 
-<h4 id="梯度下降原理"><a href="#梯度下降原理" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h4><h5 id="一阶导数定义"><a href="#一阶导数定义" class="headerlink" title="一阶导数定义"></a>一阶导数定义</h5><p>$$<br>f{‘}(x) &#x3D; \displaystyle{\lim_{\Delta x \to 0}} \frac{\Delta y}{\Delta x} &#x3D; \frac{f(\Delta x +x) - f(x)}{\Delta x}<br>$$</p>
-<h5 id="多元函数偏导数定义，"><a href="#多元函数偏导数定义，" class="headerlink" title="多元函数偏导数定义，"></a>多元函数偏导数定义，</h5><p>$$<br>f_{x1}(x1, x2,…)&#x3D;\lim _{\Delta x \to 0} \frac{f(x1+\Delta x, x2, x3, …)-f(x1, x2, x3,…)}{\Delta x}<br>$$</p>
-<h5 id="方向导数的定义"><a href="#方向导数的定义" class="headerlink" title="方向导数的定义"></a>方向导数的定义</h5><p>偏导数定义只是沿着某个坐标轴方向的导数，多元函数的自变量在某点可以沿无数个方向运动，多元函数沿着某个方向上的变换率称为 &#x3D;&#x3D;方向导数&#x3D;&#x3D; ,它的推导过程如图所示（2个变元的情况）</p>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>在推导之前先复习一下一些基础知识。</p>
+<h3 id="一阶导数定义"><a href="#一阶导数定义" class="headerlink" title="一阶导数定义"></a>一阶导数定义</h3><p>$$<br>f{‘}(x) &#x3D; \displaystyle{\lim_{\Delta x \to 0}} \frac{\Delta y}{\Delta x} &#x3D; \frac{f(\Delta x +x) - f(x)}{\Delta x}<br>$$</p>
+<h3 id="多元函数偏导数定义"><a href="#多元函数偏导数定义" class="headerlink" title="多元函数偏导数定义"></a>多元函数偏导数定义</h3><p>$$<br>f_{x1}(x1, x2,…)&#x3D;\lim _{\Delta x \to 0} \frac{f(x1+\Delta x, x2, x3, …)-f(x1, x2, x3,…)}{\Delta x}<br>$$</p>
+<h3 id="方向导数的定义"><a href="#方向导数的定义" class="headerlink" title="方向导数的定义"></a>方向导数的定义</h3><p>偏导数定义只是沿着某个坐标轴方向的导数，多元函数的自变量在某点可以沿无数个方向运动，多元函数沿着某个方向上的变换率称为 &#x3D;&#x3D;方向导数&#x3D;&#x3D; ,它的推导过程如图所示（2个变元的情况）</p>
 
 $$
 \begin{array}{l}
@@ -66,7 +67,7 @@ $$
 
 
 
-<h5 id="梯度的定义"><a href="#梯度的定义" class="headerlink" title="梯度的定义"></a>梯度的定义</h5><p>多元函数在某一点的梯度是一个非常特殊的向量，其由多元函数对每个变量的偏导数组成,（这即是为什么求梯度的时候需要对各个变量求偏导的原因），其方向为函数在该点增加最快的方向，大小（向量的模长）为函数在该点的最大变化率。</p>
+<h2 id="梯度的定义"><a href="#梯度的定义" class="headerlink" title="梯度的定义"></a>梯度的定义</h2><p>多元函数在某一点的梯度是一个非常特殊的向量，其由多元函数对每个变量的偏导数组成,（这即是为什么求梯度的时候需要对各个变量求偏导的原因），其方向为函数在该点增加最快的方向，大小（向量的模长）为函数在该点的最大变化率。</p>
 <p>将上面的方向导数写成两个向量相乘的格式，就得到了：</p>
 
 $$
@@ -102,18 +103,18 @@ $$
 <li><p>在$\theta &#x3D; \pi$的情况下函数的变化率最大，函数呈下降趋势</p>
 </li>
 </ul>
-<h5 id="梯度下降原理-1"><a href="#梯度下降原理-1" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h5><p>因为梯度指示了函数变化率最大的地方，因此只要每次沿着梯度指示方向的反方向更新当前网络的参数并一直迭代，就可以将$loss$函数优化到最低点。<br>$$<br>w &#x3D; w_j - \alpha \nabla J(W_j)<br>$$</p>
-<h4 id="矩阵求导"><a href="#矩阵求导" class="headerlink" title="矩阵求导"></a>矩阵求导</h4><p>由于在机器学习中，我们使用最多的数据一般都是向量或者矩阵形式的，很少有标量的情况，因此我们还需要学习矩阵求导的相关知识。</p>
+<h2 id="梯度下降原理"><a href="#梯度下降原理" class="headerlink" title="梯度下降原理"></a>梯度下降原理</h2><p>因为梯度指示了函数变化率最大的地方，因此只要每次沿着梯度指示方向的反方向更新当前网络的参数并一直迭代，就可以将$loss$函数优化到最低点。<br>$$<br>w &#x3D; w_j - \alpha \nabla J(W_j)<br>$$</p>
+<h2 id="矩阵求导"><a href="#矩阵求导" class="headerlink" title="矩阵求导"></a>矩阵求导</h2><p>由于在机器学习中，我们使用最多的数据一般都是向量或者矩阵形式的，很少有标量的情况，因此我们还需要学习矩阵求导的相关知识。</p>
 <p>矩阵求导和函数求导还是不太一样的，具体学习可以参考下面这两个链接。矩阵求导的本质就是 一个函数 $function$的每一个$f$对变元中的每个元素逐个求偏导。但是在神经网络中一般涉及到的形式一般是输入一组矩阵或者向量，最后输出的$loss$值一般为一个标量用于衡量网络的性能。所这里就只考虑$f$是一个矩阵变元的实值标量函数，我们需要使用梯度下降优化这个函数的参数，使该函数的输出值最小。</p>
 <p>这里推荐两篇文章，这里只是对这两篇文章的一些总结，更详细的内容可以直接看原文。</p>
 <p><a class="link"   href="https://zhuanlan.zhihu.com/p/24709748" >矩阵求导术<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   href="https://zhuanlan.zhihu.com/p/263777564" >矩阵求导<i class="fas fa-external-link-alt"></i></a></p>
-<h5 id="矩阵求导布局"><a href="#矩阵求导布局" class="headerlink" title="矩阵求导布局"></a>矩阵求导布局</h5><ol>
+<h3 id="矩阵求导布局"><a href="#矩阵求导布局" class="headerlink" title="矩阵求导布局"></a>矩阵求导布局</h3><ol>
 <li>分子布局：求导的 $f$ 是列向量的形式，分子$X$是行向量的形式</li>
 <li>分母布局：求导的 $f$是行向量的形式，分子$X$是列向量的形式</li>
 </ol>
 <p>分子布局和分母布局互为转置。</p>
-<h5 id="矩阵求导常用的四个法则以及公式"><a href="#矩阵求导常用的四个法则以及公式" class="headerlink" title="矩阵求导常用的四个法则以及公式"></a>矩阵求导常用的四个法则以及公式</h5><p>矩阵求导的四个法则跟一元函数求导的法则是一致的，可以直接借鉴过来</p>
+<h3 id="矩阵求导常用的四个法则以及公式"><a href="#矩阵求导常用的四个法则以及公式" class="headerlink" title="矩阵求导常用的四个法则以及公式"></a>矩阵求导常用的四个法则以及公式</h3><p>矩阵求导的四个法则跟一元函数求导的法则是一致的，可以直接借鉴过来</p>
 
 
 
@@ -139,7 +140,7 @@ $$
 
 
 
-<h5 id="矩阵求导的进阶技巧"><a href="#矩阵求导的进阶技巧" class="headerlink" title="矩阵求导的进阶技巧"></a>矩阵求导的进阶技巧</h5><p>上面写都是矩阵求导的基本法则，类似于使用定义法求一元函数的导数，使用的场合不多，更为常用的方法是使用<strong>迹技巧</strong>去求解。</p>
+<h3 id="矩阵求导的进阶技巧"><a href="#矩阵求导的进阶技巧" class="headerlink" title="矩阵求导的进阶技巧"></a>矩阵求导的进阶技巧</h3><p>上面写都是矩阵求导的基本法则，类似于使用定义法求一元函数的导数，使用的场合不多，更为常用的方法是使用<strong>迹技巧</strong>去求解。</p>
 <p>首先来看迹的定义：<br>$$<br>tr(A) &#x3D; a_{11} + a_{22} + \cdots + a_{nn} &#x3D; \sum_{i&#x3D;1}^{n}a_{i}<br>$$<br>一些常见的迹的公式</p>
 
 $$
@@ -199,7 +200,12 @@ $$
 $$
 
 
-<p>可以发现，$df(X)$的结果其实就是两个矩阵$(\frac{\partial f}{\partial X_{ij}})<em>{i&#x3D;1,j&#x3D;1}^{m,n}$和$(dX</em>{ij})_{i&#x3D;1,j&#x3D;1}^{m,n}$对应位置相乘并相加，所以该式就可以写为迹的形式：</p>
+
+
+可以发现，$df(X)$的结果其实就是两个矩阵$(\frac{\partial f}{\partial X_{ij}})_{i=1,j=1}^{m,n}$和$(dX_{ij})_{i=1,j=1}^{m,n}$对应位置相乘并相加，所以该式就可以写为迹的形式：
+
+
+
 
 $$
 \begin{aligned}
@@ -223,7 +229,7 @@ $$
 
 
 <p>所以就可以得出结论：$df(X)&#x3D; tr(\frac{\partial f(X)}{\partial X^T} dX)$</p>
-<h5 id="如何使用矩阵微分求导"><a href="#如何使用矩阵微分求导" class="headerlink" title="如何使用矩阵微分求导"></a>如何使用矩阵微分求导</h5><p>对于实值标量函数$f(X)$，$tr(f(X)) &#x3D; f(X)$， $df(X) &#x3D; tr(df(X))$ ，所以有<br>$$<br>df(X) &#x3D; d(tr(f(X))) &#x3D; tr(df(X))<br>$$<br><em>上面的公式表明，迹和求微分是可以交换的</em></p>
+<h3 id="如何使用矩阵微分求导"><a href="#如何使用矩阵微分求导" class="headerlink" title="如何使用矩阵微分求导"></a>如何使用矩阵微分求导</h3><p>对于实值标量函数$f(X)$，$tr(f(X)) &#x3D; f(X)$， $df(X) &#x3D; tr(df(X))$ ，所以有<br>$$<br>df(X) &#x3D; d(tr(f(X))) &#x3D; tr(df(X))<br>$$<br><em>上面的公式表明，迹和求微分是可以交换的</em></p>
 <p>下面计算一个简单的例题：证明正面下面结论。</p>
 
 $$
@@ -253,9 +259,9 @@ $$
     <content><![CDATA[<p>记录Docker的常见用法，主要是用在机器学习上。</p>
 <span id="more"></span>
 
-<h4 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker pull &lt;image_name&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker rmi &lt;image_id&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看本地已经下载的镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker images <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">基本运行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;image_name&gt;:tag &lt;commands&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run ubuntu:leatest /bin/echo <span class="string">&quot;hello world&quot;</span></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">以后台模式运行(detach mode)</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run -d &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看运行中的container，可以查看Container <span class="built_in">id</span> 和 name</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker ps</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">停止和重启container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker stop &lt;container_name&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker restart &lt;container_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">detach/ escape <span class="keyword">in</span> a iteractive containner</span></span><br><span class="line">&lt;C-p&gt;+&lt;C+q&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">attach to a container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker attach &lt;container_name&gt;/&lt;container_id&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker pull &lt;image_name&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker rmi &lt;image_id&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看本地已经下载的镜像</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker images <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">基本运行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;image_name&gt;:tag &lt;commands&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run ubuntu:leatest /bin/echo <span class="string">&quot;hello world&quot;</span></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">以后台模式运行(detach mode)</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker run -d &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">查看运行中的container，可以查看Container <span class="built_in">id</span> 和 name</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker ps</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">停止和重启container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker stop &lt;container_name&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker restart &lt;container_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">detach/ escape <span class="keyword">in</span> a iteractive containner</span></span><br><span class="line">&lt;C-p&gt;+&lt;C+q&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">attach to a container</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker attach &lt;container_name&gt;/&lt;container_id&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="高级运行"><a href="#高级运行" class="headerlink" title="高级运行"></a>高级运行</h3><p>可以在执行 <code>run</code>命令的时候添加各种参数设置 container的各种参数</p>
+<h2 id="高级运行"><a href="#高级运行" class="headerlink" title="高级运行"></a>高级运行</h2><p>可以在执行 <code>run</code>命令的时候添加各种参数设置 container的各种参数</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker run &lt;parameters&gt; &lt;image_name&gt; &lt;commands&gt;</span></span><br><span class="line"></span><br><span class="line">&lt;parameter list&gt;</span><br><span class="line">-it # 交互模式运行</span><br><span class="line">--name &lt;container_name&gt; # 指定container运行名字</span><br><span class="line">-v &lt;host_folder&gt;:&lt;container_folder&gt; # 映射宿主机文件夹到container，也就是 volume</span><br><span class="line">-p &lt;host_port&gt;:&lt;container_port&gt; # 映射container端口到宿主机</span><br></pre></td></tr></table></figure>
 
 <p>给Container挂载GPU，在运行的时候添加参数</p>
@@ -264,7 +270,7 @@ $$
 <p>最终运行例子，这里以运行 Pytorch 环境为例子。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --gpus all \</span><br><span class="line">-it \</span><br><span class="line">--name pytorch_yjm \</span><br><span class="line">-v /home/jiaming:/workspace \</span><br><span class="line">-p 8022:22 \</span><br><span class="line">pytorch/pytorch:1.9.0-cuda10.2-cudnn7-devel \</span><br><span class="line">/bin/bash</span><br></pre></td></tr></table></figure>
 
-<h4 id="深度学习工具配置"><a href="#深度学习工具配置" class="headerlink" title="深度学习工具配置"></a>深度学习工具配置</h4><ul>
+<h2 id="深度学习工具配置"><a href="#深度学习工具配置" class="headerlink" title="深度学习工具配置"></a>深度学习工具配置</h2><ul>
 <li>配置SSH</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt install update</span><br><span class="line">apt install -y openssh-server vim</span><br><span class="line">vim \etc\ssh\sshd_config # 配置ssh</span><br></pre></td></tr></table></figure>
@@ -282,7 +288,7 @@ $$
 </ul>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda install -y numpy seaborn opencv pandas</span><br><span class="line"><span class="meta"># </span><span class="language-bash">如果需要使用 jupyter 的话</span></span><br><span class="line">conda install -y jupyter</span><br></pre></td></tr></table></figure>
 
-<h4 id="Save-container-to-an-image"><a href="#Save-container-to-an-image" class="headerlink" title="Save container to an image"></a>Save container to an image</h4><p>我们以交互方式配置完环境后，为了不用每次都重新配置，可以将Container 保存为image。 这样每次只用Run一下这个镜像就可以了。自定镜像的方法有 通过<code>dockerfile</code>编译生成 和 通过 commit 的方式。这里展示 commit 的方式，</p>
+<h2 id="Save-container-to-an-image"><a href="#Save-container-to-an-image" class="headerlink" title="Save container to an image"></a>Save container to an image</h2><p>我们以交互方式配置完环境后，为了不用每次都重新配置，可以将Container 保存为image。 这样每次只用Run一下这个镜像就可以了。自定镜像的方法有 通过<code>dockerfile</code>编译生成 和 通过 commit 的方式。这里展示 commit 的方式，</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;author_name&quot;</span> -m <span class="string">&quot;messages&quot;</span> &lt;container_id&gt; &lt;save_image_name&gt;:&lt;tag&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker commit -a <span class="string">&quot;jiaming&quot;</span> -m <span class="string">&quot;pytorch&quot;</span> a404c6c174a2  mytorch:v1</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
@@ -310,16 +316,16 @@ $$
     <url>/2022/03/11/%E4%BD%BF%E7%94%A8Github-Action-%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2-Hexo/</url>
     <content><![CDATA[<span id="more"></span>
 
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前立的每天写点东西的Flag感觉都差不多遗忘了，注册的博客园感觉也不好玩，默认的界面太丑了，写东西都没感觉（好吧，这是借口）。觉得还是搭建自己的博客比较Geek 一点，自己DIY也比较方便（就是想折腾）。</p>
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前立的每天写点东西的Flag感觉都差不多遗忘了，注册的博客园感觉也不好玩，默认的界面太丑了，写东西都没感觉（好吧，这是借口）。觉得还是搭建自己的博客比较Geek 一点，自己DIY也比较方便（就是想折腾）。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
 <li>新建一个<code>&lt;username&gt;.github.io</code>的Github仓库。</li>
 <li>新建一个Blog 的私有仓库用于保存Blog 源代码</li>
 <li>在本地安装 Node.js</li>
 </ul>
-<h4 id="本地初始化Hexo"><a href="#本地初始化Hexo" class="headerlink" title="本地初始化Hexo"></a>本地初始化Hexo</h4><p>安装完Node.js后</p>
+<h2 id="本地初始化Hexo"><a href="#本地初始化Hexo" class="headerlink" title="本地初始化Hexo"></a>本地初始化Hexo</h2><p>安装完Node.js后</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">安装 hexo</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">npm install hexo-cli -g</span> </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">hexo 初始化</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo init &lt;folder&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder&gt;</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">npm install</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="Hexo-的配置"><a href="#Hexo-的配置" class="headerlink" title="Hexo 的配置"></a>Hexo 的配置</h4><p>因为 Github的限制，所以在访问仓库时需要设置 Taken。</p>
+<h2 id="Hexo-的配置"><a href="#Hexo-的配置" class="headerlink" title="Hexo 的配置"></a>Hexo 的配置</h2><p>因为 Github的限制，所以在访问仓库时需要设置 Taken。</p>
 <p>Token 获取步骤 ：依次选择，下面的选项，创建一个Token。</p>
 <p>Account -&gt; settings -&gt; Developer settings -&gt; Personal access tokens</p>
 <p>&#x3D;&#x3D;创建时记得勾选全部权限&#x3D;&#x3D;</p>
@@ -329,7 +335,7 @@ $$
 <p>Hexo 的常用操作如下。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">hexo g <span class="comment"># 编译生成发布文件</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo s <span class="comment"># 开启本地服务器预览</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo new &lt;post&gt; <span class="string">&quot;title&quot;</span> <span class="comment"># 新建一个文章</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">新建一个页面，类似于 About me 的功能，新建之后可以在相应的主题config中进行开启</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo new page <span class="string">&quot;title&quot;</span></span>  </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">hexo d <span class="comment"># 部署</span></span></span><br></pre></td></tr></table></figure>
 
-<h4 id="使用Github-Actions-自动部署"><a href="#使用Github-Actions-自动部署" class="headerlink" title="使用Github Actions 自动部署"></a>使用Github Actions 自动部署</h4><p>为了可以在多台设备上随时进行写作和同步，我们可以利用 Github 提供的Actions 服务自动化对博客进行部署。也可以省去我们在本地配置环境的时间，专注于写作。当我们写了新的文章，只需要将Blog 的源代码推送到Github 的 Blog 仓库，Github actions 就可以在直接云端执行 <code>hexo g</code>、<code>hexo d</code>这些操作，自动帮我们部署到page中。</p>
+<h2 id="使用Github-Actions-自动部署"><a href="#使用Github-Actions-自动部署" class="headerlink" title="使用Github Actions 自动部署"></a>使用Github Actions 自动部署</h2><p>为了可以在多台设备上随时进行写作和同步，我们可以利用 Github 提供的Actions 服务自动化对博客进行部署。也可以省去我们在本地配置环境的时间，专注于写作。当我们写了新的文章，只需要将Blog 的源代码推送到Github 的 Blog 仓库，Github actions 就可以在直接云端执行 <code>hexo g</code>、<code>hexo d</code>这些操作，自动帮我们部署到page中。</p>
 <p>在开始配置之前需要确定以下事情：</p>
 <ol>
 <li><p>本地Blog部署生成和部署正常</p>
@@ -348,11 +354,11 @@ $$
 <p>在配置完Secret Key 之后点击进入 Blog 的 Actions 界面。选择New workflow。添加如下内容。&#x3D;&#x3D;注意参数中的deploy_key &#x3D; $&#x3D;&#x3D;这个也就是我们刚刚设置的Secret Key 的名称。代码更新的内容可参照<a class="link"   href="https://github.com/marketplace/actions/hexo-action" >hexo actions<i class="fas fa-external-link-alt"></i></a>。</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># This is a basic workflow to help you get started with Actions</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Hexo</span> <span class="string">Blog</span></span><br><span class="line"><span class="comment"># Controls when the workflow will run</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="comment"># Triggers the workflow on push or pull request events but only for the main branch</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> [ <span class="string">main</span> ]</span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">A</span> <span class="string">job</span> <span class="string">to</span> <span class="string">deploy</span> <span class="string">blog.</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@v3.0.0</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">submodules:</span> <span class="literal">true</span> <span class="comment"># Checkout private submodules(themes or something else).</span></span><br><span class="line">    <span class="comment"># Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Cache</span> <span class="string">node</span> <span class="string">modules</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/cache@v1</span></span><br><span class="line">      <span class="attr">id:</span> <span class="string">cache</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">node_modules</span></span><br><span class="line">        <span class="attr">key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-node-$&#123;&#123;</span> <span class="string">hashFiles(&#x27;**/package-lock.json&#x27;)</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          $&#123;&#123; runner.os &#125;&#125;-node-</span></span><br><span class="line"><span class="string"></span>    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">Dependencies</span></span><br><span class="line">      <span class="attr">if:</span> <span class="string">steps.cache.outputs.cache-hit</span> <span class="type">!=</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Deploy hexo blog website.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">id:</span> <span class="string">deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">sma11black/hexo-action@v1.0.3</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">deploy_key:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DEPLOY_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">user_name:</span> <span class="string">your</span> <span class="string">github</span> <span class="string">username</span>  <span class="comment"># (or delete this input setting to use bot account)</span></span><br><span class="line">        <span class="attr">user_email:</span> <span class="string">your</span> <span class="string">github</span> <span class="string">useremail</span>  <span class="comment"># (or delete this input setting to use bot account)</span></span><br><span class="line">        <span class="attr">commit_msg:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.event.head_commit.message</span> <span class="string">&#125;&#125;</span>  <span class="comment"># (or delete this input setting to use hexo default settings)</span></span><br><span class="line">    <span class="comment"># Use the output from the `deploy` step(use for test action)</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Get</span> <span class="string">the</span> <span class="string">output</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line">        <span class="string">echo</span> <span class="string">&quot;$<span class="template-variable">&#123;&#123; steps.deploy.outputs.notify &#125;&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="更新测试"><a href="#更新测试" class="headerlink" title="更新测试"></a>更新测试</h4><p>在设置两个仓库后就可以向Blog 仓库中commit 代码了。</p>
+<h2 id="更新测试"><a href="#更新测试" class="headerlink" title="更新测试"></a>更新测试</h2><p>在设置两个仓库后就可以向Blog 仓库中commit 代码了。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> Blog  <span class="comment"># 进入Blog 目录</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init <span class="comment"># 初始化仓库</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git config --global user.name <span class="string">&quot;username&quot;</span></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git config --global user.email <span class="string">&quot;email@email.com&quot;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git remote add origin &lt;github repository address&gt;</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">add 之前记得先添加 .gitignore 文件</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add .</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git push</span></span><br></pre></td></tr></table></figure>
 
 <p>完成推送之后就可以在Actions 那里查看是否正常编译部署。部署完成再等一会儿，就可以打开<code>&lt;username&gt;.github.io</code>查看部署是否完成了。</p>
-<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
 <li>在自动部署中，配置的主题需要使用 submodule 的形式引入，如果没有以该种形式引入的话，最终生成的<code>index.html</code>会为一个空的文件，Actions的生成 logs 也会产生Warning。</li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">git submodule add https://github.com/litten/hexo-theme-yilia.git themes/yilia <span class="comment">#以yilia 主题为例</span></span></span><br></pre></td></tr></table></figure>
@@ -374,7 +380,7 @@ $$
     <content><![CDATA[<p>复习基本的数字电路知识。包括基本的编码方式、基本门电路的符号、逻辑代数化简方法、常见的组合逻辑设计方法。</p>
 <span id="more"></span>
 
-<h4 id="常见编码"><a href="#常见编码" class="headerlink" title="常见编码"></a>常见编码</h4><p>我们比较的编码有8421码，其他的码感觉用的不多。</p>
+<h2 id="常见编码"><a href="#常见编码" class="headerlink" title="常见编码"></a>常见编码</h2><p>我们比较的编码有8421码，其他的码感觉用的不多。</p>
 <p><img src="https://i.imgur.com/ZgH7ncQ.png" alt="常用编码"></p>
 <p>这里着重学习以下 格雷码，格雷码又叫循环二进制码或反射二进制码。格雷码相邻的两个码之间仅有一个位不一样，其与8421码可通过以下步骤互转：</p>
 <p><strong>8421 转格雷码（编码）</strong>：从&#x3D;&#x3D;右往左&#x3D;&#x3D;的第 N 位和 第 N+1 位进行异或，最后一位两个码相同。</p>
@@ -382,37 +388,31 @@ $$
 <p>两个步骤是一样的。一个数异或同一个数两次得到的结果不变。</p>
 <img src="https://i.imgur.com/YkyZHbq.png" alt="格雷码" style="zoom:67%;" />
 
-<h4 id="基本门电路"><a href="#基本门电路" class="headerlink" title="基本门电路"></a>基本门电路</h4><p>这部分比较简单，记住下面这个表就可以了。</p>
+<h2 id="基本门电路"><a href="#基本门电路" class="headerlink" title="基本门电路"></a>基本门电路</h2><p>这部分比较简单，记住下面这个表就可以了。</p>
 <ul>
 <li>记住常见的门电路符号</li>
 <li>可以根据电路图写出逻辑代数表达式<br><img src="https://i.imgur.com/XPak1sq.png" alt="常见门电路的符号"></li>
 </ul>
-<h4 id="逻辑表达式化简"><a href="#逻辑表达式化简" class="headerlink" title="逻辑表达式化简"></a>逻辑表达式化简</h4><p>在使用逻辑代数表达式描述完之后功能之后还需要对表达式进行化简，化简的表达式所转化得到的电路具有更少的元件，使电路图可以更加直观，同时也可以节省成本。化简的方法有下面两种。</p>
-<ul>
-<li>公式法化简 （这个得看熟练程度）</li>
-</ul>
-<p><img src="https://i.imgur.com/jFJklb4.png" alt="逻辑代数公式表"></p>
-<ul>
-<li>卡诺图化简方法 （这个要实用一点，但需要列的表比较多）</li>
-</ul>
-<p>将所有的输入变量构成最小项，并将最小项根据格雷码的顺序写成表格，保证相邻的两项只有一个输入变量变化，如由 A, B 构成的最小项包括 AB, A’B, AB’, A’B’，就可以构成下图这种两变量 卡诺图</p>
+<h2 id="逻辑表达式化简"><a href="#逻辑表达式化简" class="headerlink" title="逻辑表达式化简"></a>逻辑表达式化简</h2><p>在使用逻辑代数表达式描述完之后功能之后还需要对表达式进行化简，化简的表达式所转化得到的电路具有更少的元件，使电路图可以更加直观，同时也可以节省成本。化简的方法有下面两种。</p>
+<h3 id="公式法化简-（这个得看熟练程度）"><a href="#公式法化简-（这个得看熟练程度）" class="headerlink" title="公式法化简 （这个得看熟练程度）"></a>公式法化简 （这个得看熟练程度）</h3><p><img src="https://i.imgur.com/jFJklb4.png" alt="逻辑代数公式表"></p>
+<h3 id="卡诺图化简方法-（这个要实用一点，但需要列的表比较多）"><a href="#卡诺图化简方法-（这个要实用一点，但需要列的表比较多）" class="headerlink" title="卡诺图化简方法 （这个要实用一点，但需要列的表比较多）"></a>卡诺图化简方法 （这个要实用一点，但需要列的表比较多）</h3><p>将所有的输入变量构成最小项，并将最小项根据格雷码的顺序写成表格，保证相邻的两项只有一个输入变量变化，如由 A, B 构成的最小项包括 AB, A’B, AB’, A’B’，就可以构成下图这种两变量 卡诺图</p>
 <table>
 <thead>
 <tr>
-<th>A&#x2F;B</th>
-<th>0</th>
-<th>1</th>
+<th align="center">A&#x2F;B</th>
+<th align="center">0</th>
+<th align="center">1</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>0</td>
-<td>m0</td>
-<td>m1</td>
+<td align="center">0</td>
+<td align="center">m0</td>
+<td align="center">m1</td>
 </tr>
 <tr>
-<td>1</td>
-<td>m2</td>
-<td>m3</td>
+<td align="center">1</td>
+<td align="center">m2</td>
+<td align="center">m3</td>
 </tr>
 </tbody></table>
 <p>卡诺图利用 $\bar{A}B + AB &#x3D; (\bar{A} + A)B &#x3D; B$进行化简，在卡诺图中画的圆圈跨过两个格子则说明所跨过的变量可以消去。</p>
@@ -424,20 +424,20 @@ $$
 <li>每个圈中至少有一个标1的方格未被其他圈所覆盖</li>
 </ol>
 <p><img src="https://i.imgur.com/poel6EW.png" alt="常见卡诺图化简"></p>
-<h4 id="组合逻辑电路设计过程"><a href="#组合逻辑电路设计过程" class="headerlink" title="组合逻辑电路设计过程"></a>组合逻辑电路设计过程</h4><ol>
+<h2 id="组合逻辑电路设计过程"><a href="#组合逻辑电路设计过程" class="headerlink" title="组合逻辑电路设计过程"></a>组合逻辑电路设计过程</h2><ol>
 <li>根据需求确定功能</li>
 <li>根据功能列出真值表</li>
 <li>根据真值表写出逻辑表达式</li>
 <li>将逻辑表达式化简</li>
 <li>逻辑表达式转化为逻辑电路图</li>
 </ol>
-<h4 id="编码器实现"><a href="#编码器实现" class="headerlink" title="编码器实现"></a>编码器实现</h4><p>译码器的作用就是按照输入的类似并行的数据格式转换为BCD码，常用的集成芯片是<strong>74LS148</strong>。它的真值表如下图。$\bar{EI}$的作用是作为输入使能端口，$\bar{GS}$ 是编码器的工作标志位低电平有效，$EO$扩展端口可以用于多个芯片进行互联。</p>
+<h2 id="编码器实现"><a href="#编码器实现" class="headerlink" title="编码器实现"></a>编码器实现</h2><p>译码器的作用就是按照输入的类似并行的数据格式转换为BCD码，常用的集成芯片是<strong>74LS148</strong>。它的真值表如下图。$\bar{EI}$的作用是作为输入使能端口，$\bar{GS}$ 是编码器的工作标志位低电平有效，$EO$扩展端口可以用于多个芯片进行互联。</p>
 <p><img src="https://i.imgur.com/ApP7YKY.png"></p>
 <p>因此可以根据它的真值表写出输出的表达式为（这里写的是最基本的编码器的逻辑代数表达式，跟上图对比需要再取反）<br>$$<br>\begin{array}{I}<br>A_0 &#x3D; I_6 + I_4 + I_2 + I_0  \\<br>A_1 &#x3D; I_5 + I_4 + I_1 + I_0  \\<br>A_2 &#x3D; I_0 + I_1 + I_2 + I_3  \\<br>\end{array}<br>$$</p>
-<h4 id="译码器实现"><a href="#译码器实现" class="headerlink" title="译码器实现"></a>译码器实现</h4><p>译码器的作用与编码器相反，作用是将BCD码转换为对应序号的端口输出，这里是常用译码器74138的真值表。七段式数码管显示电路也可以借用这个思想进行设计。</p>
+<h2 id="译码器实现"><a href="#译码器实现" class="headerlink" title="译码器实现"></a>译码器实现</h2><p>译码器的作用与编码器相反，作用是将BCD码转换为对应序号的端口输出，这里是常用译码器74138的真值表。七段式数码管显示电路也可以借用这个思想进行设计。</p>
 <p><img src="https://i.imgur.com/NXA4DwK.png"></p>
 <p>同样是需要写出它的逻辑表达式。<br>$$<br>\begin{array}{l}<br>I_0 &#x3D; \bar{A_2}\bar{A_1}\bar{A_0},I_4 &#x3D; {A_2}\bar{A_1}\bar{A_0}  \\<br>I_1 &#x3D; \bar{A_2}\bar{A_1}{A_5}, I_5 &#x3D; {A_2}\bar{A_1}{A_0}  \\<br>I_2 &#x3D; \bar{A_2}{A_1}\bar{A_0},I_6 &#x3D; {A_2}{A_1}\bar{A_0}  \\<br>I_3 &#x3D; \bar{A_2}{A_1}{A_0},I_7 &#x3D; {A_2}{A_1}{A_0}  \\<br>\end{array}<br>$$</p>
-<h4 id="加法器实现"><a href="#加法器实现" class="headerlink" title="加法器实现"></a>加法器实现</h4><p>加法器是现代计算机中最基础的一个运算单元。加法器分为半加器和全加器，<br>半加器不考虑进位，结构比较简单，只能计算一位二进制加法。因为半加器比较简单，所以这里直接给出它的逻辑表达式。<br>半加器逻辑表达式为<br>$$<br>S &#x3D; A \oplus B &#x3D; \bar{A}B + A\bar{B} \\<br>C &#x3D; A \times B<br>$$<br>全加器因为需要考虑到进位信息，所以稍微复杂一些，下面的就是全加器的真值表</p>
+<h2 id="加法器实现"><a href="#加法器实现" class="headerlink" title="加法器实现"></a>加法器实现</h2><p>加法器是现代计算机中最基础的一个运算单元。加法器分为半加器和全加器，<br>半加器不考虑进位，结构比较简单，只能计算一位二进制加法。因为半加器比较简单，所以这里直接给出它的逻辑表达式。<br>半加器逻辑表达式为<br>$$<br>S &#x3D; A \oplus B &#x3D; \bar{A}B + A\bar{B} \\<br>C &#x3D; A \times B<br>$$<br>全加器因为需要考虑到进位信息，所以稍微复杂一些，下面的就是全加器的真值表</p>
 <p><img src="https://i.imgur.com/B96VxDf.png"></p>
 <p>通过化简可以得出全加器的逻辑表达式为，这里只涉及一个全加器。<br>$$<br>S&#x3D;\bar{A}\bar{B}C + \bar{A}B\bar{C} + A\bar{B}\bar{C}&#x3D;A \oplus B \oplus C \\<br>C&#x3D;AB + BC + AC<br>$$<br>**行波进位加法器(Ripple-Carry Adder，RCA)**，如果要实现多位二进制数进行相加，可以通过将多个全加器进行级联，$c_{n - 1}$和下一个全加器的$c_{n}$相连就可以实现多个位的相加。<br><img src="https://i.imgur.com/FVPfMgX.png"></p>
 <p>全加器的位数等于相加数的个数，最低位的 $c_{-1}$应接0，串行进位加法器电路比较简单，当时缺点是第N个全加器的输出必须要等到第N-1个全加器运算完成。</p>
@@ -456,7 +456,7 @@ $$
     <content><![CDATA[<p>学习Verilog的基本语法.</p>
 <span id="more"></span>
 
-<h4 id="可综合语言"><a href="#可综合语言" class="headerlink" title="可综合语言"></a>可综合语言</h4><p>可以被综合器转化为相应的逻辑门电路的语句称为可综合语言。</p>
+<h2 id="可综合语言"><a href="#可综合语言" class="headerlink" title="可综合语言"></a>可综合语言</h2><p>可以被综合器转化为相应的逻辑门电路的语句称为可综合语言。</p>
 <table>
 <thead>
 <tr>
@@ -577,7 +577,7 @@ $$
 <td>上升沿或者下降沿</td>
 </tr>
 </tbody></table>
-<h4 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h4><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这里演示一个与门的代码结构</span></span><br><span class="line"><span class="keyword">module</span> module_name</span><br><span class="line">(</span><br><span class="line">	a, b, c</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">input</span> a; <span class="comment">// 输入</span></span><br><span class="line"><span class="keyword">input</span> b;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">output</span> c; <span class="comment">// 输出</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">assign</span> c = a &amp; b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h2><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这里演示一个与门的代码结构</span></span><br><span class="line"><span class="keyword">module</span> module_name</span><br><span class="line">(</span><br><span class="line">	a, b, c</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">input</span> a; <span class="comment">// 输入</span></span><br><span class="line"><span class="keyword">input</span> b;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">output</span> c; <span class="comment">// 输出</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">assign</span> c = a &amp; b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
 
 
 
