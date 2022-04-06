@@ -23,16 +23,17 @@
   text-decoration: none;
   overflow-wrap: break-word;
   cursor: pointer;
-  border-bottom: 1px solid var(--third-text-color);
+  border-bottom: 1px solid var(--copyright-info-color);
   box-sizing: border-box;
   padding-bottom: 2px;
+  color: var(--copyright-info-color);
 }
 .markdown-body a .fas,
 .markdown-body a .far,
 .markdown-body a fab {
   margin: 0 2px 0 6px;
   position: relative;
-  color: var(--third-text-color);
+  color: var(--copyright-info-color);
   font-size: 0.88rem;
 }
 .markdown-body a:hover {

@@ -148,9 +148,10 @@ $$
 &tr(c) = c \newline
 &tr(c_1A + c_2B) = c_1tr(A) + c_2tr(B) \newline
 &tr(A) = tr(A^T) \newline
-&\underline{tr(ABC) = tr(CAB) = tr(BCA)} & A_{m\times n}, B_{n \times p}, C_{p \times m} \newline
+&\underline{tr(ABC) = tr(CAB) = tr(BCA)}, \quad A_{m\times n}, B_{n \times p}, C_{p \times m} \newline
 &tr(AB^T) = tr(B^TA) = tr(A^TB) = tr(BA^T) \newline
-&tr(|A|) = |A| tr(A^{-1}dA) = tr(|A|A^{-1}dA)
+&tr(|A|) = |A| tr(A^{-1}dA) = tr(|A|A^{-1}dA) \newline
+&tr(A^T (B \odot C)) = tr((A \odot B)^T C)
 \end{align}
 $$
 
@@ -251,6 +252,200 @@ $$
       </categories>
       <tags>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MLP的BP推导与实现(下)</title>
+    <url>/2022/04/05/MLP%E7%9A%84BP%E6%8E%A8%E5%AF%BC%E4%B8%8E%E5%AE%9E%E7%8E%B0-%E4%B8%8B/</url>
+    <content><![CDATA[<p>上一篇文章学习矩阵求导的方法，这篇文章以推导一个三层的MLP的反向传播算法以及它的代码实现。</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进行推导前需要先列出几个后面需要使用的函数</p>
+<p>首先是大名的鼎鼎的交叉熵（Cross Entropy）函数，它的定义如下，其中 $y$ 是独热码编码后的类别，$softmax$的函数输出可以衡量输出是每个类别的概率大小。</p>
+<p><a name="pretext"></a></p>
+
+$$
+L = -y^T log(softmax(x))\\\\
+softmax(\vec {x}) = \frac{e^{x_i}}{\sum_{j=1}^{K}e^{x_j}} \\\\
+L^{'}(x) = softmax(\vec{x}) - \vec{y}
+$$
+
+
+<p>我们后面的激活函数采用比较常见的$\sigma$函数，它的定义和导数是</p>
+
+$$
+\begin{align}
+\sigma(x) &= \frac{1}{1 + exp(x)} \\\\
+\sigma(x)^{'} &= \sigma(x)(1-\sigma(x))
+\end{align}
+$$
+
+
+<p>当然，后面的推导也不会使用$\sigma$函数求导的完整结果（因为太长了），而是用$\sigma^{‘}$表示，如果要更换$ReLu$或者别的激活函数，如只需要将求导结果带进去就可以了。</p>
+<h2 id="符号定义"><a href="#符号定义" class="headerlink" title="符号定义"></a>符号定义</h2><p>假设我们的网络有 $n$层，$w_i$和$b_i$分别表示第$i$层的参数(wight)和偏置(bias)，使用$a_i$表示第$i$层还没有经过激活函数的结果，使用 $h_i$表示第$i$层的输出同时也是第$i+1$层的输入，也就是相当于$h_i &#x3D; \sigma(a_i)$， $\sigma$函数作为激活函数。整个网络的前向传播的$Loss$表达式可以写成下面的这种形式。</p>
+
+$$
+\begin{align}
+L &= -y^T log(softmax(h_3)) \\\\
+
+h_3 &= h_2w_3 + b_3 \\\\
+a_2 &= h_1w_2 + b_2 \quad h_2 = \sigma(a_2) \\\\
+a_1 &= h_0w_1 + b_1 \quad h_1 = \sigma(a_1) \\\\
+h_0 &= x
+\end{align}
+$$
+
+
+<p><strong>这里假设输入的向量$x$和输出向量$y$都是列向量</strong></p>
+<p>当然，如果不定义符号进行替换的话就可以写成下面的这种比较长的形式。</p>
+
+$$
+L = -y^T log(softmax( \sigma(\sigma(xw_1 + b_1)w_2 + b_2)w_3 + b_3 ))
+$$
+
+
+<p>可以看到，MLP的本质其实就是我们最常见的复合函数的形式，只是我们的输入的变量$x$是一个向量或者矩阵的形式。我们的任务就是借助上一篇文章中所提到的矩阵求导的手段求出 $L$ 对每个$w_i$和$b_i$的偏导表达式。</p>
+<h2 id="第三层"><a href="#第三层" class="headerlink" title="第三层"></a>第三层</h2><p>根据<a href="#pretext">前言</a>部分$log(softmax(x))$函数的求导，可以直接求得$h_3$的偏导数</p>
+
+$$
+\frac{\partial L }{\partial h_3} = softmax(h_3) -y
+$$
+
+
+<p>将 $dL$ 写成迹的形式</p>
+
+$$
+\begin{align}
+tr(dL) &= tr((\frac{\partial L}{\partial h_3})^T dh_3) \\
+&=tr((\frac{\partial L}{\partial h_3})^T d(h_2w_3 + b_3)) \\ 
+&= \color{blue}{tr((\frac{\partial L}{\partial h_3})^T d(h_2w_3))} + \color{red}{tr((\frac{\partial L}{\partial h_3})^T d(b_3))}\\ 
+\end{align}
+$$
+
+
+
+<p>通过红色的部分就得到了我们可以看到$L$关于$b_3$的微分形式，通过这个式子就可以写出$L$关于$b_3$的偏导数：</p>
+
+$$
+\frac{\partial L}{\partial b_3} = ((\frac{\partial L }{\partial h_3})^T)^T = \frac{\partial L }{\partial h_3}
+$$
+
+
+<p>将前面蓝色的部分单独写下来，继续经过变形</p>
+
+$$
+\begin{align*}
+&\quad tr((\frac{\partial L}{\partial h_3})^T d(h_2w_3)) \\
+&=tr((\frac{\partial L}{\partial h_3})^T d(h_2)w_3) + tr((\frac{\partial L}{\partial h_3})^T h_2d(w_3)) \\
+&=\color{blue}{tr(w_3(\frac{\partial L}{\partial h_3})^T d(h_2))} + \color{red}{tr((\frac{\partial L}{\partial h_3})^T h_2d(w_3))} \\
+\end{align*}
+$$
+
+
+<p>同样的由红色部分，我们可以得到$L$关于$w_3$的偏导，蓝色的部分我们后续的推导需要用。</p>
+
+$$
+\frac{\partial L}{\partial w_3} = (\frac{\partial L}{\partial h_3})^T h_2)^T = h_2^T \frac{\partial L}{\partial h_3}
+$$
+
+
+<p>到这里，我们第三层的所有参数 $w_3$和$b_3$的梯度我们都算出来了。</p>
+<h2 id="第二层"><a href="#第二层" class="headerlink" title="第二层"></a>第二层</h2><p>接着把第三层推导剩下的蓝色部分单独提出来</p>
+
+$$
+\begin{align*}
+& \quad tr(w_3(\frac{\partial L}{\partial h_3})^T d(h_2))\\
+& = tr(w_3(\frac{\partial L}{\partial h_3})^T d(\sigma(a_2))) \\ 
+& = tr(w_3(\frac{\partial L}{\partial h_3})^T \sigma^{'}(a_2) \odot d(a_2)) \\
+\end{align*}
+$$
+
+
+<p>根据上篇文章提到的$tr(A^T (B \odot C)) &#x3D; tr((A \odot B)^T C)$可以化简为</p>
+
+$$
+\begin{align*}
+& \quad tr(w_3(\frac{\partial L}{\partial h_3})^T \sigma^{'}(a_2) \odot d(a_2)) \\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T)^T \sigma^{'}(a_2) \odot d(a_2)) \\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(a_2)) \\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1w_2 + b_2)) \\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1w_2)) + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d( b_2))}\\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1)w_2) + \color{blue}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T h_1d(w_2))} + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d( b_2))}\\
+\end{align*}
+$$
+
+
+<p>可以得到</p>
+
+$$
+\frac{\partial L}{\partial w_2} = ((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T h_1)^T = h_1^T (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))
+$$
+
+$$
+\frac{\partial L}{\partial b_2} =\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)
+$$
+
+
+
+<h2 id="第一层"><a href="#第一层" class="headerlink" title="第一层"></a>第一层</h2><p>经过前两节的推导，我们得到了第二和第三层的表达式，但是他们的规律还不是非常的明显，我们继续推导第一层的偏导数。</p>
+
+$$
+\begin{align*}
+&\quad  tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1)w_2) \\
+& = tr(w_2 (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(\sigma(a1)) \\
+& = tr(w_2 (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T \sigma ^{'}(a1)\odot d(a1)) \\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T )^T \sigma ^{'}(a1)\odot d(a1)) \\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0w_1 + b_1)) \\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0w_1)) + tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(b_1)) \\
+& = \color{blue}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T h_0d(w_1))} + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(b_1))} + tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0)w_1)\\
+\end{align*}
+$$
+
+
+<p>可以得出</p>
+
+$$
+\begin{align}
+
+\frac{\partial L}{\partial w_1} &= (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T h_0)^T \\
+& = h_0^T(\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))
+\end{align}
+$$
+
+$$
+\frac{\partial L}{\partial b_2} =\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1)
+$$
+
+
+
+<h2 id="总结规律"><a href="#总结规律" class="headerlink" title="总结规律"></a>总结规律</h2><p>将分别将 $w_1, w_2, w_3$的偏导表达式写出来</p>
+
+$$
+\begin{align}
+\frac{\partial L}{\partial w_1} &= h_0^T(\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1)) \\\\
+\frac{\partial L}{\partial w_2} &= h_1^T (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)) \\\\
+\frac{\partial L}{\partial w_3} &= h_2^T \frac{\partial L}{\partial h_3}
+\end{align}
+$$
+
+
+<p>$b_1,b_2,b_3$的表达式为</p>
+
+$$
+\begin{align}
+\frac{\partial L}{\partial b_1} &= \frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1) \\\\
+\frac{\partial L}{\partial b_2} &= \frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2) \\\\
+\frac{\partial L}{\partial b_3} &= \frac{\partial L}{\partial h_3}
+\end{align}
+$$
+
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>BP算法</tag>
       </tags>
   </entry>
   <entry>
@@ -380,7 +575,7 @@ $$
     <content><![CDATA[<p>复习基本的数字电路知识。包括基本的编码方式、基本门电路的符号、逻辑代数化简方法、常见的组合逻辑设计方法。</p>
 <span id="more"></span>
 
-<h2 id="常见编码"><a href="#常见编码" class="headerlink" title="常见编码"></a>常见编码</h2><p>我们比较的编码有8421码，其他的码感觉用的不多。</p>
+<h2 id="常见编码"><a href="#常见编码" class="headerlink" title="常见编码"></a>常见编码</h2><p>我们比较常用的编码有8421码，其他的码感觉用的不多。</p>
 <p><img src="https://i.imgur.com/ZgH7ncQ.png" alt="常用编码"></p>
 <p>这里着重学习以下 格雷码，格雷码又叫循环二进制码或反射二进制码。格雷码相邻的两个码之间仅有一个位不一样，其与8421码可通过以下步骤互转：</p>
 <p><strong>8421 转格雷码（编码）</strong>：从&#x3D;&#x3D;右往左&#x3D;&#x3D;的第 N 位和 第 N+1 位进行异或，最后一位两个码相同。</p>
@@ -460,121 +655,121 @@ $$
 <table>
 <thead>
 <tr>
-<th>关键字</th>
-<th>作用</th>
+<th align="center">关键字</th>
+<th align="center">作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>module&#x2F; endmodule</td>
-<td>Verlog 的基本单元，成对使用</td>
+<td align="center">module&#x2F; endmodule</td>
+<td align="center">Verlog 的基本单元，成对使用</td>
 </tr>
 <tr>
-<td>input</td>
-<td>输入端口定义</td>
+<td align="center">input</td>
+<td align="center">输入端口定义</td>
 </tr>
 <tr>
-<td>output</td>
-<td>输出端口定义</td>
+<td align="center">output</td>
+<td align="center">输出端口定义</td>
 </tr>
 <tr>
-<td>inout</td>
-<td>输入&#x2F;输出端口定义</td>
+<td align="center">inout</td>
+<td align="center">输入&#x2F;输出端口定义</td>
 </tr>
 <tr>
-<td>begin</td>
-<td>成对和end使用相当于 {}</td>
+<td align="center">begin</td>
+<td align="center">成对和end使用相当于 {}</td>
 </tr>
 <tr>
-<td>end</td>
-<td></td>
+<td align="center">end</td>
+<td align="center"></td>
 </tr>
 </tbody></table>
 <p>数据类型</p>
 <table>
 <thead>
 <tr>
-<th>关键字</th>
-<th>作用</th>
+<th align="center">关键字</th>
+<th align="center">作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>wire</td>
-<td>线网类型</td>
+<td align="center">wire</td>
+<td align="center">线网类型</td>
 </tr>
 <tr>
-<td>reg</td>
-<td>寄存器类型</td>
+<td align="center">reg</td>
+<td align="center">寄存器类型</td>
 </tr>
 <tr>
-<td>parameter</td>
-<td>参数类型 &#x2F; 类似于常量</td>
+<td align="center">parameter</td>
+<td align="center">参数类型 &#x2F; 类似于常量</td>
 </tr>
 </tbody></table>
 <p>逻辑判断</p>
 <table>
 <thead>
 <tr>
-<th>关键字</th>
-<th>作用</th>
+<th align="center">关键字</th>
+<th align="center">作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>if</td>
-<td>逻辑判断</td>
+<td align="center">if</td>
+<td align="center">逻辑判断</td>
 </tr>
 <tr>
-<td>else</td>
-<td>逻辑判断</td>
+<td align="center">else</td>
+<td align="center">逻辑判断</td>
 </tr>
 <tr>
-<td>case</td>
-<td></td>
+<td align="center">case</td>
+<td align="center"></td>
 </tr>
 <tr>
-<td>endcase</td>
-<td></td>
+<td align="center">endcase</td>
+<td align="center"></td>
 </tr>
 <tr>
-<td>default</td>
-<td></td>
+<td align="center">default</td>
+<td align="center"></td>
 </tr>
 </tbody></table>
 <p>连续赋值</p>
 <table>
 <thead>
 <tr>
-<th>关键字</th>
-<th>作用</th>
+<th align="center">关键字</th>
+<th align="center">作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>always</td>
-<td>过程赋值</td>
+<td align="center">always</td>
+<td align="center">过程赋值</td>
 </tr>
 <tr>
-<td>assign</td>
-<td>连续赋值</td>
+<td align="center">assign</td>
+<td align="center">连续赋值</td>
 </tr>
 </tbody></table>
 <p>过程赋值条件</p>
 <table>
 <thead>
 <tr>
-<th>关键字</th>
-<th>作用</th>
+<th align="center">关键字</th>
+<th align="center">作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>posedge</td>
-<td>上升沿</td>
+<td align="center">posedge</td>
+<td align="center">上升沿</td>
 </tr>
 <tr>
-<td>negedge</td>
-<td>下降沿</td>
+<td align="center">negedge</td>
+<td align="center">下降沿</td>
 </tr>
 <tr>
-<td>posedge or negedge</td>
-<td>上升沿或者下降沿</td>
+<td align="center">posedge or negedge</td>
+<td align="center">上升沿或者下降沿</td>
 </tr>
 </tbody></table>
 <h2 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h2><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这里演示一个与门的代码结构</span></span><br><span class="line"><span class="keyword">module</span> module_name</span><br><span class="line">(</span><br><span class="line">	a, b, c</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">input</span> a; <span class="comment">// 输入</span></span><br><span class="line"><span class="keyword">input</span> b;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">output</span> c; <span class="comment">// 输出</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">assign</span> c = a &amp; b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>

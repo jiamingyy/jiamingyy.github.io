@@ -26,7 +26,7 @@ keep-mobile()
 .home-content-container .home-article-list .home-article-item .home-article-content {
   word-wrap: break-word;
   text-align: justify;
-  margin: 20px 0;
+  margin: 0px 0;
   color: var(--default-text-color);
 }
 .home-content-container .home-article-list .home-article-item .home-article-meta-info-container {

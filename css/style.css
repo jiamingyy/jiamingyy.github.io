@@ -1049,7 +1049,7 @@ pre .javascript .function {
   position: relative;
   box-sizing: border-box;
   width: 80%;
-  max-width: 920px;
+  max-width: 1220px;
   height: 100%;
 }
 @media (max-width: 780px) {
@@ -1074,7 +1074,7 @@ pre .javascript .function {
   height: 100%;
   z-index: 1006;
   overflow-y: auto;
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
   background: var(--background-color);
   box-shadow: 2px 2px 5px var(--shadow-color);
@@ -1467,7 +1467,7 @@ pre .javascript .function {
   position: relative;
   height: 100%;
   width: 80%;
-  max-width: 920px;
+  max-width: 1220px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1475,7 +1475,7 @@ pre .javascript .function {
   z-index: 1005;
 }
 .header-wrapper .header-content.has-first-screen {
-  max-width: 1104px;
+  max-width: 1464px;
 }
 @media (max-width: 780px) {
   .header-wrapper .header-content {
@@ -2251,7 +2251,7 @@ pre .javascript .function {
 .home-content-container .home-article-list .home-article-item .home-article-content {
   word-wrap: break-word;
   text-align: justify;
-  margin: 20px 0;
+  margin: 0px 0;
   color: var(--default-text-color);
 }
 .home-content-container .home-article-list .home-article-item .home-article-meta-info-container {
@@ -2738,16 +2738,17 @@ pre .javascript .function {
   text-decoration: none;
   overflow-wrap: break-word;
   cursor: pointer;
-  border-bottom: 1px solid var(--third-text-color);
+  border-bottom: 1px solid var(--copyright-info-color);
   box-sizing: border-box;
   padding-bottom: 2px;
+  color: var(--copyright-info-color);
 }
 .markdown-body a .fas,
 .markdown-body a .far,
 .markdown-body a fab {
   margin: 0 2px 0 6px;
   position: relative;
-  color: var(--third-text-color);
+  color: var(--copyright-info-color);
   font-size: 0.88rem;
 }
 .markdown-body a:hover {
