@@ -305,7 +305,7 @@ $$
 
 
 <p>可以看到，MLP的本质其实就是我们最常见的复合函数的形式，只是我们的输入的变量$x$是一个向量或者矩阵的形式。我们的任务就是借助上一篇文章中所提到的矩阵求导的手段求出 $L$ 对每个$w_i$和$b_i$的偏导表达式。</p>
-<h2 id="第三层"><a href="#第三层" class="headerlink" title="第三层"></a>第三层</h2><p>根据<a href="#pretext">前言</a>部分$log(softmax(x))$函数的求导，可以直接求得$h_3$的偏导数</p>
+<h2 id="第三层推导"><a href="#第三层推导" class="headerlink" title="第三层推导"></a>第三层推导</h2><p>根据<a href="#pretext">前言</a>部分$log(softmax(x))$函数的求导，可以直接求得$h_3$的偏导数</p>
 
 $$
 \frac{\partial L }{\partial h_3} = softmax(h_3) -y
@@ -350,7 +350,7 @@ $$
 
 
 <p>到这里，我们第三层的所有参数 $w_3$和$b_3$的梯度我们都算出来了。</p>
-<h2 id="第二层"><a href="#第二层" class="headerlink" title="第二层"></a>第二层</h2><p>接着把第三层推导剩下的蓝色部分单独提出来</p>
+<h2 id="第二层推导"><a href="#第二层推导" class="headerlink" title="第二层推导"></a>第二层推导</h2><p>接着把第三层推导剩下的蓝色部分单独提出来</p>
 
 $$
 \begin{align*}
@@ -370,7 +370,8 @@ $$
 & = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(a_2)) \\
 & = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1w_2 + b_2)) \\
 & = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1w_2)) + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d( b_2))}\\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1)w_2) + \color{blue}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T h_1d(w_2))} + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d( b_2))}\\
+& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1)w_2) \\
+\quad &+ \color{blue}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T h_1d(w_2))} + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d( b_2))}\\
 \end{align*}
 $$
 
@@ -387,7 +388,7 @@ $$
 
 
 
-<h2 id="第一层"><a href="#第一层" class="headerlink" title="第一层"></a>第一层</h2><p>经过前两节的推导，我们得到了第二和第三层的表达式，但是他们的规律还不是非常的明显，我们继续推导第一层的偏导数。</p>
+<h2 id="第一层推导"><a href="#第一层推导" class="headerlink" title="第一层推导"></a>第一层推导</h2><p>经过前两节的推导，我们得到了第二和第三层的表达式，但是他们的规律还不是非常的明显，我们继续推导第一层的偏导数。</p>
 
 $$
 \begin{align*}
@@ -397,7 +398,8 @@ $$
 & = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T )^T \sigma ^{'}(a1)\odot d(a1)) \\
 & = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0w_1 + b_1)) \\
 & = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0w_1)) + tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(b_1)) \\
-& = \color{blue}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T h_0d(w_1))} + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(b_1))} + tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0)w_1)\\
+& = \color{blue}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T h_0d(w_1))} + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(b_1))} \\
+&+ tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0)w_1)\\
 \end{align*}
 $$
 
@@ -429,6 +431,16 @@ $$
 $$
 
 
+<p>假设网络有 $n$层，编号依次为 1, 2 …，损失函数关于网络最终输出的偏导为$\frac{\partial L}{\partial out}$，可以比较明显地发现以下规律：</p>
+
+$$
+\frac{\partial L}{\partial w_{i}} = h_{i-1}^T\left[\frac{\partial L}{\partial out} \prod_{k=n}^{k=i+1}(w_{k}^T \odot \sigma^{'}(a_{k-1}))\right]
+$$
+
+
+
+
+<p><strong>注意:这里的连乘是倒序的</strong></p>
 <p>$b_1,b_2,b_3$的表达式为</p>
 
 $$
@@ -439,6 +451,25 @@ $$
 \end{align}
 $$
 
+
+<p>跟$w_i$类似，写出关于$b_i$的偏导数，其实就是$w_i$的偏导数去掉前面的$h_{i-1}$</p>
+
+$$
+\frac{\partial L}{\partial w_{i}} = \frac{\partial L}{\partial out} \prod_{k=n}^{k=i+1}(w_{k}^T \odot \sigma^{'}(a_{k-1}))
+$$
+
+
+<p><strong>注意:这里的连乘是倒序的</strong></p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>有了前面的推导过程，接下来就是代码的实现，代码将包含3个部分。</p>
+<ul>
+<li>数据准备</li>
+<li>模型类实现</li>
+<li>全连接层实现</li>
+</ul>
+<h3 id="测试和训练数据生成"><a href="#测试和训练数据生成" class="headerlink" title="测试和训练数据生成"></a>测试和训练数据生成</h3><p>在开始实现之前，我们需要先准备一些数据用于验证我们的模型工作是否正常。这里就直接实用<code>sklearn</code>库所提供的<code>make_classification</code>函数生成测试用的数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">N_CLASS = <span class="number">3</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_classification</span><br><span class="line">x, y = make_classification(n_samples=<span class="number">2000</span>, n_features=<span class="number">5</span>, n_classes=N_CLASS,</span><br><span class="line">                           n_informative=<span class="number">5</span>, n_repeated=<span class="number">0</span>, n_redundant=<span class="number">0</span>, n_clusters_per_class=<span class="number">1</span>)</span><br><span class="line">sns.scatterplot(x=x[:,<span class="number">0</span>], y=x[:,<span class="number">1</span>], hue=y)</span><br></pre></td></tr></table></figure>
+
+<p>测试用的数据将包含5个特征，也就是说输入的向量维度是5，总共有 3个类别</p>
 ]]></content>
       <categories>
         <category>机器学习</category>
@@ -498,8 +529,47 @@ $$
   <entry>
     <title>pandas教程</title>
     <url>/2022/03/29/pandas%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<p>因为这是之前学的，也总结了一些笔记，但还少一篇比较全面的总结，这篇文章相当于补上了。</p>
+    <content><![CDATA[<p>这是很久之前在Kaggle上学的，写了一些笔记，但还少一篇比较全面的总结，这篇文章相当于补上了。</p>
 <span id="more"></span>
+
+<h2 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h2><p><code>DataFrame</code>是<code>pandas</code>里面最基本的数据结构和操作单元，<code>pandas</code>所有的操作都是围绕它来进行的。<code>DataFrame</code>可以理解为一个类似于Excel的多维的数据表，可以存储并操作表格型的数据。</p>
+<ul>
+<li><code>df.index</code>代表的是行编号</li>
+<li><code>df.columns</code>代表的是列编号</li>
+</ul>
+<h3 id="新建DataFrame"><a href="#新建DataFrame" class="headerlink" title="新建DataFrame"></a>新建DataFrame</h3><p>新建 DataFrame的方式一般有以下几种：</p>
+<ol>
+<li><p>通过一维的<code>list</code>或者<code>numpy.ndarrys</code>创建</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 一维</span></span><br><span class="line">data = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">df = pd.DataFrame(data) <span class="comment">#输出是一列</span></span><br><span class="line"><span class="comment"># 二维</span></span><br><span class="line">data = [[<span class="string">&#x27;Alex&#x27;</span>,<span class="number">10</span>],[<span class="string">&#x27;Bob&#x27;</span>,<span class="number">12</span>],[<span class="string">&#x27;Clarke&#x27;</span>,<span class="number">13</span>]]</span><br><span class="line">df = pd.DataFrame(data,columns=[<span class="string">&#x27;Name&#x27;</span>,<span class="string">&#x27;Age&#x27;</span>]) <span class="comment">#可以指定列名</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过字典创建</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 两列元素的长度需要相同</span></span><br><span class="line">data = &#123;<span class="string">&#x27;Name&#x27;</span>:[<span class="string">&#x27;Tom&#x27;</span>, <span class="string">&#x27;Jack&#x27;</span>, <span class="string">&#x27;Steve&#x27;</span>, <span class="string">&#x27;Ricky&#x27;</span>],<span class="string">&#x27;Age&#x27;</span>:[<span class="number">28</span>,<span class="number">34</span>,<span class="number">29</span>,<span class="number">42</span>]&#125; </span><br><span class="line">df = pd.DataFrame(data) <span class="comment"># 这里默认的 index 就是 range(n)，n 是列表的长度</span></span><br><span class="line"><span class="comment"># 可以指定行的名称</span></span><br><span class="line">df = pd.DataFrame(data, index=[<span class="string">&#x27;rank1&#x27;</span>,<span class="string">&#x27;rank2&#x27;</span>,<span class="string">&#x27;rank3&#x27;</span>,<span class="string">&#x27;rank4&#x27;</span>])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过Series</p>
+<p><code>pd.Series</code> 可以表示 <code>dataframe</code>中的一列，可以将<code>pd.Series</code>组成一个字典或者列表再初始化得到一个<code>dataframe</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">d = &#123;<span class="string">&#x27;one&#x27;</span> : pd.Series([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], index=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]),</span><br><span class="line">   <span class="string">&#x27;two&#x27;</span> : pd.Series([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], index=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>])&#125;</span><br><span class="line"><span class="comment"># one 列的最后一行会补全为 NaN</span></span><br><span class="line">df = pd.DataFrame(d)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="常用属性"><a href="#常用属性" class="headerlink" title="常用属性"></a>常用属性</h2><p><code>dataframe</code>有很多非常有用的属性，可以快速地分析一个表格数据，这里分别列举出来</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df1.describe() <span class="comment"># 计算数据中的数值型的一些常见统计信息(以列为单位)</span></span><br><span class="line">df1.index <span class="comment"># 返回 行索引</span></span><br><span class="line">df1.columns <span class="comment"># 返回列索引</span></span><br><span class="line">df1.values <span class="comment"># 返回所有的值，以array的形式</span></span><br><span class="line">df1.T <span class="comment">#返回 转置结果</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><p>使用<code>panda</code>提供的方法可以非常快速地对表格进行操作</p>
+<p>假设我们有这样一个表格</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">date_index=pd.date_range(<span class="string">&#x27;20211020&#x27;</span>, periods=<span class="number">5</span>)</span><br><span class="line">df1 = pd.DataFrame(np.random.randn(<span class="number">5</span>, <span class="number">3</span>), index=date_index, columns=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/bYZ4kvL.png" alt="image-20220408214411140"></p>
+<p>按照列方向进行排序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df1.sort_index(axis=<span class="number">1</span>, ascending=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/3k5y9Rk.png" alt="image-20220408214558146"></p>
+<p>按照某个列的值进行排序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df1.sort_values(by=<span class="string">&#x27;a&#x27;</span>, ascending=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/BDgO5xP.png" alt="image-20220408214706887"></p>
+<h2 id="数据访问"><a href="#数据访问" class="headerlink" title="数据访问"></a>数据访问</h2><p>对表中的某个元素进行访问也是一个常用的操作，<code>pandas</code>提供了多种方式完成这个操作</p>
+<ol>
+<li><code>df.loc</code>以标签的形式访问</li>
+<li><code>df.iloc</code>使用整数索引进行访问</li>
+</ol>
 ]]></content>
       <tags>
         <tag>数据分析</tag>
@@ -509,7 +579,8 @@ $$
   <entry>
     <title>使用Github Actions 自动化部署 Hexo</title>
     <url>/2022/03/11/%E4%BD%BF%E7%94%A8Github-Action-%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2-Hexo/</url>
-    <content><![CDATA[<span id="more"></span>
+    <content><![CDATA[<p>用<code>hexo</code>搭建个人博客并使用<code>github action</code>自动进行部署</p>
+<span id="more"></span>
 
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前立的每天写点东西的Flag感觉都差不多遗忘了，注册的博客园感觉也不好玩，默认的界面太丑了，写东西都没感觉（好吧，这是借口）。觉得还是搭建自己的博客比较Geek 一点，自己DIY也比较方便（就是想折腾）。</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
@@ -565,8 +636,12 @@ $$
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash">git config --global init.defaultBranch main</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git branch -M main <span class="comment"># 如果是已经新建了的仓库，修改当前的分支名称为 main</span></span></span><br></pre></td></tr></table></figure></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>工具使用</category>
+      </categories>
       <tags>
         <tag>工具使用</tag>
+        <tag>Github</tag>
       </tags>
   </entry>
   <entry>

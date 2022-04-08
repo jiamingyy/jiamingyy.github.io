@@ -23,7 +23,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"jiamingyy.github.io","root":"/","language":"zh_cn","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"1220px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg1.svg","description":"May the Force be with you."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/logo.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"150px","content_max_width":"1920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg1.svg","description":"May the Force be with you."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -206,12 +206,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>38 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>636 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>2 Mins</span>
         </span>
     
     
@@ -223,8 +223,47 @@
         
 
         <div class="article-content markdown-body">
-            <p>因为这是之前学的，也总结了一些笔记，但还少一篇比较全面的总结，这篇文章相当于补上了。</p>
+            <p>这是很久之前在Kaggle上学的，写了一些笔记，但还少一篇比较全面的总结，这篇文章相当于补上了。</p>
 <span id="more"></span>
+
+<h2 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h2><p><code>DataFrame</code>是<code>pandas</code>里面最基本的数据结构和操作单元，<code>pandas</code>所有的操作都是围绕它来进行的。<code>DataFrame</code>可以理解为一个类似于Excel的多维的数据表，可以存储并操作表格型的数据。</p>
+<ul>
+<li><code>df.index</code>代表的是行编号</li>
+<li><code>df.columns</code>代表的是列编号</li>
+</ul>
+<h3 id="新建DataFrame"><a href="#新建DataFrame" class="headerlink" title="新建DataFrame"></a>新建DataFrame</h3><p>新建 DataFrame的方式一般有以下几种：</p>
+<ol>
+<li><p>通过一维的<code>list</code>或者<code>numpy.ndarrys</code>创建</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一维</span></span><br><span class="line">data = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">df = pd.DataFrame(data) <span class="comment">#输出是一列</span></span><br><span class="line"><span class="comment"># 二维</span></span><br><span class="line">data = [[<span class="string">&#x27;Alex&#x27;</span>,<span class="number">10</span>],[<span class="string">&#x27;Bob&#x27;</span>,<span class="number">12</span>],[<span class="string">&#x27;Clarke&#x27;</span>,<span class="number">13</span>]]</span><br><span class="line">df = pd.DataFrame(data,columns=[<span class="string">&#x27;Name&#x27;</span>,<span class="string">&#x27;Age&#x27;</span>]) <span class="comment">#可以指定列名</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过字典创建</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 两列元素的长度需要相同</span></span><br><span class="line">data = &#123;<span class="string">&#x27;Name&#x27;</span>:[<span class="string">&#x27;Tom&#x27;</span>, <span class="string">&#x27;Jack&#x27;</span>, <span class="string">&#x27;Steve&#x27;</span>, <span class="string">&#x27;Ricky&#x27;</span>],<span class="string">&#x27;Age&#x27;</span>:[<span class="number">28</span>,<span class="number">34</span>,<span class="number">29</span>,<span class="number">42</span>]&#125; </span><br><span class="line">df = pd.DataFrame(data) <span class="comment"># 这里默认的 index 就是 range(n)，n 是列表的长度</span></span><br><span class="line"><span class="comment"># 可以指定行的名称</span></span><br><span class="line">df = pd.DataFrame(data, index=[<span class="string">&#x27;rank1&#x27;</span>,<span class="string">&#x27;rank2&#x27;</span>,<span class="string">&#x27;rank3&#x27;</span>,<span class="string">&#x27;rank4&#x27;</span>])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过Series</p>
+<p><code>pd.Series</code> 可以表示 <code>dataframe</code>中的一列，可以将<code>pd.Series</code>组成一个字典或者列表再初始化得到一个<code>dataframe</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">&#x27;one&#x27;</span> : pd.Series([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], index=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]),</span><br><span class="line">   <span class="string">&#x27;two&#x27;</span> : pd.Series([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], index=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>])&#125;</span><br><span class="line"><span class="comment"># one 列的最后一行会补全为 NaN</span></span><br><span class="line">df = pd.DataFrame(d)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="常用属性"><a href="#常用属性" class="headerlink" title="常用属性"></a>常用属性</h2><p><code>dataframe</code>有很多非常有用的属性，可以快速地分析一个表格数据，这里分别列举出来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df1.describe() <span class="comment"># 计算数据中的数值型的一些常见统计信息(以列为单位)</span></span><br><span class="line">df1.index <span class="comment"># 返回 行索引</span></span><br><span class="line">df1.columns <span class="comment"># 返回列索引</span></span><br><span class="line">df1.values <span class="comment"># 返回所有的值，以array的形式</span></span><br><span class="line">df1.T <span class="comment">#返回 转置结果</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><p>使用<code>panda</code>提供的方法可以非常快速地对表格进行操作</p>
+<p>假设我们有这样一个表格</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">date_index=pd.date_range(<span class="string">&#x27;20211020&#x27;</span>, periods=<span class="number">5</span>)</span><br><span class="line">df1 = pd.DataFrame(np.random.randn(<span class="number">5</span>, <span class="number">3</span>), index=date_index, columns=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/bYZ4kvL.png" alt="image-20220408214411140"></p>
+<p>按照列方向进行排序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df1.sort_index(axis=<span class="number">1</span>, ascending=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/3k5y9Rk.png" alt="image-20220408214558146"></p>
+<p>按照某个列的值进行排序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df1.sort_values(by=<span class="string">&#x27;a&#x27;</span>, ascending=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/BDgO5xP.png" alt="image-20220408214706887"></p>
+<h2 id="数据访问"><a href="#数据访问" class="headerlink" title="数据访问"></a>数据访问</h2><p>对表中的某个元素进行访问也是一个常用的操作，<code>pandas</code>提供了多种方式完成这个操作</p>
+<ol>
+<li><code>df.loc</code>以标签的形式访问</li>
+<li><code>df.iloc</code>使用整数索引进行访问</li>
+</ol>
 
         </div>
 
@@ -500,7 +539,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame"><span class="nav-number">1.</span> <span class="nav-text">DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BADataFrame"><span class="nav-number">1.1.</span> <span class="nav-text">新建DataFrame</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">常用属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE"><span class="nav-number">4.</span> <span class="nav-text">数据访问</span></a></li></ol>
     </div>
 </div>
         </aside>
