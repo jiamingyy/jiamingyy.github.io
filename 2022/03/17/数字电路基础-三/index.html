@@ -206,12 +206,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>238 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.8k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>10 Mins</span>
         </span>
     
     
@@ -226,131 +226,119 @@
             <p>学习Verilog的基本语法.</p>
 <span id="more"></span>
 
-<h2 id="可综合语言"><a href="#可综合语言" class="headerlink" title="可综合语言"></a>可综合语言</h2><p>可以被综合器转化为相应的逻辑门电路的语句称为可综合语言。</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">module&#x2F; endmodule</td>
-<td align="center">Verlog 的基本单元，成对使用</td>
-</tr>
-<tr>
-<td align="center">input</td>
-<td align="center">输入端口定义</td>
-</tr>
-<tr>
-<td align="center">output</td>
-<td align="center">输出端口定义</td>
-</tr>
-<tr>
-<td align="center">inout</td>
-<td align="center">输入&#x2F;输出端口定义</td>
-</tr>
-<tr>
-<td align="center">begin</td>
-<td align="center">成对和end使用相当于 {}</td>
-</tr>
-<tr>
-<td align="center">end</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<p>数据类型</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">wire</td>
-<td align="center">线网类型</td>
-</tr>
-<tr>
-<td align="center">reg</td>
-<td align="center">寄存器类型</td>
-</tr>
-<tr>
-<td align="center">parameter</td>
-<td align="center">参数类型 &#x2F; 类似于常量</td>
-</tr>
-</tbody></table>
-<p>逻辑判断</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">if</td>
-<td align="center">逻辑判断</td>
-</tr>
-<tr>
-<td align="center">else</td>
-<td align="center">逻辑判断</td>
-</tr>
-<tr>
-<td align="center">case</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">endcase</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">default</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<p>连续赋值</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">always</td>
-<td align="center">过程赋值</td>
-</tr>
-<tr>
-<td align="center">assign</td>
-<td align="center">连续赋值</td>
-</tr>
-</tbody></table>
-<p>过程赋值条件</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">posedge</td>
-<td align="center">上升沿</td>
-</tr>
-<tr>
-<td align="center">negedge</td>
-<td align="center">下降沿</td>
-</tr>
-<tr>
-<td align="center">posedge or negedge</td>
-<td align="center">上升沿或者下降沿</td>
-</tr>
-</tbody></table>
-<h2 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里演示一个与门的代码结构</span></span><br><span class="line"><span class="keyword">module</span> module_name</span><br><span class="line">(</span><br><span class="line">	a, b, c</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">input</span> a; <span class="comment">// 输入</span></span><br><span class="line"><span class="keyword">input</span> b;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">output</span> c; <span class="comment">// 输出</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">assign</span> c = a &amp; b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="电路的描述方式"><a href="#电路的描述方式" class="headerlink" title="电路的描述方式"></a>电路的描述方式</h2><p>verilog是描述电路的语言。为了实现系统的逻辑功能，在设计系统时可以采用多种描述方式进行建模。<code>verilog</code>通常使用三种不同的风格描述电路。在设计电路的时候可以任意使用一种或混合使用多种描述方式来描述电路。经过综合工具综合后的结果一般都是门级结构描述。</p>
+<ol>
+<li><strong>结构描述方式：</strong>调用其他已经定义好的低层模块对整个电路功能进行描述，或者直接调用<code>verilog</code>内部基本的门级元件描述电路的结构。</li>
+<li><strong>数据流描述方式：</strong>设计者从数据在各存储单元之间进行流动和运算的角度对电路的功能进行描述。设计者可以使用<code>verilog</code>提供的高层次运算符，例如 <code>+</code>等直接对数据进行高层次的数学逻辑运算建模，而不用关心具体的门级电路结构。</li>
+<li><strong>行为描述方式：</strong>直接根据电路的外部行为进行建模，与具体的硬件电路无关。</li>
+</ol>
+<h2 id="常量表示方式"><a href="#常量表示方式" class="headerlink" title="常量表示方式"></a>常量表示方式</h2><p><code>verlog</code>中的常量有三种类型</p>
+<ul>
+<li>整数型常量 （可逻辑综合）</li>
+<li>实数型常量 （用于逻辑仿真）</li>
+<li>字符串型常量 （用于逻辑仿真）</li>
+</ul>
+<p>整数型常量的定义格式为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[-][&lt;位宽&gt;]&#x27;&lt;进制&gt;&lt;数值&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中进制的标识符分别为：二进制（b或B）、八进制（o或O）十进制（d或D）、十六进制（h或H）。若省略进制则默认为十进制。</p>
+<p><em>负号的标识需要在位宽的前面</em></p>
+<p>数值还可以使用符号表示不定态</p>
+<ul>
+<li>x（X）表示未知状态</li>
+<li>z（Z，？）表示高阻态</li>
+</ul>
+<p>一个 <code>x</code>或<code>z</code>可以分别表示十六进制中的四位，八进制中的三位，二进制的一位</p>
+<p>声明举例</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">parameter</span> a=<span class="number">4&#x27;b10x0</span>			<span class="comment">// 4位二进制，第二位为不定值</span></span><br><span class="line"><span class="keyword">parameter</span> b=<span class="number">12&#x27;dz</span>			<span class="comment">// 12位十进制，全位为高阻态</span></span><br><span class="line"><span class="keyword">parameter</span> c=<span class="number">8&#x27;h4x</span>			<span class="comment">// 8位十六进制，低4位为不定值</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="变量和数据类型"><a href="#变量和数据类型" class="headerlink" title="变量和数据类型"></a>变量和数据类型</h2><p><code>verilog</code>中包含两大数据类型</p>
+<ul>
+<li><p><code>wire</code>类型</p>
+<p>线网类型代表各个模块之间的物理连线，不能存储逻辑值，它的值由它的驱动元件决定，线网类型的默认值为高阻态z。<code>verilog</code>中所有的输入输出信号类型默认均为<code>wire</code>类型。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span> [位宽] 线网名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明例子</span></span><br><span class="line"><span class="keyword">wire</span> a;				<span class="comment">// 定义一个 1位 的wire</span></span><br><span class="line"><span class="keyword">wire</span> [<span class="number">7</span>:<span class="number">0</span>] b;		<span class="comment">// 定义一个8 位的wire</span></span><br><span class="line"><span class="keyword">wire</span> [<span class="number">4</span>:<span class="number">1</span>] c, d;	<span class="comment">// 定义一个4 位的wire</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>reg</code>类型</p>
+<p>寄存器类型表示一个抽象的数据存储单元，它具有状态保存作用。寄存器类型只能在<code>initial</code>和<code>always</code>内部被赋值。在赋值前默认值为<code>x</code>。对于<code>reg</code>类型，赋值语句的作用就像改变一组触发器的存储单元的值。可以用各种构造控制改变值的时机，如上升沿、下降沿等。单个<code>reg</code>类型的声明格式如下，其中的 n 代表寄存器的位宽。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [位宽] 寄存器名称;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] a;		<span class="comment">// 声明一个 4 位的寄存器</span></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">4</span>:<span class="number">1</span>] b;		<span class="comment">// 声明一个 4 位的寄存器</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><code>wire</code>和<code>reg</code>的默认位宽都是1，当位宽大于1时又称为<strong>向量</strong>。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span>[msb:lsb] name;</span><br></pre></td></tr></table></figure>
+<p>上面的<code>msb</code>和<code>lsb</code>分别代表向量的最高有效位和最低有效位。<code>msb</code>和<code>lsb</code>必须为常数、常数表达式或者parameter参数。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>线网和变量都可以声明为一个数组，数组中的每个元素可以是标量也可以是向量。数组的定义格式为</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">数据类型 [位宽] 变量名称[地址范围]</span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">wire</span> bus[<span class="number">5</span>:<span class="number">0</span>]; 			<span class="comment">//声明 6个位宽为 1 的wire 类型数组</span></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] data[<span class="number">3</span>:<span class="number">0</span>]; 	<span class="comment">// 声明4个位宽为7 的reg 类型数组</span></span><br></pre></td></tr></table></figure>
+
+<p>通过使用下标可以访问数组中特定的单元</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data[<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">data[<span class="number">3</span>] = <span class="number">8&#x27;hff</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="verilog中的特殊运算符"><a href="#verilog中的特殊运算符" class="headerlink" title="verilog中的特殊运算符"></a>verilog中的特殊运算符</h2><p>verilog中支持的运算符与c语言中的运算符基本一致，但是由于<code>verilog</code>支持不定值的赋值方式，所以某些运算符的运算结果可能会不太一样。而且还有<code>verilog</code>中的所特有的运算符这里也会列出来。</p>
+<h3 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h3><ol>
+<li>在进程整数除法运算时，结果要略去小数的部分只取整数部分。</li>
+<li>在进行取模运算时结果的符号位与第一个操作数的符号位一致。</li>
+</ol>
+<p><strong>注意：当所运算的操作数中含有不确定的值<code>x</code>或者<code>z</code>时算数运算的结果也是不确定的</strong></p>
+<h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><ol>
+<li><code>! &amp;&amp; ||</code>这三个逻辑运算符只有作用于 全 0 的操作数时才认为该操作数具有逻辑零的值，操作数中有任意多个1则认为该操作数为1，当操作数中含有<code>x</code>时则返回结果仍然为 <code>x</code>。</li>
+<li>判断逻辑相等和不相等分为两种 ,逻辑相等<code>== !=</code>和逻辑全等<code>=== !==</code>，当进行<strong>相等运算</strong>时，两个操作数必须逐位相等，比较结果才为1（真），如果任意一个操作数含有不定态（X）或高祖态（Z），其相等比较的结果就会是不定值。进行<strong>全等运算</strong>时，对不定或高阻状态也进行比较，当两个操作数完全一致时，其结果才为1，否则为0.</li>
+</ol>
+<h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><ul>
+<li><p>在使用<code>~ &amp; | ^ ^~</code>等位运算符时，若两个操作数的位宽不相等，则会自动将操作数在右端对齐，位数少的操作数相应的高位会使用0进行填充。</p>
+</li>
+<li><p>移位操作，移位操作分为两种，移位运算符 <code>&gt;&gt;</code>，<code>&lt;&lt;</code>，算术移位运算符<code>&lt;&lt;&lt;</code>,<code>&gt;&gt;&gt;</code>。</p>
+<p>对于左移操作中出现的空位，都使用 0 开进行填充，在进行右移操作时，算术移位会使用符号位进行填充。</p>
+</li>
+</ul>
+<h3 id="独有的运算符"><a href="#独有的运算符" class="headerlink" title="独有的运算符"></a>独有的运算符</h3><p>下面列举<code>verilog</code>中所特有的运算符。</p>
+<ul>
+<li><p>拼接运算符：可以将两个或多个信号的某些为进行拼接表示一个整体信号。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例子</span></span><br><span class="line">&#123;a, b[<span class="number">3</span>:<span class="number">0</span>], w, <span class="number">3&#x27;b101</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将信号复制再进行拼接</span></span><br><span class="line">&#123;<span class="number">4</span>&#123;w&#125;&#125; <span class="comment">// 等同于 </span></span><br><span class="line">&#123;w, w, w, w&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>缩位运算符：缩位运算符的符号与位运算符的符号一样，但缩位运算符是针对当个操作数的，对当个操作数从左到右按照位的顺序两两进行相应的运算。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">4&#x27;b0101</span>;</span><br><span class="line"></span><br><span class="line">&amp;a			<span class="comment">//  0</span></span><br><span class="line">|a 			<span class="comment">// 1</span></span><br><span class="line">^a			<span class="comment">// 0</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h2><h3 id="结构化描述"><a href="#结构化描述" class="headerlink" title="结构化描述"></a>结构化描述</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里演示全器的实现</span></span><br><span class="line"><span class="keyword">module</span> fadder</span><br><span class="line">(</span><br><span class="line">	i_A, i_B, i_Cin,</span><br><span class="line">    o_S, o_C</span><br><span class="line">);</span><br><span class="line">	<span class="keyword">input</span> i_A, i_B, i_Cin; <span class="comment">// 输入端口</span></span><br><span class="line">	<span class="keyword">output</span> o_S, o_C; <span class="comment">// 输出端口</span></span><br><span class="line">	<span class="keyword">parameter</span> s_delay=<span class="number">1</span>, c_delay=<span class="number">1</span>; <span class="comment">// 定义两个参数，参数也可以代表常量</span></span><br><span class="line">	<span class="keyword">assign</span> #s_delay o_S = i_A ^ i_B ^ i_Cin; <span class="comment">// 延时s_delay </span></span><br><span class="line">    <span class="keyword">assign</span> #c_delay o_C = (i_A ^ i_B) &amp; i_Cin | (i_A &amp; i_B) <span class="comment">// 延时c_delay </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p>实例化模块的基本语法 如下</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">模块名 实例名 (.端口名<span class="number">1</span>(连线<span class="number">1</span>), .端口名<span class="number">2</span>(连线<span class="number">2</span>), ...)；</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> fadder_delay_1</span><br><span class="line">(</span><br><span class="line">	i_A, i_B, i_Cin,</span><br><span class="line">    o_S, o_C</span><br><span class="line">)</span><br><span class="line">	<span class="comment">// 实例化一个模块并设置其中的参数</span></span><br><span class="line">    <span class="comment">// 第一种方式</span></span><br><span class="line">    fadder fadder_delay_1_ins(<span class="variable">.i_A</span>(i_A), <span class="variable">.i_B</span>(i_B), <span class="variable">.i_Cin</span>(i_Cin), <span class="variable">.o_S</span>(o_S), o_C(o_C));</span><br><span class="line">    <span class="keyword">defparam</span> fadder_delay_1_ins<span class="variable">.s_delay</span>=<span class="number">2</span>, fadder_delay_1_ins<span class="variable">.c_delay</span>=<span class="number">3</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 第二种方式</span></span><br><span class="line">    fadder <span class="variable">#(2,3)</span> </span><br><span class="line">    	fadder_delay_1_ins(<span class="variable">.i_A</span>(i_A), <span class="variable">.i_B</span>(i_B), <span class="variable">.i_Cin</span>(i_Cin), <span class="variable">.o_S</span>(o_S), o_C(o_C));</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//第三种方式</span></span><br><span class="line">    fadder <span class="variable">#(.s_delay(2),.c_delay(3))</span></span><br><span class="line">    	fadder_delay_1_ins(<span class="variable">.i_A</span>(i_A), <span class="variable">.i_B</span>(i_B), <span class="variable">.i_Cin</span>(i_Cin), <span class="variable">.o_S</span>(o_S), o_C(o_C));</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据流描述"><a href="#数据流描述" class="headerlink" title="数据流描述"></a>数据流描述</h3><p>在使用数据流描述电路时通常使用连续赋值语句实现。连续赋值语句必须以 <code>assign</code>开头，出现在和门单元实例化相同的代码层次，它的结构为</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> [delay] wire_type_var=expression;</span><br></pre></td></tr></table></figure>
+
+<p>使用数据流的方式描述一个4位的加法器</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> adder(</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] a, <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] b, <span class="keyword">input</span> cin, <span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] sum, <span class="keyword">output</span> cout;</span><br><span class="line">)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> &#123;cout,sum&#125; = a+b+cin;</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p>在进行逻辑综合时，综合器会自动优化综合出来的门电路。</p>
+<h3 id="行为描述"><a href="#行为描述" class="headerlink" title="行为描述"></a>行为描述</h3><p>行为描述一般使用<code>initial</code>和<code>always</code>过程块结构。</p>
+<ul>
+<li><p>initial过程块</p>
+<p>主要用于仿真测试，用来对变量进行初始化或者产生激励波形，过程块中的内容只会被执行一次，一个<code>module</code>可以有多个<code>initial</code>块结构，各个<code>initial</code>过程块之间并行运行。若块中的语句没有添加延时控制，则可以延时指定的时钟周期后再执行后续指令。</p>
+<p><em>initial过程块不能进行逻辑综合</em></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">initial</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	#延时数 行为语句; </span><br><span class="line">    #延时数 行为语句; </span><br><span class="line">    ..</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">reg</span>[<span class="number">3</span>:<span class="number">0</span>] a;</span><br><span class="line"></span><br><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span> </span><br><span class="line">a=<span class="number">4&#x27;b0000</span>; 		<span class="comment">// 缺省为在0时刻执行该代码</span></span><br><span class="line">#<span class="number">5</span> a=<span class="number">4&#x27;b0001</span> 	<span class="comment">// 经过5个时间单位后执行赋值</span></span><br><span class="line">#<span class="number">5</span> a=<span class="number">4&#x27;b0010</span> 	<span class="comment">// 经过 10 个时间单位后执行赋值</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
 
-
+</li>
+<li><p>always 过程块，always 过程块会一致被重复执行，多个<code>always</code>过程块并行执行，与书写顺序无关。<code>@</code>中包含的敏感信号可为电平触发或者逻辑变量触发，使用电平触发时可以使用 <code>posedge</code>和<code>negedge</code>表示上升沿和下降沿。</p>
+<p>在<code>always</code>过程块中执行的赋值语句，等号左边必须为<code>reg</code>类型。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @ (敏感信号列表)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    # 延时数 行为语句<span class="number">1</span>;</span><br><span class="line">    # 延时数 行为语句<span class="number">2</span>;</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk)					<span class="comment">//只在上升沿触发执行</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> clk)	<span class="comment">// 在上升沿和下降沿都执行	</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="过程块"><a href="#过程块" class="headerlink" title="过程块"></a>过程块</h2><p>前面举例使用将多条语句包裹在<code>begin ... end </code>语句块中的语法，都是串行语句块。串行块内的语句按照他们在块内的语句顺序执行，若语句含有延时控制，则后一条语句的执行开始时刻为前一条语句延时控制结束后的时刻。</p>
+<p><code>fork ... join </code>可以替换到<code>begin ... end</code>出现的地方代表并行语句块，块内的语句是并行执行的。各个语句的延时是相对于进入并行块的时刻同时开始计时。</p>
+<h2 id="过程赋值"><a href="#过程赋值" class="headerlink" title="过程赋值"></a>过程赋值</h2><p>这块儿还没有怎么搞懂。</p>
+<p>过程赋值语句分为阻塞赋值和非阻塞赋值两种形式，多用于对 <code>reg</code>类型的变量进行赋值。</p>
+<p>多条阻塞赋值语句是顺序执行的，但多条非阻塞语句是并行执行的。</p>
+<p><strong>在描述组合逻辑电路时使用非阻塞赋值，在描述时序逻辑电路时使用阻塞赋值。</strong></p>
+<h3 id="非阻塞赋值-例如-b-lt-x3D-a"><a href="#非阻塞赋值-例如-b-lt-x3D-a" class="headerlink" title="非阻塞赋值 (例如 b &lt;&#x3D; a)"></a>非阻塞赋值 (例如 b &lt;&#x3D; a)</h3><p>非阻塞赋值通常用在编写可综合模块时使用。它有以下特点</p>
+<ol>
+<li>在块结束后才完成赋值操作</li>
+<li>b的值并不是立刻就改变</li>
+</ol>
+<h2 id="阻塞赋值（例如-b-x3D-a）"><a href="#阻塞赋值（例如-b-x3D-a）" class="headerlink" title="阻塞赋值（例如 b &#x3D; a）"></a>阻塞赋值（例如 b &#x3D; a）</h2><ol>
+<li>只有当赋值语句执行完成后当前块才结束</li>
+<li>b的值在赋值语句执行完成后立刻改变</li>
+</ol>
+<h2 id="判断和循环"><a href="#判断和循环" class="headerlink" title="判断和循环"></a>判断和循环</h2><h3 id="逻辑判断"><a href="#逻辑判断" class="headerlink" title="逻辑判断"></a>逻辑判断</h3><p>逻辑判断使用<code>if () ... else if () ... else</code> 语句表示。具体的语法和c 语言的差不多，这是在书写多条语句的时候需要使用 <code>begin ... end</code>括起来。</p>
 
         </div>
 
@@ -626,7 +614,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%BB%BC%E5%90%88%E8%AF%AD%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">可综合语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#verilog-%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">verilog 程序的基本结构</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E8%B7%AF%E7%9A%84%E6%8F%8F%E8%BF%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">电路的描述方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">常量表示方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">变量和数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">3.1.</span> <span class="nav-text">数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#verilog%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.</span> <span class="nav-text">verilog中的特殊运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97"><span class="nav-number">4.1.</span> <span class="nav-text">算术运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="nav-number">4.2.</span> <span class="nav-text">逻辑运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-number">4.3.</span> <span class="nav-text">位运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8B%AC%E6%9C%89%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.4.</span> <span class="nav-text">独有的运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#verilog-%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">verilog 程序的基本结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%8F%E8%BF%B0"><span class="nav-number">5.1.</span> <span class="nav-text">结构化描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E6%8F%8F%E8%BF%B0"><span class="nav-number">5.2.</span> <span class="nav-text">数据流描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E4%B8%BA%E6%8F%8F%E8%BF%B0"><span class="nav-number">5.3.</span> <span class="nav-text">行为描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%E5%9D%97"><span class="nav-number">6.</span> <span class="nav-text">过程块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%E8%B5%8B%E5%80%BC"><span class="nav-number">7.</span> <span class="nav-text">过程赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%B5%8B%E5%80%BC-%E4%BE%8B%E5%A6%82-b-lt-x3D-a"><span class="nav-number">7.1.</span> <span class="nav-text">非阻塞赋值 (例如 b &lt;&#x3D; a)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E%E8%B5%8B%E5%80%BC%EF%BC%88%E4%BE%8B%E5%A6%82-b-x3D-a%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">阻塞赋值（例如 b &#x3D; a）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%92%8C%E5%BE%AA%E7%8E%AF"><span class="nav-number">9.</span> <span class="nav-text">判断和循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD"><span class="nav-number">9.1.</span> <span class="nav-text">逻辑判断</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>

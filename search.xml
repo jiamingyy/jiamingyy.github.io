@@ -732,6 +732,63 @@ $$
       </tags>
   </entry>
   <entry>
+    <title>pthread并行程序开发基础</title>
+    <url>/2022/04/23/pthread%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[<p>备课，复习 pthread 的使用，内容包括pthread 的基础知识以及并发所需要的PV操作</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>POSIX Threads</strong>（Portable Operating System Interface）, commonly known as <strong>pthreads</strong>, is an <a class="link"   href="https://en.wikipedia.org/wiki/Execution_model" >execution model<i class="fas fa-external-link-alt"></i></a> that exists independently from a language, as well as a parallel execution model. It allows a program to control multiple different flows of work that overlap in time. Each flow of work is referred to as a <em><a class="link"   href="https://en.wikipedia.org/wiki/Thread_(computing)" >thread<i class="fas fa-external-link-alt"></i></a></em>, and creation and control over these flows is achieved by making calls to the POSIX Threads API.</p>
+<ul>
+<li>是一种独立于编程语言的程序并行运行模型</li>
+<li>控制程序的并行工作流（线程）</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在编写<code>pthread</code>程序的第一步就是导入头文件</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span>	<span class="comment">// pthread api</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span>		<span class="comment">// posix system 中通用的api</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;semaphore.h&gt;</span> 	<span class="comment">// 信号量操作相关</span></span></span><br></pre></td></tr></table></figure>
+
+<p>使用 gcc 编译的时候需要加上 <code>-lpthread</code>参数</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">gcc demo1.c -lpthread -o demo1</span><br></pre></td></tr></table></figure>
+
+<h2 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h2><p>进程创建可以使用以下函数</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">pthread_create</span> <span class="params">(<span class="type">pthread_t</span> *thread_id,<span class="type">pthread_attr_t</span> *attr,<span class="type">void</span> *(*start_routine)(<span class="type">void</span> *),<span class="type">void</span> *arg)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>thread_id</code>是进程的唯一标识符</li>
+<li><code>attr_t</code> 设置进程的属性，可以设置想进程的调度策略，堆栈相关信息，可以设置为默认值 <code>NULL</code></li>
+<li><code>start_routine</code>是线程开始运行的函数指针，函数指针的原型包括一个<code>void</code>类型的形参指针</li>
+<li><code>arg</code>设置线程运行时传递的参数，可以在线程开始运行时传递用户自定义参数</li>
+</ul>
+<p>在进程运行过程中可以使用<code>pthread_self</code>获取当前线程的标识符。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">pthread_t</span> tid = pthread_self();</span><br></pre></td></tr></table></figure>
+
+<h2 id="结束进程"><a href="#结束进程" class="headerlink" title="结束进程"></a>结束进程</h2><p>当一个进程可以通过<code>return </code>或者 <code>pthread_exit()</code>方式结束自身的运行。</p>
+<p>一个线程结束，只是说它结束了运行状态，但是并不意味着它的所有信息都已经消失。</p>
+<p>可以通过 调用 <code>pthread_cancel</code>函数结束其他进程，但前提是需要获得需要结束进程的进程标识符。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">pthread_cancel(<span class="type">pthread_t</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a>进程同步</h2><p>进程同步算是OS 里面比较重要的内容了，<code>pthread</code>提供了很多 API 供我们使用。</p>
+<p><code>pthread_join(pthread_t tid, void* revalue)</code>可以阻塞当前线程并等待一个线程运行完毕再重新运行该进程。<code>revalue</code>是进程运行结束所返回的结果。</p>
+<h3 id="mutex"><a href="#mutex" class="headerlink" title="mutex"></a>mutex</h3><p>为了解决多个线程同时访问同一个内存问题，常用的<code>mutex</code>互斥锁方式可以通过定义一个<code>pthread_mutex_t</code>变量解决，它的使用方式如下。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">pthread_mutex_t</span> buff_mutex;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span>* <span class="title function_">thread1</span><span class="params">(<span class="type">void</span>* arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    pthread_mutex_lock(&amp;buff_mutex);</span><br><span class="line">    <span class="comment">// 访问内存</span></span><br><span class="line">    buff_count++;</span><br><span class="line">    pthread_mutex_unlock(&amp;buff_mutex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span>* <span class="title function_">thread2</span><span class="params">(<span class="type">void</span>* arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    pthread_mutex_lock(&amp;buff_mutex);</span><br><span class="line">    <span class="comment">// 访问内存</span></span><br><span class="line">    buff_count--;</span><br><span class="line">    pthread_mutex_unlock(&amp;buff_mutex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    pthread_mutex_init(&amp;buff_mutex, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_mutex_destroy(&amp;buff_mutex);</span><br><span class="line">    </span><br><span class="line">    pthread_mutex_destroy(&amp;buff_mutex); <span class="comment">// 使用完成后需要销毁</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在使用之前需要先调用 <code>pthread_mutex_init</code>初始化，当某个线程需要访问临界区时，使用 <code>pthread_mutex_lock(&amp;count_mutex);</code>进入临界区，结束访问临界区后使用 <code>pthread_mutex_unlock(&amp;count_mutex)</code>退出临界区访问。<code>mutex</code>使用完成后需要调用 <code>pthread_mutex_destroy</code>将mutex销毁。</p>
+<h3 id="semaphore"><a href="#semaphore" class="headerlink" title="semaphore"></a>semaphore</h3><p>理论上<code>mutex </code>可以当做一个 <code>semaphore=1</code>的信号量使用，在一定程度上两者是等价的,<code>Mutex</code>管理的是资源的访问，而<code>Semaphore</code>管理的是资源的数量。</p>
+<p>信号量可以根据资源的数量控制进程的访问。例如著名的生产者消费者问题，假设缓冲区数量为N</p>
+<ul>
+<li>当缓冲区中的资源数目小于N，生产者就可以不断生产，但当生产的资源数等于N，生产者就要停止生产，并等待消费者进行消费。</li>
+<li>当缓冲区中资源的数目大于N，消费者就可以不断消费直到资源的数目等于0，消费者就要阻塞直到生产者生产出货物。</li>
+</ul>
+<p>Linux中可以使用<code>semaphore.h</code>头文件中提供的API 完成PV线程同步操作。下面的代码就是实现生产者消费者问题的代码。其中<code>sem_t</code>定义了一个信号量，定义信号量后调用 <code>sem_init()</code>初始化信号量的值。 <code>sem_wait()</code>相当于 P操作，<code>sem_post()</code>相当于V操作。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//生产者消费者问题</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">pthread_mutex_t</span> buff_mutex; <span class="comment">// 创建一个互斥锁</span></span><br><span class="line"><span class="type">int</span> buff_count = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> buff[<span class="number">10</span>];</span><br><span class="line"><span class="type">sem_t</span> empty, full; <span class="comment">// 声明信号量</span></span><br><span class="line"><span class="comment">// 消费者线程</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">consumer</span><span class="params">(<span class="type">void</span>* arg)</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (;;)</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(&amp;full); <span class="comment">// P(full)</span></span><br><span class="line">        pthread_mutex_lock(&amp;buff_mutex);</span><br><span class="line">        buff[buff_count] = <span class="number">0</span>;</span><br><span class="line">        buff_count--;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[consumer thread] buffer count %d&quot;</span>, buff_count); <span class="comment">// 打印当前的缓冲区信息</span></span><br><span class="line">        pthread_mutex_unlock(&amp;buff_mutex);</span><br><span class="line">        sem_post(&amp;empty); <span class="comment">// V(empty)</span></span><br><span class="line">        sleep(<span class="number">2</span>); <span class="comment">//假设每次消费需要 2 秒</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 生产者线程</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">producer</span><span class="params">(<span class="type">void</span>* arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (;;)</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(&amp;empty); <span class="comment">// P(empty)</span></span><br><span class="line">        pthread_mutex_lock(&amp;buff_mutex); <span class="comment">// 进入临界区</span></span><br><span class="line">        buff[buff_count] = <span class="number">1</span>;</span><br><span class="line">        buff_count++;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[consumer thread] buffer count %d&quot;</span>, buff_count); <span class="comment">// 打印当前的缓冲区信息</span></span><br><span class="line">        pthread_mutex_unlock(&amp;buff_mutex); <span class="comment">// 退出临界区</span></span><br><span class="line">        sem_post(&amp;full); <span class="comment">//v(full)</span></span><br><span class="line">        sleep(<span class="number">3</span>); <span class="comment">// 假设每次生成需要 3 秒</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">pthread_t</span> p_id, c_id;</span><br><span class="line"></span><br><span class="line">    pthread_mutex_init(&amp;buff_mutex, <span class="literal">NULL</span>); <span class="comment">// 初始化互斥锁</span></span><br><span class="line">    sem_init(&amp;empty, <span class="number">0</span>, <span class="number">10</span>); <span class="comment">// 初始化，第三个参数为信号量初值</span></span><br><span class="line">    sem_init(&amp;full, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    pthread_create(&amp;p_id, <span class="literal">NULL</span>, producer, <span class="literal">NULL</span>); <span class="comment">// 创建生产者和消费者线程</span></span><br><span class="line">    pthread_create(&amp;c_id, <span class="literal">NULL</span>, consumer, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    pthread_join(p_id, <span class="literal">NULL</span>); <span class="comment">// 阻塞当前线程，等待生产者和消费者线程执行完毕</span></span><br><span class="line">    pthread_join(c_id, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_mutex_destroy(&amp;buff_mutex); <span class="comment">// 使用完后需要销毁</span></span><br><span class="line">    sem_destroy(&amp;empty); <span class="comment">//销毁信号量</span></span><br><span class="line">    sem_destroy(&amp;full);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>pthread</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Github Actions 自动化部署 Hexo</title>
     <url>/2022/03/11/%E4%BD%BF%E7%94%A8Github-Action-%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2-Hexo/</url>
     <content><![CDATA[<p>用<code>hexo</code>搭建个人博客并使用<code>github action</code>自动进行部署</p>
@@ -881,131 +938,119 @@ $$
     <content><![CDATA[<p>学习Verilog的基本语法.</p>
 <span id="more"></span>
 
-<h2 id="可综合语言"><a href="#可综合语言" class="headerlink" title="可综合语言"></a>可综合语言</h2><p>可以被综合器转化为相应的逻辑门电路的语句称为可综合语言。</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">module&#x2F; endmodule</td>
-<td align="center">Verlog 的基本单元，成对使用</td>
-</tr>
-<tr>
-<td align="center">input</td>
-<td align="center">输入端口定义</td>
-</tr>
-<tr>
-<td align="center">output</td>
-<td align="center">输出端口定义</td>
-</tr>
-<tr>
-<td align="center">inout</td>
-<td align="center">输入&#x2F;输出端口定义</td>
-</tr>
-<tr>
-<td align="center">begin</td>
-<td align="center">成对和end使用相当于 {}</td>
-</tr>
-<tr>
-<td align="center">end</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<p>数据类型</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">wire</td>
-<td align="center">线网类型</td>
-</tr>
-<tr>
-<td align="center">reg</td>
-<td align="center">寄存器类型</td>
-</tr>
-<tr>
-<td align="center">parameter</td>
-<td align="center">参数类型 &#x2F; 类似于常量</td>
-</tr>
-</tbody></table>
-<p>逻辑判断</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">if</td>
-<td align="center">逻辑判断</td>
-</tr>
-<tr>
-<td align="center">else</td>
-<td align="center">逻辑判断</td>
-</tr>
-<tr>
-<td align="center">case</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">endcase</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">default</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<p>连续赋值</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">always</td>
-<td align="center">过程赋值</td>
-</tr>
-<tr>
-<td align="center">assign</td>
-<td align="center">连续赋值</td>
-</tr>
-</tbody></table>
-<p>过程赋值条件</p>
-<table>
-<thead>
-<tr>
-<th align="center">关键字</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">posedge</td>
-<td align="center">上升沿</td>
-</tr>
-<tr>
-<td align="center">negedge</td>
-<td align="center">下降沿</td>
-</tr>
-<tr>
-<td align="center">posedge or negedge</td>
-<td align="center">上升沿或者下降沿</td>
-</tr>
-</tbody></table>
-<h2 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h2><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这里演示一个与门的代码结构</span></span><br><span class="line"><span class="keyword">module</span> module_name</span><br><span class="line">(</span><br><span class="line">	a, b, c</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">input</span> a; <span class="comment">// 输入</span></span><br><span class="line"><span class="keyword">input</span> b;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">output</span> c; <span class="comment">// 输出</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">assign</span> c = a &amp; b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="电路的描述方式"><a href="#电路的描述方式" class="headerlink" title="电路的描述方式"></a>电路的描述方式</h2><p>verilog是描述电路的语言。为了实现系统的逻辑功能，在设计系统时可以采用多种描述方式进行建模。<code>verilog</code>通常使用三种不同的风格描述电路。在设计电路的时候可以任意使用一种或混合使用多种描述方式来描述电路。经过综合工具综合后的结果一般都是门级结构描述。</p>
+<ol>
+<li><strong>结构描述方式：</strong>调用其他已经定义好的低层模块对整个电路功能进行描述，或者直接调用<code>verilog</code>内部基本的门级元件描述电路的结构。</li>
+<li><strong>数据流描述方式：</strong>设计者从数据在各存储单元之间进行流动和运算的角度对电路的功能进行描述。设计者可以使用<code>verilog</code>提供的高层次运算符，例如 <code>+</code>等直接对数据进行高层次的数学逻辑运算建模，而不用关心具体的门级电路结构。</li>
+<li><strong>行为描述方式：</strong>直接根据电路的外部行为进行建模，与具体的硬件电路无关。</li>
+</ol>
+<h2 id="常量表示方式"><a href="#常量表示方式" class="headerlink" title="常量表示方式"></a>常量表示方式</h2><p><code>verlog</code>中的常量有三种类型</p>
+<ul>
+<li>整数型常量 （可逻辑综合）</li>
+<li>实数型常量 （用于逻辑仿真）</li>
+<li>字符串型常量 （用于逻辑仿真）</li>
+</ul>
+<p>整数型常量的定义格式为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[-][&lt;位宽&gt;]&#x27;&lt;进制&gt;&lt;数值&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中进制的标识符分别为：二进制（b或B）、八进制（o或O）十进制（d或D）、十六进制（h或H）。若省略进制则默认为十进制。</p>
+<p><em>负号的标识需要在位宽的前面</em></p>
+<p>数值还可以使用符号表示不定态</p>
+<ul>
+<li>x（X）表示未知状态</li>
+<li>z（Z，？）表示高阻态</li>
+</ul>
+<p>一个 <code>x</code>或<code>z</code>可以分别表示十六进制中的四位，八进制中的三位，二进制的一位</p>
+<p>声明举例</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">parameter</span> a=<span class="number">4&#x27;b10x0</span>			<span class="comment">// 4位二进制，第二位为不定值</span></span><br><span class="line"><span class="keyword">parameter</span> b=<span class="number">12&#x27;dz</span>			<span class="comment">// 12位十进制，全位为高阻态</span></span><br><span class="line"><span class="keyword">parameter</span> c=<span class="number">8&#x27;h4x</span>			<span class="comment">// 8位十六进制，低4位为不定值</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="变量和数据类型"><a href="#变量和数据类型" class="headerlink" title="变量和数据类型"></a>变量和数据类型</h2><p><code>verilog</code>中包含两大数据类型</p>
+<ul>
+<li><p><code>wire</code>类型</p>
+<p>线网类型代表各个模块之间的物理连线，不能存储逻辑值，它的值由它的驱动元件决定，线网类型的默认值为高阻态z。<code>verilog</code>中所有的输入输出信号类型默认均为<code>wire</code>类型。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [位宽] 线网名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明例子</span></span><br><span class="line"><span class="keyword">wire</span> a;				<span class="comment">// 定义一个 1位 的wire</span></span><br><span class="line"><span class="keyword">wire</span> [<span class="number">7</span>:<span class="number">0</span>] b;		<span class="comment">// 定义一个8 位的wire</span></span><br><span class="line"><span class="keyword">wire</span> [<span class="number">4</span>:<span class="number">1</span>] c, d;	<span class="comment">// 定义一个4 位的wire</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>reg</code>类型</p>
+<p>寄存器类型表示一个抽象的数据存储单元，它具有状态保存作用。寄存器类型只能在<code>initial</code>和<code>always</code>内部被赋值。在赋值前默认值为<code>x</code>。对于<code>reg</code>类型，赋值语句的作用就像改变一组触发器的存储单元的值。可以用各种构造控制改变值的时机，如上升沿、下降沿等。单个<code>reg</code>类型的声明格式如下，其中的 n 代表寄存器的位宽。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">reg</span> [位宽] 寄存器名称;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] a;		<span class="comment">// 声明一个 4 位的寄存器</span></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">4</span>:<span class="number">1</span>] b;		<span class="comment">// 声明一个 4 位的寄存器</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><code>wire</code>和<code>reg</code>的默认位宽都是1，当位宽大于1时又称为<strong>向量</strong>。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">reg</span>[msb:lsb] name;</span><br></pre></td></tr></table></figure>
+<p>上面的<code>msb</code>和<code>lsb</code>分别代表向量的最高有效位和最低有效位。<code>msb</code>和<code>lsb</code>必须为常数、常数表达式或者parameter参数。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>线网和变量都可以声明为一个数组，数组中的每个元素可以是标量也可以是向量。数组的定义格式为</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">数据类型 [位宽] 变量名称[地址范围]</span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">wire</span> bus[<span class="number">5</span>:<span class="number">0</span>]; 			<span class="comment">//声明 6个位宽为 1 的wire 类型数组</span></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] data[<span class="number">3</span>:<span class="number">0</span>]; 	<span class="comment">// 声明4个位宽为7 的reg 类型数组</span></span><br></pre></td></tr></table></figure>
+
+<p>通过使用下标可以访问数组中特定的单元</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">data[<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">data[<span class="number">3</span>] = <span class="number">8&#x27;hff</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="verilog中的特殊运算符"><a href="#verilog中的特殊运算符" class="headerlink" title="verilog中的特殊运算符"></a>verilog中的特殊运算符</h2><p>verilog中支持的运算符与c语言中的运算符基本一致，但是由于<code>verilog</code>支持不定值的赋值方式，所以某些运算符的运算结果可能会不太一样。而且还有<code>verilog</code>中的所特有的运算符这里也会列出来。</p>
+<h3 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h3><ol>
+<li>在进程整数除法运算时，结果要略去小数的部分只取整数部分。</li>
+<li>在进行取模运算时结果的符号位与第一个操作数的符号位一致。</li>
+</ol>
+<p><strong>注意：当所运算的操作数中含有不确定的值<code>x</code>或者<code>z</code>时算数运算的结果也是不确定的</strong></p>
+<h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><ol>
+<li><code>! &amp;&amp; ||</code>这三个逻辑运算符只有作用于 全 0 的操作数时才认为该操作数具有逻辑零的值，操作数中有任意多个1则认为该操作数为1，当操作数中含有<code>x</code>时则返回结果仍然为 <code>x</code>。</li>
+<li>判断逻辑相等和不相等分为两种 ,逻辑相等<code>== !=</code>和逻辑全等<code>=== !==</code>，当进行<strong>相等运算</strong>时，两个操作数必须逐位相等，比较结果才为1（真），如果任意一个操作数含有不定态（X）或高祖态（Z），其相等比较的结果就会是不定值。进行<strong>全等运算</strong>时，对不定或高阻状态也进行比较，当两个操作数完全一致时，其结果才为1，否则为0.</li>
+</ol>
+<h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><ul>
+<li><p>在使用<code>~ &amp; | ^ ^~</code>等位运算符时，若两个操作数的位宽不相等，则会自动将操作数在右端对齐，位数少的操作数相应的高位会使用0进行填充。</p>
+</li>
+<li><p>移位操作，移位操作分为两种，移位运算符 <code>&gt;&gt;</code>，<code>&lt;&lt;</code>，算术移位运算符<code>&lt;&lt;&lt;</code>,<code>&gt;&gt;&gt;</code>。</p>
+<p>对于左移操作中出现的空位，都使用 0 开进行填充，在进行右移操作时，算术移位会使用符号位进行填充。</p>
+</li>
+</ul>
+<h3 id="独有的运算符"><a href="#独有的运算符" class="headerlink" title="独有的运算符"></a>独有的运算符</h3><p>下面列举<code>verilog</code>中所特有的运算符。</p>
+<ul>
+<li><p>拼接运算符：可以将两个或多个信号的某些为进行拼接表示一个整体信号。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 例子</span></span><br><span class="line">&#123;a, b[<span class="number">3</span>:<span class="number">0</span>], w, <span class="number">3&#x27;b101</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将信号复制再进行拼接</span></span><br><span class="line">&#123;<span class="number">4</span>&#123;w&#125;&#125; <span class="comment">// 等同于 </span></span><br><span class="line">&#123;w, w, w, w&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>缩位运算符：缩位运算符的符号与位运算符的符号一样，但缩位运算符是针对当个操作数的，对当个操作数从左到右按照位的顺序两两进行相应的运算。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">a = <span class="number">4&#x27;b0101</span>;</span><br><span class="line"></span><br><span class="line">&amp;a			<span class="comment">//  0</span></span><br><span class="line">|a 			<span class="comment">// 1</span></span><br><span class="line">^a			<span class="comment">// 0</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="verilog-程序的基本结构"><a href="#verilog-程序的基本结构" class="headerlink" title="verilog 程序的基本结构"></a>verilog 程序的基本结构</h2><h3 id="结构化描述"><a href="#结构化描述" class="headerlink" title="结构化描述"></a>结构化描述</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这里演示全器的实现</span></span><br><span class="line"><span class="keyword">module</span> fadder</span><br><span class="line">(</span><br><span class="line">	i_A, i_B, i_Cin,</span><br><span class="line">    o_S, o_C</span><br><span class="line">);</span><br><span class="line">	<span class="keyword">input</span> i_A, i_B, i_Cin; <span class="comment">// 输入端口</span></span><br><span class="line">	<span class="keyword">output</span> o_S, o_C; <span class="comment">// 输出端口</span></span><br><span class="line">	<span class="keyword">parameter</span> s_delay=<span class="number">1</span>, c_delay=<span class="number">1</span>; <span class="comment">// 定义两个参数，参数也可以代表常量</span></span><br><span class="line">	<span class="keyword">assign</span> #s_delay o_S = i_A ^ i_B ^ i_Cin; <span class="comment">// 延时s_delay </span></span><br><span class="line">    <span class="keyword">assign</span> #c_delay o_C = (i_A ^ i_B) &amp; i_Cin | (i_A &amp; i_B) <span class="comment">// 延时c_delay </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p>实例化模块的基本语法 如下</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">模块名 实例名 (.端口名<span class="number">1</span>(连线<span class="number">1</span>), .端口名<span class="number">2</span>(连线<span class="number">2</span>), ...)；</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> fadder_delay_1</span><br><span class="line">(</span><br><span class="line">	i_A, i_B, i_Cin,</span><br><span class="line">    o_S, o_C</span><br><span class="line">)</span><br><span class="line">	<span class="comment">// 实例化一个模块并设置其中的参数</span></span><br><span class="line">    <span class="comment">// 第一种方式</span></span><br><span class="line">    fadder fadder_delay_1_ins(<span class="variable">.i_A</span>(i_A), <span class="variable">.i_B</span>(i_B), <span class="variable">.i_Cin</span>(i_Cin), <span class="variable">.o_S</span>(o_S), o_C(o_C));</span><br><span class="line">    <span class="keyword">defparam</span> fadder_delay_1_ins<span class="variable">.s_delay</span>=<span class="number">2</span>, fadder_delay_1_ins<span class="variable">.c_delay</span>=<span class="number">3</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 第二种方式</span></span><br><span class="line">    fadder <span class="variable">#(2,3)</span> </span><br><span class="line">    	fadder_delay_1_ins(<span class="variable">.i_A</span>(i_A), <span class="variable">.i_B</span>(i_B), <span class="variable">.i_Cin</span>(i_Cin), <span class="variable">.o_S</span>(o_S), o_C(o_C));</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//第三种方式</span></span><br><span class="line">    fadder <span class="variable">#(.s_delay(2),.c_delay(3))</span></span><br><span class="line">    	fadder_delay_1_ins(<span class="variable">.i_A</span>(i_A), <span class="variable">.i_B</span>(i_B), <span class="variable">.i_Cin</span>(i_Cin), <span class="variable">.o_S</span>(o_S), o_C(o_C));</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据流描述"><a href="#数据流描述" class="headerlink" title="数据流描述"></a>数据流描述</h3><p>在使用数据流描述电路时通常使用连续赋值语句实现。连续赋值语句必须以 <code>assign</code>开头，出现在和门单元实例化相同的代码层次，它的结构为</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> [delay] wire_type_var=expression;</span><br></pre></td></tr></table></figure>
+
+<p>使用数据流的方式描述一个4位的加法器</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> adder(</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] a, <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] b, <span class="keyword">input</span> cin, <span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] sum, <span class="keyword">output</span> cout;</span><br><span class="line">)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> &#123;cout,sum&#125; = a+b+cin;</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p>在进行逻辑综合时，综合器会自动优化综合出来的门电路。</p>
+<h3 id="行为描述"><a href="#行为描述" class="headerlink" title="行为描述"></a>行为描述</h3><p>行为描述一般使用<code>initial</code>和<code>always</code>过程块结构。</p>
+<ul>
+<li><p>initial过程块</p>
+<p>主要用于仿真测试，用来对变量进行初始化或者产生激励波形，过程块中的内容只会被执行一次，一个<code>module</code>可以有多个<code>initial</code>块结构，各个<code>initial</code>过程块之间并行运行。若块中的语句没有添加延时控制，则可以延时指定的时钟周期后再执行后续指令。</p>
+<p><em>initial过程块不能进行逻辑综合</em></p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">initial</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	#延时数 行为语句; </span><br><span class="line">    #延时数 行为语句; </span><br><span class="line">    ..</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">reg</span>[<span class="number">3</span>:<span class="number">0</span>] a;</span><br><span class="line"></span><br><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span> </span><br><span class="line">a=<span class="number">4&#x27;b0000</span>; 		<span class="comment">// 缺省为在0时刻执行该代码</span></span><br><span class="line">#<span class="number">5</span> a=<span class="number">4&#x27;b0001</span> 	<span class="comment">// 经过5个时间单位后执行赋值</span></span><br><span class="line">#<span class="number">5</span> a=<span class="number">4&#x27;b0010</span> 	<span class="comment">// 经过 10 个时间单位后执行赋值</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
 
-
+</li>
+<li><p>always 过程块，always 过程块会一致被重复执行，多个<code>always</code>过程块并行执行，与书写顺序无关。<code>@</code>中包含的敏感信号可为电平触发或者逻辑变量触发，使用电平触发时可以使用 <code>posedge</code>和<code>negedge</code>表示上升沿和下降沿。</p>
+<p>在<code>always</code>过程块中执行的赋值语句，等号左边必须为<code>reg</code>类型。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @ (敏感信号列表)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    # 延时数 行为语句<span class="number">1</span>;</span><br><span class="line">    # 延时数 行为语句<span class="number">2</span>;</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk)					<span class="comment">//只在上升沿触发执行</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> clk)	<span class="comment">// 在上升沿和下降沿都执行	</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="过程块"><a href="#过程块" class="headerlink" title="过程块"></a>过程块</h2><p>前面举例使用将多条语句包裹在<code>begin ... end </code>语句块中的语法，都是串行语句块。串行块内的语句按照他们在块内的语句顺序执行，若语句含有延时控制，则后一条语句的执行开始时刻为前一条语句延时控制结束后的时刻。</p>
+<p><code>fork ... join </code>可以替换到<code>begin ... end</code>出现的地方代表并行语句块，块内的语句是并行执行的。各个语句的延时是相对于进入并行块的时刻同时开始计时。</p>
+<h2 id="过程赋值"><a href="#过程赋值" class="headerlink" title="过程赋值"></a>过程赋值</h2><p>这块儿还没有怎么搞懂。</p>
+<p>过程赋值语句分为阻塞赋值和非阻塞赋值两种形式，多用于对 <code>reg</code>类型的变量进行赋值。</p>
+<p>多条阻塞赋值语句是顺序执行的，但多条非阻塞语句是并行执行的。</p>
+<p><strong>在描述组合逻辑电路时使用非阻塞赋值，在描述时序逻辑电路时使用阻塞赋值。</strong></p>
+<h3 id="非阻塞赋值-例如-b-lt-x3D-a"><a href="#非阻塞赋值-例如-b-lt-x3D-a" class="headerlink" title="非阻塞赋值 (例如 b &lt;&#x3D; a)"></a>非阻塞赋值 (例如 b &lt;&#x3D; a)</h3><p>非阻塞赋值通常用在编写可综合模块时使用。它有以下特点</p>
+<ol>
+<li>在块结束后才完成赋值操作</li>
+<li>b的值并不是立刻就改变</li>
+</ol>
+<h2 id="阻塞赋值（例如-b-x3D-a）"><a href="#阻塞赋值（例如-b-x3D-a）" class="headerlink" title="阻塞赋值（例如 b &#x3D; a）"></a>阻塞赋值（例如 b &#x3D; a）</h2><ol>
+<li>只有当赋值语句执行完成后当前块才结束</li>
+<li>b的值在赋值语句执行完成后立刻改变</li>
+</ol>
+<h2 id="判断和循环"><a href="#判断和循环" class="headerlink" title="判断和循环"></a>判断和循环</h2><h3 id="逻辑判断"><a href="#逻辑判断" class="headerlink" title="逻辑判断"></a>逻辑判断</h3><p>逻辑判断使用<code>if () ... else if () ... else</code> 语句表示。具体的语法和c 语言的差不多，这是在书写多条语句的时候需要使用 <code>begin ... end</code>括起来。</p>
 ]]></content>
       <tags>
         <tag>数字电路</tag>
@@ -1017,6 +1062,9 @@ $$
     <url>/2022/03/17/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80-%E4%BA%8C/</url>
     <content><![CDATA[<p>学习时序逻辑电路的设计方法，锁存器，触发器，边缘触发器，最后使用触发器实现流水灯和一个计数器电路。</p>
 <span id="more"></span>
+
+<h2 id="锁存器（Latch）"><a href="#锁存器（Latch）" class="headerlink" title="锁存器（Latch）"></a>锁存器（Latch）</h2><p>锁存器(Latch)是数字电路中的一种具有记忆功能的逻辑元件。锁存器对脉冲电平敏感的 存储单元电路，它只在输入脉冲的高电平(或低电平)期间对输入信号敏感并改变状态</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <tags>
