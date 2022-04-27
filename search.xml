@@ -257,7 +257,7 @@ $$
   <entry>
     <title>MLP的BP推导与实现(下)</title>
     <url>/2022/04/05/MLP%E7%9A%84BP%E6%8E%A8%E5%AF%BC%E4%B8%8E%E5%AE%9E%E7%8E%B0-%E4%B8%8B/</url>
-    <content><![CDATA[<p>上一篇文章学习矩阵求导的方法，这篇文章以推导一个三层的MLP的反向传播算法以及它的代码实现。</p>
+    <content><![CDATA[<p>上一篇文章学习矩阵求导的方法，这篇文章以上一篇文章为基础，推导一个三层的MLP的反向传播算法并给出它的代码实现。</p>
 <span id="more"></span>
 
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进行推导前需要先列出几个后面需要使用的函数</p>
@@ -786,6 +786,75 @@ $$
       <tags>
         <tag>linux</tag>
         <tag>pthread</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tqdm常用方法总结</title>
+    <url>/2022/04/27/tqdm%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p><code>tqdm</code>可以非常方便地在控制台或者<code>jupyter notebook</code>上面显示一个进度条,可以可视化观察当前运行任务的进度等信息。</p>
+<span id="more"></span>
+
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>如果任务是需要遍历一个<code>List</code>等的一些可以迭代的对象，可以直接将<code>tqdm()</code>包裹到可迭代对象上面上再通过for循环就可以在控制台显示出进度条了。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> char <span class="keyword">in</span> tqdm([<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>]):</span><br><span class="line">    text = text + char</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">100</span>))</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 如果只是需要range，还可以直接使用trange()函数直接代替range</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> trange(<span class="number">100</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义显示信息"><a href="#自定义显示信息" class="headerlink" title="自定义显示信息"></a>自定义显示信息</h2><p>因为<code>tqdm</code>中实现了<code>__enter__()</code>和<code>__exit__()</code>两个方法，所以可以直接使用<code>with</code>表达式获取到 <code>tqdm</code>对象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"> <span class="comment"># 可以在初始化的时候设置进度条相应的参数</span></span><br><span class="line"><span class="keyword">with</span> tqdm(total, ncols=<span class="number">100</span>, position=<span class="number">0</span>) <span class="keyword">as</span> pbar:</span><br><span class="line">    pbar.set_description(<span class="string">f&quot;description&quot;</span>) <span class="comment"># 也可以在 with 范围内 使用 set_xxxx 实时设置进度条的参数</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不想用 <code>with</code>多嵌套一层代码，特别是想显示多个进度条，使用多个<code>with</code>就会显得很不优雅，其实<code>with</code>主要是为了控制变量的作用范围，<code>tqdm</code>本身是可以直接当做对象进行初始化的。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">_tqdm = tqdm(total=<span class="number">100</span>, ncols=<span class="number">100</span>, position=<span class="number">0</span>, leave=<span class="literal">False</span>,colour=<span class="string">&#x27;red&#x27;</span>) <span class="comment"># 设置进度条显示到第0行</span></span><br><span class="line">_tqdm1 = tqdm(total=<span class="number">1000</span>, ncols=<span class="number">100</span>, position=<span class="number">1</span>, colour=<span class="string">&#x27;green&#x27;</span>) <span class="comment"># 设置进度条显示到第1行，保证两个进度条错开</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    _tqdm.set_description(<span class="string">f&quot;epoch <span class="subst">&#123;x&#125;</span>&quot;</span>) <span class="comment"># 进度条前面显示的东西</span></span><br><span class="line">    _tqdm.update(<span class="number">1</span>) <span class="comment"># 这里控制每次增加 1</span></span><br><span class="line">    _tqdm.set_postfix(epoch=<span class="string">f&quot;<span class="subst">&#123;x&#125;</span>&quot;</span>) <span class="comment"># 进度条后面显示的信息输入参数是字典</span></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">        _tqdm1.update(<span class="number">1</span>) </span><br><span class="line">        _tqdm1.set_postfix(epoch=<span class="string">f&quot;<span class="subst">&#123;y&#125;</span>&quot;</span>)</span><br><span class="line">        sleep(<span class="number">0.01</span>)</span><br><span class="line">    _tqdm1.n = <span class="number">0</span> <span class="comment"># 直接设置当前进度条的值</span></span><br><span class="line">    _tqdm1.refresh() <span class="comment"># 更新完 n 后记得 refresh一下显示</span></span><br></pre></td></tr></table></figure>
+
+<p>tqdm的常见属性为:</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">使用方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>n</strong></td>
+<td align="left">可以直接设置当前进度条的进度，pbar.n &#x3D; 80，设置完之后 需要调用*pbar.refrash()*刷新显示</td>
+</tr>
+<tr>
+<td align="left"><strong>total</strong></td>
+<td align="left">进度条的总长度， n &lt;&#x3D; total</td>
+</tr>
+<tr>
+<td align="left"><strong>ncols</strong></td>
+<td align="left">进度条显示的宽度，应该是以字符长度为单位</td>
+</tr>
+<tr>
+<td align="left"><strong>description</strong></td>
+<td align="left">进度条前面显示的信息</td>
+</tr>
+<tr>
+<td align="left"><strong>postfix</strong></td>
+<td align="left">进度条后面显示的信息</td>
+</tr>
+<tr>
+<td align="left"><strong>colour</strong></td>
+<td align="left">设置进度条显示的颜色，可以使用pbar.colour &#x3D; ‘green’</td>
+</tr>
+<tr>
+<td align="left"><strong>position</strong></td>
+<td align="left">进度条显示在第几行</td>
+</tr>
+<tr>
+<td align="left"><strong>leave</strong></td>
+<td align="left">如果设置为<code>False</code>或者<code>None</code>则最运行完成后，进度条显示为 0，否则进度条就会隐藏</td>
+</tr>
+</tbody></table>
+<h2 id="tqdm与print混用问题"><a href="#tqdm与print混用问题" class="headerlink" title="tqdm与print混用问题"></a>tqdm与print混用问题</h2><p>如果在显示进度条的同时还需要调用<code>print</code>打印一些调试信息，直接混用的话，进度条的显示会分为多行显示，打印的信息也会显得很混乱。就类似于下面这样</p>
+<p><img src="https://i.imgur.com/M8hnbzT.png" alt="image-20220427224747262"></p>
+<p>为了解决这个问题，这里也是参照了<a class="link"   href="https://zhuanlan.zhihu.com/p/450780357" >这篇帖子<i class="fas fa-external-link-alt"></i></a>，使用<code>tqdm.write()</code>代替<code>print</code>输出信息。最后就可以像这样</p>
+<p><img src="https://i.imgur.com/fvj7J8p.png" alt="image-20220427225036971"></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>tqdm</tag>
       </tags>
   </entry>
   <entry>

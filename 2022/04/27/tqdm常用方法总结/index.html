@@ -9,7 +9,7 @@
     
     <title>
         
-            MLP的BP推导与实现(下) |
+            tqdm常用方法总结 |
         
         Jiaming&#39;s Blog
     </title>
@@ -165,7 +165,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">MLP的BP推导与实现(下)</span>
+            <span class="title-hover-animation">tqdm常用方法总结</span>
         </div>
 
         
@@ -182,8 +182,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-04-05 22:56:19</span>
-        <span class="mobile">2022-04-05 22:56</span>
+        <span class="pc">2022-04-27 21:26:51</span>
+        <span class="mobile">2022-04-27 21:26</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -191,7 +191,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                        <a href="/categories/Python/">Python</a>&nbsp;
                     </li>
                 
             </ul>
@@ -203,11 +203,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                        <a href="/tags/Python/">Python</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/BP%E7%AE%97%E6%B3%95/">BP算法</a>&nbsp;
+                        | <a href="/tags/tqdm/">tqdm</a>&nbsp;
                     </li>
                 
             </ul>
@@ -217,12 +217,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>1.9k Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>769 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>9 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>3 Mins</span>
         </span>
     
     
@@ -234,219 +234,63 @@
         
 
         <div class="article-content markdown-body">
-            <p>上一篇文章学习矩阵求导的方法，这篇文章以上一篇文章为基础，推导一个三层的MLP的反向传播算法并给出它的代码实现。</p>
+            <p><code>tqdm</code>可以非常方便地在控制台或者<code>jupyter notebook</code>上面显示一个进度条,可以可视化观察当前运行任务的进度等信息。</p>
 <span id="more"></span>
 
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进行推导前需要先列出几个后面需要使用的函数</p>
-<p>首先是大名的鼎鼎的交叉熵（Cross Entropy）函数，它的定义如下，其中 $y$ 是独热码编码后的类别，$softmax$的函数输出可以衡量输出是每个类别的概率大小。</p>
-<p><a name="pretext"></a></p>
-
-$$
-L = -y^T log(softmax(x))\\\\
-softmax(\vec {x}) = \frac{e^{x_i}}{\sum_{j=1}^{K}e^{x_j}} \\\\
-L^{'}(x) = softmax(\vec{x}) - \vec{y}
-$$
-
-
-<p>我们后面的激活函数采用比较常见的$\sigma$函数，它的定义和导数是</p>
-
-$$
-\begin{align}
-\sigma(x) &= \frac{1}{1 + exp(x)} \\\\
-\sigma(x)^{'} &= \sigma(x)(1-\sigma(x))
-\end{align}
-$$
-
-
-<p>当然，后面的推导也不会使用$\sigma$函数求导的完整结果（因为太长了），而是用$\sigma^{‘}$表示，如果要更换$ReLu$或者别的激活函数，如只需要将求导结果带进去就可以了。</p>
-<h2 id="符号定义"><a href="#符号定义" class="headerlink" title="符号定义"></a>符号定义</h2><p>假设我们的网络有 $n$层，$w_i$和$b_i$分别表示第$i$层的参数(wight)和偏置(bias)，使用$a_i$表示第$i$层还没有经过激活函数的结果，使用 $h_i$表示第$i$层的输出同时也是第$i+1$层的输入，也就是相当于$h_i &#x3D; \sigma(a_i)$， $\sigma$函数作为激活函数。整个网络的前向传播的$Loss$表达式可以写成下面的这种形式。</p>
-
-$$
-\begin{align}
-L &= -y^T log(softmax(h_3)) \\\\
-
-h_3 &= h_2w_3 + b_3 \\\\
-a_2 &= h_1w_2 + b_2 \quad h_2 = \sigma(a_2) \\\\
-a_1 &= h_0w_1 + b_1 \quad h_1 = \sigma(a_1) \\\\
-h_0 &= x
-\end{align}
-$$
-
-
-<p><strong>这里假设输入的向量$x$和输出向量$y$都是列向量</strong></p>
-<p>当然，如果不定义符号进行替换的话就可以写成下面的这种比较长的形式。</p>
-
-$$
-L = -y^T log(softmax( \sigma(\sigma(xw_1 + b_1)w_2 + b_2)w_3 + b_3 ))
-$$
-
-
-<p>可以看到，MLP的本质其实就是我们最常见的复合函数的形式，只是我们的输入的变量$x$是一个向量或者矩阵的形式。我们的任务就是借助上一篇文章中所提到的矩阵求导的手段求出 $L$ 对每个$w_i$和$b_i$的偏导表达式。</p>
-<h2 id="第三层推导"><a href="#第三层推导" class="headerlink" title="第三层推导"></a>第三层推导</h2><p>根据<a href="#pretext">前言</a>部分$log(softmax(x))$函数的求导，可以直接求得$h_3$的偏导数</p>
-
-$$
-\frac{\partial L }{\partial h_3} = softmax(h_3) -y
-$$
-
-
-<p>将 $dL$ 写成迹的形式</p>
-
-$$
-\begin{align}
-tr(dL) &= tr((\frac{\partial L}{\partial h_3})^T dh_3) \\
-&=tr((\frac{\partial L}{\partial h_3})^T d(h_2w_3 + b_3)) \\ 
-&= \color{blue}{tr((\frac{\partial L}{\partial h_3})^T d(h_2w_3))} + \color{red}{tr((\frac{\partial L}{\partial h_3})^T d(b_3))}\\ 
-\end{align}
-$$
-
-
-
-<p>通过红色的部分就得到了我们可以看到$L$关于$b_3$的微分形式，通过这个式子就可以写出$L$关于$b_3$的偏导数：</p>
-
-$$
-\frac{\partial L}{\partial b_3} = ((\frac{\partial L }{\partial h_3})^T)^T = \frac{\partial L }{\partial h_3}
-$$
-
-
-<p>将前面蓝色的部分单独写下来，继续经过变形</p>
-
-$$
-\begin{align*}
-&\quad tr((\frac{\partial L}{\partial h_3})^T d(h_2w_3)) \\
-&=tr((\frac{\partial L}{\partial h_3})^T d(h_2)w_3) + tr((\frac{\partial L}{\partial h_3})^T h_2d(w_3)) \\
-&=\color{blue}{tr(w_3(\frac{\partial L}{\partial h_3})^T d(h_2))} + \color{red}{tr((\frac{\partial L}{\partial h_3})^T h_2d(w_3))} \\
-\end{align*}
-$$
-
-
-<p>同样的由红色部分，我们可以得到$L$关于$w_3$的偏导，蓝色的部分我们后续的推导需要用。</p>
-
-$$
-\frac{\partial L}{\partial w_3} = (\frac{\partial L}{\partial h_3})^T h_2)^T = h_2^T \frac{\partial L}{\partial h_3}
-$$
-
-
-<p>到这里，我们第三层的所有参数 $w_3$和$b_3$的梯度我们都算出来了。</p>
-<h2 id="第二层推导"><a href="#第二层推导" class="headerlink" title="第二层推导"></a>第二层推导</h2><p>接着把第三层推导剩下的蓝色部分单独提出来</p>
-
-$$
-\begin{align*}
-& \quad tr(w_3(\frac{\partial L}{\partial h_3})^T d(h_2))\\
-& = tr(w_3(\frac{\partial L}{\partial h_3})^T d(\sigma(a_2))) \\ 
-& = tr(w_3(\frac{\partial L}{\partial h_3})^T \sigma^{'}(a_2) \odot d(a_2)) \\
-\end{align*}
-$$
-
-
-<p>根据上篇文章提到的$tr(A^T (B \odot C)) &#x3D; tr((A \odot B)^T C)$可以化简为</p>
-
-$$
-\begin{align*}
-& \quad tr(w_3(\frac{\partial L}{\partial h_3})^T \sigma^{'}(a_2) \odot d(a_2)) \\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T)^T \sigma^{'}(a_2) \odot d(a_2)) \\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(a_2)) \\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1w_2 + b_2)) \\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1w_2)) + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d( b_2))}\\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1)w_2) \\
-\quad &+ \color{blue}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T h_1d(w_2))} + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d( b_2))}\\
-\end{align*}
-$$
-
-
-<p>可以得到</p>
-
-$$
-\frac{\partial L}{\partial w_2} = ((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T h_1)^T = h_1^T (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))
-$$
-
-$$
-\frac{\partial L}{\partial b_2} =\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)
-$$
-
-
-
-<h2 id="第一层推导"><a href="#第一层推导" class="headerlink" title="第一层推导"></a>第一层推导</h2><p>经过前两节的推导，我们得到了第二和第三层的表达式，但是他们的规律还不是非常的明显，我们继续推导第一层的偏导数。</p>
-
-$$
-\begin{align*}
-&\quad  tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(h_1)w_2) \\
-& = tr(w_2 (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T d(\sigma(a1)) \\
-& = tr(w_2 (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2))^T \sigma ^{'}(a1)\odot d(a1)) \\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T )^T \sigma ^{'}(a1)\odot d(a1)) \\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0w_1 + b_1)) \\
-& = tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0w_1)) + tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(b_1)) \\
-& = \color{blue}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T h_0d(w_1))} + \color{red}{tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(b_1))} \\
-&+ tr((\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T d(h_0)w_1)\\
-\end{align*}
-$$
-
-
-<p>可以得出</p>
-
-$$
-\begin{align}
-
-\frac{\partial L}{\partial w_1} &= (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))^T h_0)^T \\
-& = h_0^T(\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1))
-\end{align}
-$$
-
-$$
-\frac{\partial L}{\partial b_2} =\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1)
-$$
-
-
-
-<h2 id="总结规律"><a href="#总结规律" class="headerlink" title="总结规律"></a>总结规律</h2><p>将分别将 $w_1, w_2, w_3$的偏导表达式写出来</p>
-
-$$
-\begin{align}
-\frac{\partial L}{\partial w_1} &= h_0^T(\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1)) \\\\
-\frac{\partial L}{\partial w_2} &= h_1^T (\frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)) \\\\
-\frac{\partial L}{\partial w_3} &= h_2^T \frac{\partial L}{\partial h_3}
-\end{align}
-$$
-
-
-<p>假设网络有 $n$层，编号依次为 1, 2 …，损失函数关于网络最终输出的偏导为$\frac{\partial L}{\partial out}$，可以比较明显地发现以下规律：</p>
-
-$$
-\frac{\partial L}{\partial w_{i}} = h_{i-1}^T\left[\frac{\partial L}{\partial out} \prod_{k=n}^{k=i+1}(w_{k}^T \odot \sigma^{'}(a_{k-1}))\right]
-$$
-
-
-
-
-<p><strong>注意:这里的连乘是倒序的</strong></p>
-<p>$b_1,b_2,b_3$的表达式为</p>
-
-$$
-\begin{align}
-\frac{\partial L}{\partial b_1} &= \frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2)w_2^T \odot  \sigma ^{'}(a1) \\\\
-\frac{\partial L}{\partial b_2} &= \frac{\partial L}{\partial h_3} w_3^T\odot \sigma^{'}(a_2) \\\\
-\frac{\partial L}{\partial b_3} &= \frac{\partial L}{\partial h_3}
-\end{align}
-$$
-
-
-<p>跟$w_i$类似，写出关于$b_i$的偏导数，其实就是$w_i$的偏导数去掉前面的$h_{i-1}$</p>
-
-$$
-\frac{\partial L}{\partial w_{i}} = \frac{\partial L}{\partial out} \prod_{k=n}^{k=i+1}(w_{k}^T \odot \sigma^{'}(a_{k-1}))
-$$
-
-
-<p><strong>注意:这里的连乘是倒序的</strong></p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>有了前面的推导过程，接下来就是代码的实现，代码将包含3个部分。</p>
-<ul>
-<li>数据准备</li>
-<li>模型类实现</li>
-<li>全连接层实现</li>
-</ul>
-<h3 id="测试和训练数据生成"><a href="#测试和训练数据生成" class="headerlink" title="测试和训练数据生成"></a>测试和训练数据生成</h3><p>在开始实现之前，我们需要先准备一些数据用于验证我们的模型工作是否正常。这里就直接实用<code>sklearn</code>库所提供的<code>make_classification</code>函数生成测试用的数据</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N_CLASS = <span class="number">3</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_classification</span><br><span class="line">x, y = make_classification(n_samples=<span class="number">2000</span>, n_features=<span class="number">5</span>, n_classes=N_CLASS,</span><br><span class="line">                           n_informative=<span class="number">5</span>, n_repeated=<span class="number">0</span>, n_redundant=<span class="number">0</span>, n_clusters_per_class=<span class="number">1</span>)</span><br><span class="line">sns.scatterplot(x=x[:,<span class="number">0</span>], y=x[:,<span class="number">1</span>], hue=y)</span><br></pre></td></tr></table></figure>
-
-<p>测试用的数据将包含5个特征，也就是说输入的向量维度是5，总共有 3个类别</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>如果任务是需要遍历一个<code>List</code>等的一些可以迭代的对象，可以直接将<code>tqdm()</code>包裹到可迭代对象上面上再通过for循环就可以在控制台显示出进度条了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> char <span class="keyword">in</span> tqdm([<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>]):</span><br><span class="line">    text = text + char</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">100</span>))</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 如果只是需要range，还可以直接使用trange()函数直接代替range</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> trange(<span class="number">100</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义显示信息"><a href="#自定义显示信息" class="headerlink" title="自定义显示信息"></a>自定义显示信息</h2><p>因为<code>tqdm</code>中实现了<code>__enter__()</code>和<code>__exit__()</code>两个方法，所以可以直接使用<code>with</code>表达式获取到 <code>tqdm</code>对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"> <span class="comment"># 可以在初始化的时候设置进度条相应的参数</span></span><br><span class="line"><span class="keyword">with</span> tqdm(total, ncols=<span class="number">100</span>, position=<span class="number">0</span>) <span class="keyword">as</span> pbar:</span><br><span class="line">    pbar.set_description(<span class="string">f&quot;description&quot;</span>) <span class="comment"># 也可以在 with 范围内 使用 set_xxxx 实时设置进度条的参数</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不想用 <code>with</code>多嵌套一层代码，特别是想显示多个进度条，使用多个<code>with</code>就会显得很不优雅，其实<code>with</code>主要是为了控制变量的作用范围，<code>tqdm</code>本身是可以直接当做对象进行初始化的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">_tqdm = tqdm(total=<span class="number">100</span>, ncols=<span class="number">100</span>, position=<span class="number">0</span>, leave=<span class="literal">False</span>,colour=<span class="string">&#x27;red&#x27;</span>) <span class="comment"># 设置进度条显示到第0行</span></span><br><span class="line">_tqdm1 = tqdm(total=<span class="number">1000</span>, ncols=<span class="number">100</span>, position=<span class="number">1</span>, colour=<span class="string">&#x27;green&#x27;</span>) <span class="comment"># 设置进度条显示到第1行，保证两个进度条错开</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    _tqdm.set_description(<span class="string">f&quot;epoch <span class="subst">&#123;x&#125;</span>&quot;</span>) <span class="comment"># 进度条前面显示的东西</span></span><br><span class="line">    _tqdm.update(<span class="number">1</span>) <span class="comment"># 这里控制每次增加 1</span></span><br><span class="line">    _tqdm.set_postfix(epoch=<span class="string">f&quot;<span class="subst">&#123;x&#125;</span>&quot;</span>) <span class="comment"># 进度条后面显示的信息输入参数是字典</span></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">        _tqdm1.update(<span class="number">1</span>) </span><br><span class="line">        _tqdm1.set_postfix(epoch=<span class="string">f&quot;<span class="subst">&#123;y&#125;</span>&quot;</span>)</span><br><span class="line">        sleep(<span class="number">0.01</span>)</span><br><span class="line">    _tqdm1.n = <span class="number">0</span> <span class="comment"># 直接设置当前进度条的值</span></span><br><span class="line">    _tqdm1.refresh() <span class="comment"># 更新完 n 后记得 refresh一下显示</span></span><br></pre></td></tr></table></figure>
+
+<p>tqdm的常见属性为:</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">使用方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>n</strong></td>
+<td align="left">可以直接设置当前进度条的进度，pbar.n &#x3D; 80，设置完之后 需要调用*pbar.refrash()*刷新显示</td>
+</tr>
+<tr>
+<td align="left"><strong>total</strong></td>
+<td align="left">进度条的总长度， n &lt;&#x3D; total</td>
+</tr>
+<tr>
+<td align="left"><strong>ncols</strong></td>
+<td align="left">进度条显示的宽度，应该是以字符长度为单位</td>
+</tr>
+<tr>
+<td align="left"><strong>description</strong></td>
+<td align="left">进度条前面显示的信息</td>
+</tr>
+<tr>
+<td align="left"><strong>postfix</strong></td>
+<td align="left">进度条后面显示的信息</td>
+</tr>
+<tr>
+<td align="left"><strong>colour</strong></td>
+<td align="left">设置进度条显示的颜色，可以使用pbar.colour &#x3D; ‘green’</td>
+</tr>
+<tr>
+<td align="left"><strong>position</strong></td>
+<td align="left">进度条显示在第几行</td>
+</tr>
+<tr>
+<td align="left"><strong>leave</strong></td>
+<td align="left">如果设置为<code>False</code>或者<code>None</code>则最运行完成后，进度条显示为 0，否则进度条就会隐藏</td>
+</tr>
+</tbody></table>
+<h2 id="tqdm与print混用问题"><a href="#tqdm与print混用问题" class="headerlink" title="tqdm与print混用问题"></a>tqdm与print混用问题</h2><p>如果在显示进度条的同时还需要调用<code>print</code>打印一些调试信息，直接混用的话，进度条的显示会分为多行显示，打印的信息也会显得很混乱。就类似于下面这样</p>
+<p><img src="https://i.imgur.com/M8hnbzT.png" alt="image-20220427224747262"></p>
+<p>为了解决这个问题，这里也是参照了<a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/450780357" >这篇帖子<i class="fas fa-external-link-alt"></i></a>，使用<code>tqdm.write()</code>代替<code>print</code>输出信息。最后就可以像这样</p>
+<p><img src="https://i.imgur.com/fvj7J8p.png" alt="image-20220427225036971"></p>
 
         </div>
 
@@ -456,11 +300,11 @@ $$
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>&nbsp;
+                        <a href="/tags/Python/">#Python</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
-                        <a href="/tags/BP%E7%AE%97%E6%B3%95/">#BP算法</a>&nbsp;
+                        <a href="/tags/tqdm/">#tqdm</a>&nbsp;
                     </li>
                 
             </ul>
@@ -469,29 +313,14 @@ $$
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/04/10/linux-shell%E8%84%9A%E6%9C%AC%E5%9F%BA%E7%A1%80/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">linux shell脚本基础</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/03/29/pandas%E6%95%99%E7%A8%8B/"
+                           href="/2022/04/23/pthread%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">pandas教程</span>
+                                <span class="post-nav-title-item">pthread并行程序开发基础</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -722,7 +551,7 @@ $$
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">符号定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%E6%8E%A8%E5%AF%BC"><span class="nav-number">3.</span> <span class="nav-text">第三层推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%E6%8E%A8%E5%AF%BC"><span class="nav-number">4.</span> <span class="nav-text">第二层推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%E6%8E%A8%E5%AF%BC"><span class="nav-number">5.</span> <span class="nav-text">第一层推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E8%A7%84%E5%BE%8B"><span class="nav-number">6.</span> <span class="nav-text">总结规律</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">7.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%92%8C%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90"><span class="nav-number">7.1.</span> <span class="nav-text">测试和训练数据生成</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%98%BE%E7%A4%BA%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">自定义显示信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tqdm%E4%B8%8Eprint%E6%B7%B7%E7%94%A8%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">tqdm与print混用问题</span></a></li></ol>
     </div>
 </div>
         </aside>
