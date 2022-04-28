@@ -37,6 +37,12 @@
 
 <h2 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;folder_name&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">初始化一个 Git 仓库，该命令会在目录中生成一个 .git 文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git init</span>  </span><br><span class="line"><span class="meta"># </span><span class="language-bash">添加文件或者文件夹</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">git add &lt;file_name&gt;</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li>正常显示中文</li>
+</ol>
+<p>git默认使用中文名称的时候是以 <code>\xxx</code>这种形式显示的，虽然不影响我们的操作结果，但是不利于我们观察文件的变动信息，设置正常显示中文文件名的命令如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global core.quotepath false</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>工具使用</category>
@@ -789,12 +795,17 @@ $$
       </tags>
   </entry>
   <entry>
+    <title>tmux使用总结</title>
+    <url>/2022/04/28/tmux%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>tqdm常用方法总结</title>
     <url>/2022/04/27/tqdm%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<p><code>tqdm</code>可以非常方便地在控制台或者<code>jupyter notebook</code>上面显示一个进度条,可以可视化观察当前运行任务的进度等信息。</p>
+    <content><![CDATA[<p><code>tqdm</code>可以非常方便地在控制台或者<code>jupyter notebook</code>上面显示一个进度条,通过进度条我们可以很方便地观察当前运行任务的进度，处理速度等信息。</p>
 <span id="more"></span>
 
-<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>如果任务是需要遍历一个<code>List</code>等的一些可以迭代的对象，可以直接将<code>tqdm()</code>包裹到可迭代对象上面上再通过for循环就可以在控制台显示出进度条了。</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>如果任务是需要遍历一个<code>List</code>或者其他的一些可以迭代的对象，可以直接将<code>tqdm()</code>包裹到可迭代对象上面上再通过for循环就可以在控制台显示出当前循环进行的进度条了。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> char <span class="keyword">in</span> tqdm([<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>]):</span><br><span class="line">    text = text + char</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">100</span>))</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 如果只是需要range，还可以直接使用trange()函数直接代替range</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> trange(<span class="number">100</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
 
 <h2 id="自定义显示信息"><a href="#自定义显示信息" class="headerlink" title="自定义显示信息"></a>自定义显示信息</h2><p>因为<code>tqdm</code>中实现了<code>__enter__()</code>和<code>__exit__()</code>两个方法，所以可以直接使用<code>with</code>表达式获取到 <code>tqdm</code>对象</p>
@@ -846,8 +857,9 @@ $$
 </tbody></table>
 <h2 id="tqdm与print混用问题"><a href="#tqdm与print混用问题" class="headerlink" title="tqdm与print混用问题"></a>tqdm与print混用问题</h2><p>如果在显示进度条的同时还需要调用<code>print</code>打印一些调试信息，直接混用的话，进度条的显示会分为多行显示，打印的信息也会显得很混乱。就类似于下面这样</p>
 <p><img src="https://i.imgur.com/M8hnbzT.png" alt="image-20220427224747262"></p>
-<p>为了解决这个问题，这里也是参照了<a class="link"   href="https://zhuanlan.zhihu.com/p/450780357" >这篇帖子<i class="fas fa-external-link-alt"></i></a>，使用<code>tqdm.write()</code>代替<code>print</code>输出信息。最后就可以像这样</p>
+<p>为了解决这个问题，这里参照了<a class="link"   href="https://zhuanlan.zhihu.com/p/450780357" >这篇帖子<i class="fas fa-external-link-alt"></i></a>，可以使用<code>tqdm.write()</code>代替<code>print</code>输出信息。最后的效果这样</p>
 <p><img src="https://i.imgur.com/fvj7J8p.png" alt="image-20220427225036971"></p>
+<p><strong>注意：tqdm.write()只能接受 字符串类型的数据输出</strong></p>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -1102,7 +1114,7 @@ $$
 </li>
 <li><p>always 过程块，always 过程块会一致被重复执行，多个<code>always</code>过程块并行执行，与书写顺序无关。<code>@</code>中包含的敏感信号可为电平触发或者逻辑变量触发，使用电平触发时可以使用 <code>posedge</code>和<code>negedge</code>表示上升沿和下降沿。</p>
 <p>在<code>always</code>过程块中执行的赋值语句，等号左边必须为<code>reg</code>类型。</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @ (敏感信号列表)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    # 延时数 行为语句<span class="number">1</span>;</span><br><span class="line">    # 延时数 行为语句<span class="number">2</span>;</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk)					<span class="comment">//只在上升沿触发执行</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> clk)	<span class="comment">// 在上升沿和下降沿都执行	</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @ (敏感信号列表) <span class="comment">// always @(*) 代表任意信号变化时都会发生的操作</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    # 延时数 行为语句<span class="number">1</span>;</span><br><span class="line">    # 延时数 行为语句<span class="number">2</span>;</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk)					<span class="comment">//只在上升沿触发执行</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> clk)	<span class="comment">// 在上升沿和下降沿都执行	</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="过程块"><a href="#过程块" class="headerlink" title="过程块"></a>过程块</h2><p>前面举例使用将多条语句包裹在<code>begin ... end </code>语句块中的语法，都是串行语句块。串行块内的语句按照他们在块内的语句顺序执行，若语句含有延时控制，则后一条语句的执行开始时刻为前一条语句延时控制结束后的时刻。</p>
 <p><code>fork ... join </code>可以替换到<code>begin ... end</code>出现的地方代表并行语句块，块内的语句是并行执行的。各个语句的延时是相对于进入并行块的时刻同时开始计时。</p>
@@ -1120,6 +1132,11 @@ $$
 <li>b的值在赋值语句执行完成后立刻改变</li>
 </ol>
 <h2 id="判断和循环"><a href="#判断和循环" class="headerlink" title="判断和循环"></a>判断和循环</h2><h3 id="逻辑判断"><a href="#逻辑判断" class="headerlink" title="逻辑判断"></a>逻辑判断</h3><p>逻辑判断使用<code>if () ... else if () ... else</code> 语句表示。具体的语法和c 语言的差不多，这是在书写多条语句的时候需要使用 <code>begin ... end</code>括起来。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition)</span><br><span class="line">    expression;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (condistion1)</span><br><span class="line">    expression1;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    expression2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (condistion1)</span><br><span class="line">    expression1;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (condistion2)</span><br><span class="line">    expression2;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    expression3;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>多条件判断时可以使用 <code>case</code> 语句，它的使用格式是</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> (<span class="keyword">var</span>)</span><br><span class="line">    condition1: expression1;</span><br><span class="line">    condition2: expression2;</span><br><span class="line"><span class="keyword">endcase</span></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <tags>
         <tag>数字电路</tag>
