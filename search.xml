@@ -1008,6 +1008,9 @@ $$
 <p>先对C的表达式进行化简, 其中$G_{i}$称为生成信号，$P_{i}$称为传播信号，$C_{i+1}$可以写为如下形式。<br>$$<br>C_{i+1} &#x3D; A_{i}B_{i} + (A_{i} + B_{i})C_{i} \\<br>G_{i} &#x3D; A_{i}B_{i} \\<br>P_{i} &#x3D; (A_{i} + B_{i}) \\<br>C_{i+1} &#x3D; G_{i} + P_{i}C_{i}<br>$$<br>按照形式，各级门电路的进位表达式可以写为:<br>$$<br>C_1 &#x3D; G_0+P_0C_0 \\<br>C_2 &#x3D; G_1+P_1C_1&#x3D;G_1 + P_1G_0+P_1P_0C_0 \\<br>C_3 &#x3D; G_2+P_2G_1+P_2P_1G_0 + P_2P_1P_0C_0<br>$$<br>规律也挺明显的，$C_{n+1}$ 等于 $C_{n}$ 乘一个 $P_n$ 再加 $G_n$（废话）。</p>
 <p>CLA相较与RCA的计算延迟时间固定为三级门延迟，且延迟和加法器的位数无关，但是如果进一步扩宽加法器的位宽，则电路会变得非常复杂。</p>
 ]]></content>
+      <categories>
+        <category>FPGA</category>
+      </categories>
       <tags>
         <tag>数字电路</tag>
         <tag>FPGA</tag>
@@ -1138,6 +1141,9 @@ $$
 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> (<span class="keyword">var</span>)</span><br><span class="line">    condition1: expression1;</span><br><span class="line">    condition2: expression2;</span><br><span class="line"><span class="keyword">endcase</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>FPGA</category>
+      </categories>
       <tags>
         <tag>数字电路</tag>
         <tag>FPGA</tag>
@@ -1153,9 +1159,69 @@ $$
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>FPGA</category>
+      </categories>
       <tags>
         <tag>数字电路</tag>
         <tag>FPGA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>贴片元件焊接方法</title>
+    <url>/2022/05/07/%E8%B4%B4%E7%89%87%E5%85%83%E4%BB%B6%E7%9A%84%E7%84%8A%E6%8E%A5%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>贴片元件的焊接方法</p>
+<p>虽然之前接触焊接的很多，但一直都没有认真的学习和练习，焊接是一个常见技能，需要多加练习来熟练掌握。</p>
+<span id="more"></span>
+
+<p>注意事项：</p>
+<ol>
+<li>烙铁温度保持在350 度。</li>
+</ol>
+<h2 id="直插原件焊接"><a href="#直插原件焊接" class="headerlink" title="直插原件焊接"></a>直插原件焊接</h2><ol>
+<li>烙铁头贴近焊盘和原件，同时为两者加热</li>
+<li>将锡丝贴近烙铁头，通过浸润作用使液态锡均匀分到焊盘上，将原件接脚包裹</li>
+<li>焊点形成圆锥侧面形状与PCB 形成 45 度夹角最佳</li>
+</ol>
+<p>注意事项：</p>
+<ul>
+<li>减少焊接持续时间避免长时间的加热损坏原件</li>
+<li>焊接完一个焊点之后，锡丝先离开后，焊头再离开</li>
+</ul>
+<h2 id="贴片原件焊接"><a href="#贴片原件焊接" class="headerlink" title="贴片原件焊接"></a>贴片原件焊接</h2><ul>
+<li>准备一个镊子</li>
+<li>准备一个刀头焊头</li>
+</ul>
+<h3 id="电容电阻焊接方法"><a href="#电容电阻焊接方法" class="headerlink" title="电容电阻焊接方法"></a>电容电阻焊接方法</h3><ol>
+<li>先给一边上锡，要注意锡量，保证锡面光滑圆润</li>
+<li>使用镊子夹起电阻&#x2F;电容，使其紧贴PCB 表面</li>
+<li>使用焊头融化刚刚上锡 的一侧，等待融化并将电容电阻的一头包裹</li>
+<li>移开焊头，等待锡凝固，固定电容电阻</li>
+<li>PCB 旋转 180度完成另外一面的焊接</li>
+</ol>
+<p>注意事项</p>
+<ul>
+<li>保证锡表面与PCB 和原件之间的夹角为45度角最佳</li>
+<li>如果锡量太多，使用烙铁头轻轻抹一下焊点，就合适了</li>
+</ul>
+<h3 id="贴片-IC-焊接方法"><a href="#贴片-IC-焊接方法" class="headerlink" title="贴片 IC 焊接方法"></a>贴片 IC 焊接方法</h3><ol>
+<li>先给2-3个 焊盘上锡</li>
+<li>使用镊子夹取芯片靠近上锡的焊盘</li>
+<li>使用焊头将锡重新融化后固定芯片</li>
+<li>将IC 的一边管脚全部上锡，只需要关注新派你管脚和焊盘之间是否已经连上锡，不用关心管脚之间是否粘连</li>
+<li>将焊头使用拖焊将管脚上的锡脱出，保证管脚和管脚之间没有锡的存在</li>
+</ol>
+<p>注意事项 </p>
+<ul>
+<li>注意芯片的焊接方向和PCB 的丝印方向对应</li>
+<li>使用左手拿镊子右手拿焊笔，需要做到左手拿镊子的稳定与精准需要长时间的练习</li>
+</ul>
+]]></content>
+      <categories>
+        <category>FPGA</category>
+      </categories>
+      <tags>
+        <tag>焊接方法</tag>
       </tags>
   </entry>
 </search>
